@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap" rel="stylesheet" />
-    <title>User Registration</title>
+    <title>Admin Registration</title>
 </head>
 
 <body>
@@ -20,13 +20,13 @@
                 <!-- success message -->
                 <div th:if="${param.success}">
                     <div class="alert alert-info">
-                        You've successfully registered a user account. Please <a th:href="@{/login}">log in.</a>
+                        You've successfully registered an admin account. Please <a th:href="@{/login}">log in.</a>
                     </div>
                 </div>
 
-                <h1>User Registration</h1>
+                <h1>Registration</h1>
 
-                <form th:action="@{/registration/user}" method="post" th:object="${user}">
+                <form th:action="@{/registration/admin}" method="post" th:object="${user}">
                     <div class="form-group">
                         <label class="control-label" for="firstName"> First Name </label>
                         <input id="firstName" class="form-control" th:field="*{firstName}" required

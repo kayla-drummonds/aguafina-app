@@ -1,0 +1,130 @@
+/*  
+--lapis-lazuli: #135C9E;
+--steel-blue: #477EAF;
+--air-superiority-blue: #7BA0C1;
+--light-steel-blue: #AFC1D2;
+--platinum: #E3E3E3;
+font-family: 'Noto Sans Ethiopic', sans-serif;
+ */
+
+body {
+	font-family: "Noto Sans Ethiopic", sans-serif;
+}
+
+/* navigation bar properties */
+.nav {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #135c9e;
+	width: 100%;
+}
+
+/* layout properties */
+.container-fluid {
+	background-color: #afc1d2;
+}
+
+.row {
+	text-align: center;
+}
+
+.card {
+	text-align: center;
+}
+
+/* button properties */
+#update-button {
+	background-color: #135c9eff;
+	color: #e3e3e3ff;
+	border: 2px solid #e3e3e3ff;
+	transition-duration: 0.4s;
+}
+
+#update-button:hover {
+	background-color: #e3e3e3ff;
+	color: #135c9eff;
+	border: 2px solid #135c9eff;
+}
+
+#delete-button {
+	background-color: red;
+	color: #e3e3e3ff;
+	border: 2px solid #e3e3e3ff;
+	transition-duration: 0.4s;
+}
+
+#delete-button:hover {
+	background-color: #e3e3e3ff;
+	color: red;
+	border: 2px solid red;
+}
+
+#create-button {
+	background-color: #477eaf;
+	color: #e3e3e3ff;
+	border: 2px solid #e3e3e3ff;
+	transition-duration: 0.4s;
+}
+
+#create-button:hover {
+	background-color: #e3e3e3ff;
+	color: #477eaf;
+	border: 2px solid #477eaf;
+}
+
+/* global form properties */
+.uk-input {
+	width: 250px;
+}
+
+form {
+	margin: auto;
+	padding: 10%;
+	border: solid 2px;
+	background-color: #e3e3e3ff;
+}
+
+h3 {
+	text-align: center;
+	color: #477eaf;
+}
+
+.uk-form-label {
+	font-size: 18px;
+	color: #477eaf;
+}
+
+.uk-select {
+	width: 250px;
+}
+
+/* global table properties */
+.table th,
+.table td {
+	text-align: center;
+	padding: 15px;
+	border-bottom: 1px solid black;
+}
+
+.table tr:nth-child(even) {
+	background-color: white;
+	color: #477eaf;
+}
+
+.table tr:nth-child(odd) {
+	background-color: #7ba0c1;
+	color: #e3e3e3ff;
+}
+
+.table tr:hover,
+.table th {
+	background-color: #477eaf;
+	color: #e3e3e3ff;
+}
+
+/* global modal properties */
+.uk-modal-header {
+	text-align: center;
+}
