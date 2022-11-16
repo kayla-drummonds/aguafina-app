@@ -12,13 +12,18 @@ body {
 }
 
 /* navigation bar properties */
-.nav {
+.navbar {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 	background-color: #135c9e;
 	width: 100%;
+}
+
+.navbar-section a,
+.btn.btn-link {
+	color: white;
 }
 
 /* layout properties */
