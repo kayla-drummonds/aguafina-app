@@ -21,9 +21,17 @@ body {
 	width: 100%;
 }
 
-.navbar-section a,
 .btn.btn-link {
 	color: white;
+}
+
+.btn.btn-link.active {
+	background-color: #e3e3e3;
+	color: #135c9e;
+}
+
+.btn.btn-link:hover {
+	color: #afc1d2;
 }
 
 /* layout properties */
@@ -109,7 +117,6 @@ h3 {
 .table th,
 .table td {
 	text-align: center;
-	padding: 15px;
 	border-bottom: 1px solid black;
 }
 

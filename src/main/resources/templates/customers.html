@@ -20,28 +20,10 @@
             <a href="#" class="navbar-brand mr-2">Aguafina</a>
         </section>
         <section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-            <div class="dropdown">
-                <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
-                    Orders
-                    <em class="icon icon-caret"></em>
-                </a>
-                <ul class="menu">
-                    <li><a class="btn btn-link" th:href="@{/orders}">All Orders</a></li>
-                    <li><a class="btn btn-link" th:href="@{/orders/new}">New Order</a></li>
-                </ul>
-            </div>
+            <a class="btn btn-link" th:href="@{/orders}">Orders</a>
         </section>
         <section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-            <div class="dropdown">
-                <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
-                    Customers
-                    <em class="icon icon-caret"></em>
-                </a>
-                <ul class="menu">
-                    <li><a class="btn btn-link" th:href="@{/customers}">All Customers</a></li>
-                    <li><a class="btn btn-link" th:href="@{/customers/new}">New Customer</a></li>
-                </ul>
-            </div>
+            <a class="btn btn-link active" th:href="@{/customers}">Customers</a>
         </section>
         <section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
             <a class="btn btn-link" th:href="@{/employees}">Employees</a>
@@ -51,8 +33,8 @@
         </section>
     </header>
     <a th:href="@{/customers/new}" class="btn" id="create-button">Create a new customer</a>
-    <div id="customers" class="table-responsive-md table-responsive-sm">
-        <table class="table table-hover">
+    <div id="customers">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Customer ID</th>
