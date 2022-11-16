@@ -54,7 +54,7 @@ public class UserController {
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpSession session) {
         session.setAttribute("SPRING_SECURITY_LAST_EXCEPTION", request);
-        return "redirect:/orders";
+        return "login";
     }
 
     @GetMapping("/logout-success")

@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/api/home", true)
                 .permitAll()
                 .and()
                 .logout()
