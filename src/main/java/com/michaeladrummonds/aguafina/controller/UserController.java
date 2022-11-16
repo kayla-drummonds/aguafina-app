@@ -5,9 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +22,9 @@ public class UserController {
     private final UserServiceImpl userService;
 
     public UserController(UserServiceImpl userService) {
-	this.userService = userService;
+        this.userService = userService;
     }
-    
+
     @GetMapping("/registration/user")
     public String createNewUser(Model model) {
         UserRegistrationDto user = new UserRegistrationDto();
@@ -57,10 +54,6 @@ public class UserController {
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpSession session) {
         session.setAttribute("SPRING_SECURITY_LAST_EXCEPTION", request);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
-        }
         return "redirect:/orders";
     }
 

@@ -4,7 +4,7 @@ function validateCustomer() {
         document.newCustomerForm.firstName.focus();
         return false;
     } else {
-        var firstName = document.getElementById("firstName").value;
+        let firstName = document.getElementById("firstName").value;
     }
 
     if (document.newCustomerForm.lastName.value == "") {
@@ -12,7 +12,7 @@ function validateCustomer() {
         document.newCustomerForm.lastName.focus();
         return false;
     } else {
-        var lastName = document.getElementById("lastName").value;
+        let lastName = document.getElementById("lastName").value;
     }
 
     if (document.newCustomerForm.email.value == "") {
@@ -20,7 +20,7 @@ function validateCustomer() {
         document.newCustomerForm.email.focus();
         return false;
     } else {
-        var emailID = document.newCustomerForm.email.value;
+        let emailID = document.newCustomerForm.email.value;
         atpos = emailID.indexOf("@");
         dotpos = emailID.lastIndexOf(".");
         if (atpos < 1 || (dotpos - atpos < 2)) {
@@ -28,7 +28,7 @@ function validateCustomer() {
             document.myForm.EMail.focus();
             return false;
         } else {
-            var email = document.getElementById("email").value;
+            let email = document.getElementById("email").value;
         }
     }
 
@@ -37,7 +37,7 @@ function validateCustomer() {
         document.newCustomerForm.phone.focus();
         return false;
     } else {
-        var phone = document.getElementById("phone").value;
+        let phone = document.getElementById("phone").value;
     }
 
     if (document.newCustomerForm.address.value == "") {
@@ -45,7 +45,7 @@ function validateCustomer() {
         document.newCustomerForm.address.focus();
         return false;
     } else {
-        var address = document.getElementById("address").value;
+        let address = document.getElementById("address").value;
     }
 
     if (document.newCustomerForm.city.value == "") {
@@ -53,7 +53,7 @@ function validateCustomer() {
         document.newCustomerForm.city.focus();
         return false;
     } else {
-        var city = document.getElementById("city").value;
+        let city = document.getElementById("city").value;
     }
 
     if (document.newCustomerForm.state.value == "") {
@@ -61,7 +61,7 @@ function validateCustomer() {
         document.newCustomerForm.state.focus();
         return false;
     } else {
-        var state = document.getElementById("state").value;
+        let state = document.getElementById("state").value;
     }
 
     if (document.newCustomerForm.zip.value == "" || isNaN(document.newCustomerForm.zip.value) || document.newCustomerForm.zip.value != 5) {
@@ -69,7 +69,7 @@ function validateCustomer() {
         document.newCustomerForm.zip.focus();
         return false;
     } else {
-        var zip = document.getElementById("zipCode").value;
+        let zip = document.getElementById("zipCode").value;
     }
 
     return true;
@@ -81,7 +81,7 @@ function validateEmployee() {
         document.newCustomerForm.firstName.focus();
         return false;
     } else {
-        var firstName = document.getElementById("firstName").value;
+        let firstName = document.getElementById("firstName").value;
     }
 
     if (document.newEmployeeForm.lastName.value == "") {
@@ -89,7 +89,7 @@ function validateEmployee() {
         document.newEmployeeForm.lastName.focus();
         return false;
     } else {
-        var lastName = document.getElementById("lastName").value;
+        let lastName = document.getElementById("lastName").value;
     }
 
     if (document.newEmployeeForm.email.value == "") {
@@ -97,7 +97,7 @@ function validateEmployee() {
         document.newEmployeeForm.email.focus();
         return false;
     } else {
-        var emailID = document.newEmployeeForm.email.value;
+        let emailID = document.newEmployeeForm.email.value;
         atpos = emailID.indexOf("@");
         dotpos = emailID.lastIndexOf(".");
         if (atpos < 1 || (dotpos - atpos < 2)) {
@@ -105,7 +105,7 @@ function validateEmployee() {
             document.newEmployeeForm.email.focus();
             return false;
         } else {
-            var email = document.getElementById("email").value;
+            let email = document.getElementById("email").value;
         }
     }
 
@@ -114,7 +114,7 @@ function validateEmployee() {
         document.newEmployeeForm.address.focus();
         return false;
     } else {
-        var address = document.getElementById("address").value;
+        let address = document.getElementById("address").value;
     }
 
     if (document.newEmployeeForm.city.value == "") {
@@ -122,7 +122,7 @@ function validateEmployee() {
         document.newEmployeeForm.city.focus();
         return false;
     } else {
-        var city = document.getElementById("city").value;
+        let city = document.getElementById("city").value;
     }
 
     if (document.newEmployeeForm.state.value == "") {
@@ -130,7 +130,7 @@ function validateEmployee() {
         document.newEmployeeForm.state.focus();
         return false;
     } else {
-        var state = document.getElementById("state").value;
+        let state = document.getElementById("state").value;
     }
 
     if (document.newEmployeeForm.zip.value == "" || isNaN(document.newEmployeeForm.zip.value) || document.newEmployeeForm.zip.value != 5) {
@@ -138,7 +138,7 @@ function validateEmployee() {
         document.newEmployeeForm.zip.focus();
         return false;
     } else {
-        var zip = document.getElementById("zipCode").value;
+        let zip = document.getElementById("zipCode").value;
     }
 
     return true;
