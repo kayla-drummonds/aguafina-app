@@ -60,7 +60,7 @@
                     <th scope="col">Creation date</th>
                     <th scope="col">Customer ID</th>
                     <th scope="col">Employee ID</th>
-                    <th scope="col">Product Code</th>
+                    <th scope="col">Product</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Total</th>
                     <th scope="col">Actions</th>
@@ -69,15 +69,15 @@
             <tbody>
                 <tr th:each="order: ${orders}">
                     <td th:text="${order.id}">Order ID</td>
-                    <td th:text="${#dates.format(order.orderDetails.creationDate,'MM-dd-yyyy')}">Creation Date</td>
+                    <td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">Creation Date</td>
                     <td>
                         <a th:href="@{/orders/customer/{customer}(customer=${order.customer.id})}"
                             th:text="${order.customer.id}"></a>
                     </td>
                     <td th:text="${order.employee.id}">Employee ID</td>
-                    <td th:text="${order.orderDetails.product.code}">Product Code</td>
-                    <td th:text="${order.orderDetails.quantity}">Quantity</td>
-                    <td th:text="${#numbers.formatCurrency(order.orderDetails.total)}">Total</td>
+                    <td th:text="${order.product}">Product</td>
+                    <td th:text="${order.quantity}">Quantity</td>
+                    <td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
                     <td>
                         <a th:href="@{/orders/{id}(id=${order.id})}" class="btn" id="delete-button">Delete</a>
                     </td>

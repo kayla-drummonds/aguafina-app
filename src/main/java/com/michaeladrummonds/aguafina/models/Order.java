@@ -29,7 +29,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
-    
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -37,13 +37,16 @@ public class Order {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "employee_id")
     private Employee employee;
-    
+
     @Column
     private String product;
-    
+
+    @Column
+    private Integer quantity;
+
     @Column
     private Double total;
-    
+
     @Column
     private Date creationDate;
 }
