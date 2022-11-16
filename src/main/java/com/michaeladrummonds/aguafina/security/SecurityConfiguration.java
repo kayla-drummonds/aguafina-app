@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/js/**",
                 "/css/**",
                 "/img/**").permitAll()
-                .antMatchers("/api/products/**", "/api/employees/**", "/api/admin")
+                .antMatchers("/api/employees/**", "/api/admin")
                 .hasAnyAuthority("ADMIN")
                 .antMatchers("/api", "/api/orders/**", "/api/customers/**", "/api/user")
                 .hasAnyAuthority("USER", "ADMIN")

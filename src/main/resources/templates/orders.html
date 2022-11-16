@@ -22,13 +22,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav justify-content-center" id="navlinks">
-                    <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('ADMIN')">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Shop</a>
-                        <ul class="dropdown-menu">
-                            <li><a th:href="@{/products}" class="dropdown-item">All Products</a></li>
-                            <li><a th:href="@{/products/new}" class="dropdown-item">Add New Product</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Orders</a>
                         <ul class="dropdown-menu">

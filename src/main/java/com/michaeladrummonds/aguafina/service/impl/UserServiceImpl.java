@@ -19,14 +19,13 @@ import com.michaeladrummonds.aguafina.repository.UserRepository;
 public class UserServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
-    
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-    
-    public UserServiceImpl(UserRepository userRepository) {
-	this.userRepository = userRepository;
-    }
 
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserDetailsService {
         if (null == user) {
             throw new UsernameNotFoundException("Cannot find user with email: " + email);
         }
-        return new CustomUserDetails();
+        return new CustomUserDetails(user);
     }
 
     public User saveUser(UserRegistrationDto registrationDto) {
@@ -46,7 +45,7 @@ public class UserServiceImpl implements UserDetailsService {
         user.setRole("USER");
         return userRepository.save(user);
     }
-    
+
     public User saveAdmin(UserRegistrationDto registrationDto) {
         User user = new User();
         user.setFirstName(registrationDto.getFirstName());
