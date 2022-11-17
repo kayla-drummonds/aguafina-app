@@ -18,7 +18,7 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeServiceImpl employeeService;
-    
+
     @GetMapping("/employees")
     public String listAllEmployees(Model model, @ModelAttribute("employee") Employee employee) {
         List<Employee> employees = employeeService.getAllEmployees();

@@ -15,13 +15,14 @@ body {
 .navbar {
 	list-style-type: none;
 	margin: 0;
-	padding: 0;
+	padding: 15px;
 	overflow: hidden;
 	background-color: #135c9e;
 	width: 100%;
 }
 
-.btn.btn-link {
+.btn.btn-link,
+.navbar-brand.mr-2 {
 	color: white;
 }
 
@@ -35,15 +36,11 @@ body {
 }
 
 /* layout properties */
-.container-fluid {
+.container {
 	background-color: #afc1d2;
 }
 
 .row {
-	text-align: center;
-}
-
-.card {
 	text-align: center;
 }
 
@@ -114,6 +111,10 @@ h3 {
 }
 
 /* global table properties */
+.table {
+	width: 100%;
+}
+
 .table th,
 .table td {
 	text-align: center;

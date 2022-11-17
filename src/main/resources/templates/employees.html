@@ -23,65 +23,54 @@
             <a class="btn btn-link" th:href="@{/orders}">Orders</a>
         </section>
         <section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-            <a class="btn btn-link active" th:href="@{/customers}">Customers</a>
+            <a class="btn btn-link" th:href="@{/customers}">Customers</a>
         </section>
         <section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
-            <a class="btn btn-link" th:href="@{/employees}">Employees</a>
+            <a class="btn btn-link active" th:href="@{/employees}">Employees</a>
         </section>
         <section class="navbar-section">
             <a class="btn btn-link" th:href="@{/logout}">Log Out</a>
         </section>
     </header>
-    <a th:href="@{/employees/new}" class="btn" id="create-button">Create New Employee</a>
-    <div id="employees" class="table-responsive-md">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Employee ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="employee : ${employees}">
-                    <td th:text="${employee.id}"></td>
-                    <td th:text="${employee.firstName}"></td>
-                    <td th:text="${employee.lastName}"></td>
-                    <td th:text="${employee.email}"></td>
-                    <td>
-                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            Orders
-                        </a>
-                        <div class="collapse multi-collapse" id="collapseExample">
-                            <div class="card" th:each="order : ${employee.orders}">
-                                <div class="card-body">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" th:text="'Order ID: ' + ${order.id}">Order ID</li>
-                                        <li class="list-group-item" th:text="'Customer ID: ' + ${order.customer.id}">
-                                            Customer ID
-                                        </li>
-                                        <li class="list-group-item"
-                                            th:text="'Product Code: ' + ${order.orderDetails.product.code}">
-                                            Product Code</li>
-                                        <li class="list-group-item"
-                                            th:text="'Quantity: ' + ${order.orderDetails.quantity}">
-                                            Quantity
-                                        </li>
-                                        <li class="list-group-item"
-                                            th:text="'Total: ' + ${#numbers.formatCurrency(order.orderDetails.total)}">
-                                            Total</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="container pt-2">
+        <div class="columns">
+            <div class="column col-4">
+                <a th:href="@{/employees/new}" class="btn btn-lg" id="create-button">Create New Employee</a>
+            </div>
+            <div class="column col-4">
+                <h2 class="text-center">Employees</h2>
+            </div>
+            <div class="column col-4 d-invisible">
+                <p>Placeholder Text</p>
+            </div>
+        </div>
     </div>
+    <div class="container">
+        <div class="columns">
+            <div class="card column col-4 my-2" th:each="employee : ${employees}">
+                <div class="card-header">
+                    <div class="card-title h5 text-uppercase text-center"
+                        th:text="${employee.firstName} + ' ' + ${employee.lastName}">
+                    </div>
+                    <div class="card-subtitle text-center" th:text="${employee.id}">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <dl>
+                        <dt>Email</dt>
+                        <dd th:text="${employee.email}"></dd>
+                        <dt>Address</dt>
+                        <dd
+                            th:text="${employee.address} + ' ' + ${employee.city} + ', ' + ${employee.state} + ' ' + ${employee.zipCode}">
+                        </dd>
+                        <dt>Order Count</dt>
+                        <dd th:text="${employee.orders.size()}"></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

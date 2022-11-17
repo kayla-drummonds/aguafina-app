@@ -32,7 +32,19 @@
             <a class="btn btn-link" th:href="@{/logout}">Log Out</a>
         </section>
     </header>
-    <a th:href="@{/customers/new}" class="btn" id="create-button">Create a new customer</a>
+    <div class="container pt-2 pb-2">
+        <div class="columns">
+            <div class="column col-4">
+                <a th:href="@{/customers/new}" class="btn btn-lg" id="create-button">Create New Customer</a>
+            </div>
+            <div class="column col-4">
+                <h2 class="text-center">Customers</h2>
+            </div>
+            <div class="column col-4 d-invisible">
+                <p>Placeholder Text</p>
+            </div>
+        </div>
+    </div>
     <div id="customers">
         <table class="table">
             <thead>
