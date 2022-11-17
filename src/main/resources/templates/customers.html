@@ -40,40 +40,42 @@
             <div class="column col-4">
                 <h2 class="text-center">Customers</h2>
             </div>
-            <div class="column col-4 d-invisible">
-                <p>Placeholder Text</p>
+            <div class="column col-4">
+                <div class="input-group input-inline">
+                    <input class="form-input" type="text" placeholder="search">
+                    <button class="btn btn-primary input-group-btn">Search</button>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="customers">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Customer ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="customer : ${customers}">
-                    <td th:text="${customer.id}"></td>
-                    <td th:text="${customer.firstName} + ' ' + ${customer.lastName}"></td>
-                    <td th:text="${customer.email}"></td>
-                    <td th:text="${customer.phone}"></td>
-                    <td
-                        th:text="${customer.address} + ' ' + ${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}">
-                    </td>
-                    <td>
-                        <a th:href="@{/customers/edit/{id}(id=${customer.id})}" class="btn"
-                            id="update-button">Update</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="container">
+            <div class="columns">
+                <div class="tile column col-6" th:each="customer : ${customers}" id="customer-tile">
+                    <div class="tile-content">
+                        <div class="tile-title h4" th:text="${customer.firstName} + ' ' + ${customer.lastName}"></div>
+                        <div class="tile-subtitle" th:text="${customer.id}"></div>
+                        <div class="divider"></div>
+                        <div class="columns">
+                            <div class="column col-4">Email:</div>
+                            <div class="column col-8" th:text="${customer.email}"></div>
+                            <div class="column col-4">Phone:</div>
+                            <div class="column col-8" th:text="${customer.phone}"></div>
+                            <div class="column col-4">Address:</div>
+                            <div class="column col-8" th:text="${customer.address}">
+                            </div>
+                            <div class="column col-4 d-invisible">Placeholder</div>
+                            <div class="column col-8"
+                                th:text="${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile-action">
+                        <a class="btn btn-link" id="update-button"
+                            th:href="@{/customers/edit/{id}(id=${customer.id})}">Update <span
+                                class="icon icon-edit"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 
 </html>

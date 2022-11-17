@@ -13,12 +13,11 @@ import com.michaeladrummonds.aguafina.service.CustomerService;
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
-    
+
     private final CustomerRepository customerRepository;
-    
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
-	this.customerRepository = customerRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -41,5 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id).get();
     }
 
+    @Override
+    public List<Customer> getCustomerByLastNameLike(String lastName) {
+        return customerRepository.findByLastNameContaining(lastName);
+    }
 
 }

@@ -3,6 +3,7 @@ package com.michaeladrummonds.aguafina.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +24,16 @@ public class CustomerController {
 
     // displays all customers
     @GetMapping("/customers")
-    public String listCustomers(@ModelAttribute("customer") Customer customer, Model model) {
-	List<Customer> customers = customerService.getAllCustomers();
-	model.addAttribute("customers", customers);
-	return "customers";
+    public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
+            @Param("lastName") String lastName) {
+        List<Customer> customers = customerService.getAllCustomers();
+        List<Customer> customersByLastName = customerService.getCustomerByLastNameLike(lastName);
+        model.addAttribute("customers", customers);
+        model.addAttribute("customersByLastName", customersByLastName);
+        return "customers";
     }
-    
- // displays the form to construct a new customer object
+
+    // displays the form to construct a new customer object
     @GetMapping("/customers/new")
     public String createNewCustomer(Model model) {
         Customer customer = new Customer();
@@ -43,7 +47,7 @@ public class CustomerController {
         customerService.saveCustomer(customer);
         return "redirect:/customers";
     }
-    
+
     @PostMapping("/customers/{id}")
     public String updateCustomer(@PathVariable Integer id, @ModelAttribute("customer") Customer customer, Model model) {
         Customer existingCustomer = customerService.getCustomerById(id);

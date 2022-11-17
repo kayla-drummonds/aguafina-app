@@ -141,3 +141,12 @@ h3 {
 .uk-modal-header {
 	text-align: center;
 }
+
+#customer-tile {
+	border: 2px solid #7ba0c1;
+	padding: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #477eaf;
+	color: #e3e3e3;
+}

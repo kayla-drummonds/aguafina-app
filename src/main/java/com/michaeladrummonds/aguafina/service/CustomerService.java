@@ -16,4 +16,6 @@ public interface CustomerService {
     Customer saveCustomer(Customer customer);
 
     Customer updateCustomer(Customer customer);
+
+    List<Customer> getCustomerByLastNameLike(String lastName);
 }
