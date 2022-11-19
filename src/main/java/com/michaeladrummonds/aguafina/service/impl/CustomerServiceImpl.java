@@ -41,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getCustomerByLastNameLike(String lastName) {
+    public List<Customer> findByLastNameContaining(String lastName) {
         return customerRepository.findByLastNameContaining(lastName);
     }
 

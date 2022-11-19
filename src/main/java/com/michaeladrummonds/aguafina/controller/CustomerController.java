@@ -3,7 +3,6 @@ package com.michaeladrummonds.aguafina.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
@@ -25,11 +25,16 @@ public class CustomerController {
     // displays all customers
     @GetMapping("/customers")
     public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
-            @Param("lastName") String lastName) {
-        List<Customer> customers = customerService.getAllCustomers();
-        List<Customer> customersByLastName = customerService.getCustomerByLastNameLike(lastName);
-        model.addAttribute("customers", customers);
-        model.addAttribute("customersByLastName", customersByLastName);
+            @RequestParam(required = false) String keyword) {
+
+        if (keyword != null) {
+            List<Customer> customers = customerService.findByLastNameContaining(keyword);
+            model.addAttribute("customers", customers);
+        } else {
+            List<Customer> customers = customerService.getAllCustomers();
+            model.addAttribute("customers", customers);
+        }
+        model.addAttribute("keyword", keyword);
         return "customers";
     }
 
