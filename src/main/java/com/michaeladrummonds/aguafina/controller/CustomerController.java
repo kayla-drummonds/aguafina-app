@@ -3,7 +3,6 @@ package com.michaeladrummonds.aguafina.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +23,12 @@ public class CustomerController {
     private CustomerServiceImpl customerService;
 
     // displays all customers
-    @GetMapping({ "/customers", "/customers/search" })
+    @GetMapping("/customers")
     public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
             @RequestParam(required = false) String lastName) {
 
         if (lastName != null) {
-            List<Customer> customers = customerService.findByLastName(lastName);
+            List<Customer> customers = customerService.getCustomerByLastName(lastName);
             model.addAttribute("customers", customers);
         } else {
             List<Customer> customers = customerService.getAllCustomers();
