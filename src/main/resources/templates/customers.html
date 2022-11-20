@@ -41,9 +41,9 @@
                 <h2 class="text-center">Customers</h2>
             </div>
             <div class="column col-4">
-                <form method="get" th:object="${customer}" th:action="@{/customers/search}">
+                <form method="get" th:action="@{/customers}">
                     <div class="input-group input-inline">
-                        <input class="form-input" type="text" placeholder="search" th:value="${lastName}">
+                        <input class="form-input" type="text" placeholder="search" th:name="lastName">
                         <button type="submit" class="btn btn-primary input-group-btn"
                             title="Search By Last Name">Search</button>
                     </div>

@@ -25,16 +25,17 @@ public class CustomerController {
     // displays all customers
     @GetMapping("/customers")
     public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
-            @RequestParam(required = false) String lastName) {
+            @RequestParam(value = "lastName", required = false) String lastName) {
 
         if (lastName != null) {
-            List<Customer> customers = customerService.getCustomerByLastName(lastName);
+            List<Customer> customers = customerService.getCustomerByLastNameContaining(lastName);
             model.addAttribute("customers", customers);
         } else {
             List<Customer> customers = customerService.getAllCustomers();
             model.addAttribute("customers", customers);
         }
         model.addAttribute("lastName", lastName);
+        model.addAttribute("customer", customer);
         return "customers";
     }
 
