@@ -3,6 +3,7 @@ package com.michaeladrummonds.aguafina.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,18 +24,18 @@ public class CustomerController {
     private CustomerServiceImpl customerService;
 
     // displays all customers
-    @GetMapping("/customers")
+    @GetMapping({ "/customers", "/customers/search" })
     public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
-            @RequestParam(required = false) String keyword) {
+            @RequestParam(required = false) String lastName) {
 
-        if (keyword != null) {
-            List<Customer> customers = customerService.findByLastNameContaining(keyword);
+        if (lastName != null) {
+            List<Customer> customers = customerService.findByLastName(lastName);
             model.addAttribute("customers", customers);
         } else {
             List<Customer> customers = customerService.getAllCustomers();
             model.addAttribute("customers", customers);
         }
-        model.addAttribute("keyword", keyword);
+        model.addAttribute("lastName", lastName);
         return "customers";
     }
 
@@ -51,6 +52,12 @@ public class CustomerController {
     public String saveCustomer(@ModelAttribute("customer") Customer customer) {
         customerService.saveCustomer(customer);
         return "redirect:/customers";
+    }
+
+    @GetMapping("/customers/edit/{id}")
+    public String editCustomer(@PathVariable Integer id, Model model) {
+        model.addAttribute("customer", customerService.getCustomerById(id));
+        return "edit_customer";
     }
 
     @PostMapping("/customers/{id}")

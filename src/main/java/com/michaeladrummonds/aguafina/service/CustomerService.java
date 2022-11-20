@@ -17,5 +17,5 @@ public interface CustomerService {
 
     Customer updateCustomer(Customer customer);
 
-    List<Customer> findByLastNameContaining(String lastName);
+    List<Customer> findByLastName(String lastName);
 }
