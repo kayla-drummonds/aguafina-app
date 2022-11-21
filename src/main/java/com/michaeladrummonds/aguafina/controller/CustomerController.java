@@ -28,7 +28,7 @@ public class CustomerController {
     public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
             @RequestParam(value = "email", required = false) String email) {
 
-        if (!email.isEmpty()) {
+        if (email != null) {
             List<Customer> customers = customerService.getCustomerByEmailContaining(email);
             model.addAttribute("customers", customers);
             model.addAttribute("email", email);
@@ -44,7 +44,7 @@ public class CustomerController {
     @GetMapping("/customers/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField,
             @RequestParam("sortDir") String sortDir, Model model) {
-        int pageSize = 10;
+        int pageSize = 12;
         Page<Customer> page = customerService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Customer> customers = page.getContent();
         model.addAttribute("currentPage", pageNo);

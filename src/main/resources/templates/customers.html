@@ -96,7 +96,7 @@
 			<div class="container">
 				<div class="columns">
 					<div
-						class="panel column col-6"
+						class="panel column col-4 col-sm-6 col-md-6"
 						th:each="customer : ${customers}"
 						id="customer-tile">
 						<div class="panel-header">
@@ -120,20 +120,18 @@
 										th:text="${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}"></div>
 								</div>
 							</div>
-						</div>
-						<div class="panel-footer">
-							<a
-								class="btn btn-link"
-								id="update-button"
-								th:href="@{/customers/edit/{id}(id=${customer.id})}"
-								>Update <span class="icon icon-edit"></span
-							></a>
+							<div class="panel-footer">
+								<a
+									class="btn btn-link"
+									id="update-button"
+									th:href="@{/customers/edit/{id}(id=${customer.id})}"
+									>Update <span class="icon icon-edit"></span>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<br />
-			<div class="divider"></div>
+				<div class="divider"></div>
 			<div th:if="${totalPages > 1}" class="text-center">
 				<ul class="pagination">
 					<li class="page-item column col-sm-12">
@@ -148,6 +146,7 @@
 						</span>
 					</li>
 				</ul>
+			</div>
 			</div>
 		</div>
 	</body>
