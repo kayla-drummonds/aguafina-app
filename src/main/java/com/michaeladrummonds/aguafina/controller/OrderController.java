@@ -25,13 +25,13 @@ public class OrderController {
 
     @Autowired
     private OrderServiceImpl orderService;
-    
+
     @Autowired
     private CustomerServiceImpl customerService;
-    
+
     @Autowired
     private EmployeeServiceImpl employeeService;
-    
+
     @GetMapping("/orders")
     public String listAllOrders(Model model) {
         List<Order> orders = orderService.getAllOrders();
@@ -63,24 +63,22 @@ public class OrderController {
     }
 
     @GetMapping("/orders/customer/{customer}")
-    public String getOrdersByCustomer(Model model, @Param("customer") Customer customer) {
+    public String getOrdersByCustomer(Model model, @Param("customer") @ModelAttribute("customer") Customer customer) {
         Integer customerId = customer.getId();
         List<Order> ordersByCustomer = orderService.getOrderByCustomerId(customerId, customer);
         Double total = orderService.getTotalByCustomerId(customerId, customer);
         model.addAttribute("ordersByCustomer", ordersByCustomer);
-        model.addAttribute("customer", customer);
         model.addAttribute("total", total);
         return "customer_orders";
     }
-    
+
     @GetMapping("/orders/employee/{employee}")
-    public String getOrdersByEmployee(Model model, @Param("employee") Employee employee) {
-	Integer employeeId = employee.getId();
-	List<Order> ordersByEmployee = orderService.getOrderByEmployeeId(employee, employeeId);
-	Double orderCount = orderService.countOrdersByEmployeeId(employee, employeeId);
-	model.addAttribute("ordersByEmployee", ordersByEmployee);
-	model.addAttribute("employee", employee);
-	model.addAttribute("orderCount", orderCount);
-	return "employee_orders";
+    public String getOrdersByEmployee(Model model, @Param("employee") @ModelAttribute("employee") Employee employee) {
+        Integer employeeId = employee.getId();
+        List<Order> ordersByEmployee = orderService.getOrderByEmployeeId(employee, employeeId);
+        Double orderCount = orderService.countOrdersByEmployeeId(employee, employeeId);
+        model.addAttribute("ordersByEmployee", ordersByEmployee);
+        model.addAttribute("orderCount", orderCount);
+        return "employee_orders";
     }
 }
