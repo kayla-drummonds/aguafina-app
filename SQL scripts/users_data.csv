@@ -1,0 +1,3 @@
+"id";"email";"first_name";"last_name";"password";"role"
+1;"jpowell0@hplussport.com";"Jack";"Powell";"$2a$10$h4hQfiPxKgfOKNsYxaYIFO.ztTcYed0y/rEFIx2IBBNNzHHecOMAm";"ADMIN"
+2;"egarcia1@hplussport.com";"Emily";"Garcia";"$2a$10$K1OGUiEhp499D82doXRjK.t0SgoQpLgQ1.jdhig2MMqox.zk6uMZS";"USER"

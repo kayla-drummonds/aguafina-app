@@ -96,15 +96,17 @@
 			<div class="container">
 				<div class="columns">
 					<div
-						class="tile column col-6"
+						class="panel column col-6"
 						th:each="customer : ${customers}"
 						id="customer-tile">
-						<div class="tile-content">
+						<div class="panel-header">
 							<div
-								class="tile-title h4"
+								class="panel-title h4"
 								th:text="${customer.firstName} + ' ' + ${customer.lastName}"></div>
-							<div class="tile-subtitle" th:text="${customer.id}"></div>
-							<div class="divider"></div>
+							<div class="h5" th:text="${customer.id}"></div>
+						</div>
+						<div class="divider"></div>
+						<div class="panel-body">
 							<div class="columns">
 								<div class="column col-4">Email:</div>
 								<div class="column col-8" th:text="${customer.email}"></div>
@@ -114,11 +116,12 @@
 								<div class="column col-8" th:text="${customer.address}"></div>
 								<div class="column col-4 d-invisible">Placeholder</div>
 								<div
-									class="column col-8"
-									th:text="${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}"></div>
+										class="column col-8"
+										th:text="${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}"></div>
+								</div>
 							</div>
 						</div>
-						<div class="tile-action">
+						<div class="panel-footer">
 							<a
 								class="btn btn-link"
 								id="update-button"
