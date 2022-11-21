@@ -26,18 +26,16 @@ public class CustomerController {
     // displays all customers
     @GetMapping("/customers")
     public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
-            @RequestParam(value = "lastName", required = false) String lastName) {
+            @RequestParam(value = "email", required = false) @ModelAttribute("email") String email) {
 
-        if (!lastName.isEmpty()) {
-            List<Customer> customers = customerService.getCustomerByLastNameContaining(lastName);
+        if (!email.isEmpty()) {
+            List<Customer> customers = customerService.getCustomerByEmailContaining(email);
             model.addAttribute("customers", customers);
         } else {
             List<Customer> customers = customerService.getAllCustomers();
             model.addAttribute("customers", customers);
             return findPaginated(1, "id", "asc", model);
         }
-        model.addAttribute("lastName", lastName);
-        model.addAttribute("customer", customer);
         return "customers";
     }
 
