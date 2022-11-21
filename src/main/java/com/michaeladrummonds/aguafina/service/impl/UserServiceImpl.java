@@ -36,20 +36,24 @@ public class UserServiceImpl implements UserDetailsService {
         return new CustomUserDetails(user);
     }
 
-    public User saveUser(UserRegistrationDto registrationDto) {
+    public User saveCustomer(UserRegistrationDto registrationDto) {
         User user = new User();
-        user.setFirstName(registrationDto.getFirstName());
-        user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
-        user.setRole("USER");
+        user.setRole("CUSTOMER");
+        return userRepository.save(user);
+    }
+
+    public User saveUser(UserRegistrationDto registrationDto) {
+        User user = new User();
+        user.setEmail(registrationDto.getEmail());
+        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        user.setRole("EMPLOYEE");
         return userRepository.save(user);
     }
 
     public User saveAdmin(UserRegistrationDto registrationDto) {
         User user = new User();
-        user.setFirstName(registrationDto.getFirstName());
-        user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         user.setRole("ADMIN");
