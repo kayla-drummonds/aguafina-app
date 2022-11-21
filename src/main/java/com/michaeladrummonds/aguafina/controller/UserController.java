@@ -39,27 +39,27 @@ public class UserController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/registration/user")
-    public String createNewUser(Model model) {
+    @GetMapping("/registration/customer")
+    public String createNewCustomerUser(Model model) {
         UserRegistrationDto user = new UserRegistrationDto();
         model.addAttribute("user", user);
-        return "registration_user";
+        return "registration_customer";
     }
 
-    @GetMapping("/registration/admin")
-    public String createNewAdmin(Model model) {
+    @GetMapping("/registration/employee")
+    public String createNewEmployeeUser(Model model) {
         UserRegistrationDto user = new UserRegistrationDto();
         model.addAttribute("user", user);
-        return "registration_admin";
+        return "registration_employee";
     }
 
-    @PostMapping("/registration/user")
+    @PostMapping("/registration/customer")
     public String registerUser(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         userService.saveUser(registrationDto);
         return "redirect:/login?success";
     }
 
-    @PostMapping("/registration/admin")
+    @PostMapping("/registration/employee")
     public String registerAdmin(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         userService.saveAdmin(registrationDto);
         return "redirect:/login?success";
@@ -97,13 +97,13 @@ public class UserController {
         return "home";
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<String> defaultPage(Model model) {
-        return new ResponseEntity<>("You have USER role.", HttpStatus.OK);
+    @GetMapping("/user/customer")
+    public ResponseEntity<String> defaultCustomerUserPage(Model model) {
+        return new ResponseEntity<>("You have CUSTOMER USER role.", HttpStatus.OK);
     }
 
-    @GetMapping("/admin")
-    public ResponseEntity<String> getAllBlogs(Model model) {
-        return new ResponseEntity<>("You have ADMIN role.", HttpStatus.OK);
+    @GetMapping("/user/employee")
+    public ResponseEntity<String> defaultEmployeeUserPage(Model model) {
+        return new ResponseEntity<>("You have EMPLOYEE USER role.", HttpStatus.OK);
     }
 }
