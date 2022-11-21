@@ -2,6 +2,7 @@ package com.michaeladrummonds.aguafina.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.michaeladrummonds.aguafina.models.Customer;
@@ -18,4 +19,6 @@ public interface CustomerService {
     Customer updateCustomer(Customer customer);
 
     List<Customer> getCustomerByLastNameContaining(String lastName);
+
+    Page<Customer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 }
