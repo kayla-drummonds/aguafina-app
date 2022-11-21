@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserDetailsService {
         return new CustomUserDetails(user);
     }
 
-    public User saveCustomer(UserRegistrationDto registrationDto) {
+    public User saveCustomerUser(UserRegistrationDto registrationDto) {
         User user = new User();
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public User saveUser(UserRegistrationDto registrationDto) {
+    public User saveEmployeeUser(UserRegistrationDto registrationDto) {
         User user = new User();
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));

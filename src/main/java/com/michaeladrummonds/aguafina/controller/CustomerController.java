@@ -91,6 +91,6 @@ public class CustomerController {
         existingCustomer.setZipCode(customer.getZipCode());
 
         customerService.updateCustomer(existingCustomer);
-        return "redirect:/customers";
+        return "redirect:/home";
     }
 }

@@ -54,12 +54,18 @@ public class UserController {
     }
 
     @PostMapping("/registration/customer")
-    public String registerUser(@ModelAttribute("user") UserRegistrationDto registrationDto) {
-        userService.saveUser(registrationDto);
+    public String registerCustomerUser(@ModelAttribute("user") UserRegistrationDto registrationDto) {
+        userService.saveCustomerUser(registrationDto);
         return "redirect:/login?success";
     }
 
     @PostMapping("/registration/employee")
+    public String registerEmployeeUser(@ModelAttribute("user") UserRegistrationDto registrationDto) {
+        userService.saveEmployeeUser(registrationDto);
+        return "redirect:/login?success";
+    }
+
+    @PostMapping("/registration/admin")
     public String registerAdmin(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         userService.saveAdmin(registrationDto);
         return "redirect:/login?success";

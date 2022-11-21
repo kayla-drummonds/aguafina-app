@@ -33,7 +33,7 @@
 			<ul>
 				<li sec:authorize="hasAnyAuthority('CUSTOMER')">
 					<a th:href="@{/orders/customer/{customer}(customer = ${customer.id})}"
-						>Orders By Customer</a
+						>My Orders</a
 					>
 				</li>
 				<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
@@ -51,6 +51,12 @@
 					<a th:href="@{/customers/edit/{id}(id = ${customer.id})}"
 						>Edit My Information</a
 					>
+				</li>
+				<li sec:authorize="hasAnyAuthority('ADMIN')">
+					<a th:href="@{/employees}">All Employees</a>
+				</li>
+				<li>
+					<a th:href="@{/logout}">Log out</a>
 				</li>
 			</ul>
 		</div>
