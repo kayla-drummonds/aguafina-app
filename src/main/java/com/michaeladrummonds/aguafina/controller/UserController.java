@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.models.UserRegistrationDto;
+import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.UserServiceImpl;
 
 @Controller
@@ -24,8 +26,11 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-    public UserController(UserServiceImpl userService) {
+    private final EmployeeServiceImpl employeeService;
+
+    public UserController(UserServiceImpl userService, EmployeeServiceImpl employeeService) {
         this.userService = userService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/registration/user")
@@ -61,12 +66,22 @@ public class UserController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        return "redirect:/orders";
+        return "redirect:/home";
     }
 
     @GetMapping("/logout-success")
     public String getLogoutPage(Model model) {
         return "logout";
+    }
+
+    @GetMapping("/home")
+    public String getHomePage(Model model, Authentication authentication) {
+        model.addAttribute("authentication", authentication);
+        String username = authentication.getName();
+        Employee employee = employeeService.getEmployeeByEmail(username);
+        model.addAttribute("username", username);
+        model.addAttribute("employee", employee);
+        return "home";
     }
 
     @GetMapping("/user")

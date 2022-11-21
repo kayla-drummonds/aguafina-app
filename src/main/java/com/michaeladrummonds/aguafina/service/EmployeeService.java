@@ -8,8 +8,10 @@ import com.michaeladrummonds.aguafina.models.Employee;
 
 @Component
 public interface EmployeeService {
-    
+
     List<Employee> getAllEmployees();
 
     Employee getEmployeeById(Integer id);
+
+    Employee getEmployeeByEmail(String email);
 }

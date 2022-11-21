@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.michaeladrummonds.aguafina.models.Employee;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+
+    Employee findByEmail(String email);
 
 }

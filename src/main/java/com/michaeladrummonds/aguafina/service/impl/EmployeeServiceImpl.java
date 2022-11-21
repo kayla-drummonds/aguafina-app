@@ -13,11 +13,11 @@ import com.michaeladrummonds.aguafina.service.EmployeeService;
 @Service
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
-    
+
     private final EmployeeRepository employeeRepository;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-	this.employeeRepository = employeeRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -28,6 +28,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeById(Integer id) {
         return employeeRepository.findById(id).get();
+    }
+
+    @Override
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
     }
 
 }
