@@ -1,72 +1,81 @@
 function validateCustomer() {
-    if (document.newCustomerForm.firstName.value == "") {
+    var firstName = document.newCustomerForm.firstName;
+    var lastName = document.newCustomerForm.lastName;
+    var email = document.newCustomerForm.email;
+    var phone = document.newCustomerForm.phone;
+    var address = document.newCustomerForm.address;
+    var city = document.newCustomerForm.city;
+    var state = document.newCustomerForm.state;
+    var zip = document.newCustomerForm.zipCode;
+
+    if (firstName.value == "") {
         alert("Please provide first name.");
-        document.newCustomerForm.firstName.focus();
+        firstName.focus();
         return false;
     } else {
         let firstName = document.getElementById("firstName").value;
     }
 
-    if (document.newCustomerForm.lastName.value == "") {
+    if (lastName.value == "") {
         alert("Please provide last name.");
-        document.newCustomerForm.lastName.focus();
+        lastName.focus();
         return false;
     } else {
         let lastName = document.getElementById("lastName").value;
     }
 
-    if (document.newCustomerForm.email.value == "") {
+    if (email.value == "") {
         alert("Please provide email address.");
-        document.newCustomerForm.email.focus();
+        email.focus();
         return false;
     } else {
-        let emailID = document.newCustomerForm.email.value;
+        let emailID = email.value;
         atpos = emailID.indexOf("@");
         dotpos = emailID.lastIndexOf(".");
         if (atpos < 1 || (dotpos - atpos < 2)) {
             alert("Please enter correct email format.")
-            document.myForm.EMail.focus();
+            email.focus();
             return false;
         } else {
             let email = document.getElementById("email").value;
         }
     }
 
-    if (document.newCustomerForm.phone.value == "") {
+    if (phone.value == "") {
         alert("Please provide phone number.");
-        document.newCustomerForm.phone.focus();
+        phone.focus();
         return false;
     } else {
         let phone = document.getElementById("phone").value;
     }
 
-    if (document.newCustomerForm.address.value == "") {
+    if (address.value == "") {
         alert("Please provide address.");
-        document.newCustomerForm.address.focus();
+        address.focus();
         return false;
     } else {
         let address = document.getElementById("address").value;
     }
 
-    if (document.newCustomerForm.city.value == "") {
+    if (city.value == "") {
         alert("Please provide city.");
-        document.newCustomerForm.city.focus();
+        city.focus();
         return false;
     } else {
         let city = document.getElementById("city").value;
     }
 
-    if (document.newCustomerForm.state.value == "") {
+    if (state.value == "") {
         alert("Please provide state.");
-        document.newCustomerForm.state.focus();
+        state.focus();
         return false;
     } else {
         let state = document.getElementById("state").value;
     }
 
-    if (document.newCustomerForm.zip.value == "" || isNaN(document.newCustomerForm.zip.value) || document.newCustomerForm.zip.value != 5) {
+    if (zip.value == "" || isNaN(zip.value) || zip.value != 5) {
         alert("Please provide 5-digit ZIP code.");
-        document.newCustomerForm.zip.focus();
+        zip.focus();
         return false;
     } else {
         let zip = document.getElementById("zipCode").value;

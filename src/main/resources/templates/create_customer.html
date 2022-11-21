@@ -1,116 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
+		<link rel="stylesheet" th:href="@{/css/styles.css}" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
+			rel="stylesheet" />
+		<title>New Customer</title>
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.10/dist/css/uikit.min.css" />
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap" rel="stylesheet">
-    <title>New Customer</title>
-</head>
+	<body>
+		<header class="navbar">
+			<section class="navbar-section">
+				<a href="#" class="navbar-brand mr-2">Aguafina</a>
+			</section>
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+				<a class="btn btn-link" th:href="@{/orders}">Orders</a>
+			</section>
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+				<a class="btn btn-link active" th:href="@{/customers}">Customers</a>
+			</section>
+			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
+				<a class="btn btn-link" th:href="@{/employees}">Employees</a>
+			</section>
+			<section class="navbar-section">
+				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
+			</section>
+		</header>
 
-<body>
-    <header>
-        <nav class="navbar">
-            <ul>
-                <li class="dropdown" sec:authorize="hasAnyAuthority('ADMIN')">
-                    <a href="#" class="dropbtn">Shop</a>
-                    <div class="dropdown-content">
-                        <a th:href="@{/products}">All Products</a>
-                        <a th:href="@{/products/new}">Add New Product</a>
-                    </div>
-                </li>
-                <li class="dropdown" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-                    <a href="#" class="dropbtn">Orders</a>
-                    <div class="dropdown-content">
-                        <a th:href="@{/orders}">All Orders</a>
-                        <a th:href="@{/orders/new}">Add New Order</a>
-                    </div>
-                </li>
-                <li class="dropdown" sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-                    <a href="#" class="dropbtn">Customers</a>
-                    <div class="dropdown-content">
-                        <a th:href="@{/customers}">All Customers</a>
-                        <a th:href="@{/customers/new}">Add New Customer</a>
-                    </div>
-                </li>
-                <li class="dropdown" sec:authorize="hasAnyAuthority('ADMIN')">
-                    <a href="#" class="dropbtn">Employees</a>
-                    <div class="dropdown-content">
-                        <a th:href="@{/employees}">All Employees</a>
-                        <a th:href="@{/employees/new}">Add New Employee</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <div id="new-customer-form" class="grid-container">
-        <form name="newCustomerForm" class="uk-form-horizontal" th:action="@{/customers}" th:object="${customer}"
-            method="POST" onsubmit="return(validateCustomer());">
-            <h3>Add New Customer</h3>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="firstName">First name:</label>
-                <div class="uk-form-controls">
-                    <input name="firstName" class="uk-input" type="text" th:field="*{firstName}" id="firstName"
-                        placeholder="Enter First Name">
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="lastName">Last Name:</label>
-                <div class="uk-form-controls">
-                    <input name="lastName" class="uk-input" type="text" th:field="*{lastName}" id="lastName"
-                        placeholder="Enter Last Name">
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="email">Email</label>
-                <div class="uk-form-controls">
-                    <input name="email" class="uk-input" type="email" th:field="*{email}" id="email"
-                        placeholder="Enter email">
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="phone">Phone</label>
-                <div class="uk-form-controls">
-                    <input name="phone" class="uk-input" type="tel" th:field="*{phone}" id="phone"
-                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="address">Address</label>
-                <div class="uk-form-controls">
-                    <input name="address" class="uk-input" type="text" th:field="*{address}" id="address"
-                        placeholder="Address">
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="city">City</label>
-                <div class="uk-form-controls">
-                    <input name="city" class="uk-input" type="text" th:field="*{city}" id="city" placeholder="City">
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="state">State</label>
-                <div class="uk-form-controls">
-                    <input name="state" class="uk-input" type="text" th:field="*{state}" id="state" placeholder="State">
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="zipCode">ZIP Code</label>
-                <div class="uk-form-controls">
-                    <input name="zip" class="uk-input" type="text" th:field="*{zipCode}" id="zipCode"
-                        placeholder="ZIP Code">
-                </div>
-            </div>
-            <button class="uk-button" type="submit">Submit</button>
-        </form>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.10/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.10/dist/js/uikit-icons.min.js"></script>
-    <script th:src="@{/js/script.js}"></script>
-</body>
-
+		<div id="new-customer-form" class="container">
+			<form
+				class="form-horizontal px-2"
+				name="newCustomerForm"
+				th:action="@{/customers}"
+				th:object="${customer}"
+				method="POST"
+				onsubmit="return validateCustomer();">
+				<h3>Add New Customer</h3>
+				<div class="columns">
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label form-inline" for="firstName"
+									>First Name:
+								</label>
+							</div>
+							<div class="column col-8">
+								<input
+									name="firstName"
+									class="form-input"
+									type="text"
+									th:field="*{firstName}"
+									id="firstName"
+									placeholder="First Name" />
+							</div>
+						</div>
+					</div>
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label form-inline" for="lastName"
+									>Last Name:</label
+								>
+							</div>
+							<div class="column col-8">
+								<input
+									name="lastName"
+									class="form-input"
+									type="text"
+									th:field="*{lastName}"
+									id="lastName"
+									placeholder="Last Name" />
+							</div>
+						</div>
+					</div>
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label" for="email">Email:</label>
+							</div>
+							<div class="column col-8">
+								<input
+									name="email"
+									class="form-input"
+									type="email"
+									th:field="*{email}"
+									id="email"
+									placeholder="Email" />
+							</div>
+						</div>
+					</div>
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label" for="phone">Phone:</label>
+							</div>
+							<div class="column col-8">
+								<input
+									name="phone"
+									class="form-input"
+									type="tel"
+									th:field="*{phone}"
+									id="phone"
+									pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+									placeholder="###-###-####" />
+							</div>
+						</div>
+					</div>
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label" for="address">Address:</label>
+							</div>
+							<div class="column col-8">
+								<input
+									name="address"
+									class="form-input"
+									type="text"
+									th:field="*{address}"
+									id="address"
+									placeholder="Address" />
+							</div>
+						</div>
+					</div>
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label" for="city">City:</label>
+							</div>
+							<div class="column col-8">
+								<input
+									name="city"
+									class="form-input"
+									type="text"
+									th:field="*{city}"
+									id="city"
+									placeholder="City" />
+							</div>
+						</div>
+					</div>
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label" for="state">State:</label>
+							</div>
+							<div class="column col-8">
+								<input
+									name="state"
+									class="form-input"
+									type="text"
+									th:field="*{state}"
+									id="state"
+									placeholder="State" />
+							</div>
+						</div>
+					</div>
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label" for="zipCode">ZIP Code</label>
+							</div>
+							<div class="column col-8">
+								<input
+									name="zip"
+									class="form-input"
+									type="text"
+									th:field="*{zipCode}"
+									id="zipCode"
+									placeholder="ZIP Code" />
+							</div>
+						</div>
+					</div>
+					<div class="column py-2">
+						<button class="btn" type="submit">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script th:src="@{/js/script.js}"></script>
+	</body>
 </html>

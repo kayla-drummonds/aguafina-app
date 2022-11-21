@@ -28,7 +28,7 @@ public class CustomerController {
     public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
             @RequestParam(value = "lastName", required = false) String lastName) {
 
-        if (lastName != null) {
+        if (!lastName.isEmpty()) {
             List<Customer> customers = customerService.getCustomerByLastNameContaining(lastName);
             model.addAttribute("customers", customers);
         } else {
