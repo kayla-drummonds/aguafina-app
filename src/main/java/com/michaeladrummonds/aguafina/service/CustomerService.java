@@ -14,6 +14,8 @@ public interface CustomerService {
 
     Customer getCustomerById(Integer id);
 
+    Customer getCustomerByEmail(String email);
+
     Customer saveCustomer(Customer customer);
 
     Customer updateCustomer(Customer customer);

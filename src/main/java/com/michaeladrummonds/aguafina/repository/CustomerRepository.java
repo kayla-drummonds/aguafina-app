@@ -11,4 +11,6 @@ import com.michaeladrummonds.aguafina.models.Customer;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     public List<Customer> findCustomerByEmailContaining(String email);
+
+    public Customer findByEmail(String email);
 }

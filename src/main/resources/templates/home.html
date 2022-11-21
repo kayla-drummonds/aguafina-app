@@ -31,20 +31,26 @@
 				<p th:text="${username}"></p>
 			</div>
 			<ul>
+				<li sec:authorize="hasAnyAuthority('CUSTOMER')">
+					<a th:href="@{/orders/customer/{customer}(customer = ${customer.id})}"
+						>Orders By Customer</a
+					>
+				</li>
 				<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 					<a th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
 						>Orders By Employee</a
 					>
 				</li>
-
 				<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 					<a th:href="@{/customers}">All Customers</a>
 				</li>
-				<li sec:authorize="hasAnyAuthority('ADMIN')">
-					<a th:href="@{/employees}">All Employees</a>
-				</li>
 				<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 					<a th:href="@{/orders}">All Orders</a>
+				</li>
+				<li sec:authorize="hasAnyAuthority('CUSTOMER')">
+					<a th:href="@{/customers/edit/{id}(id = ${customer.id})}"
+						>Edit My Information</a
+					>
 				</li>
 			</ul>
 		</div>

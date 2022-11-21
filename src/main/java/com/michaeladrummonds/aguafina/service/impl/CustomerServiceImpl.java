@@ -58,4 +58,9 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findAll(pageable);
     }
 
+    @Override
+    public Customer getCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
 }

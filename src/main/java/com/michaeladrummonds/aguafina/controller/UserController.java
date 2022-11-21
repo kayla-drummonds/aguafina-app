@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.models.UserRegistrationDto;
+import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.UserServiceImpl;
 
@@ -28,9 +30,13 @@ public class UserController {
 
     private final EmployeeServiceImpl employeeService;
 
-    public UserController(UserServiceImpl userService, EmployeeServiceImpl employeeService) {
+    private final CustomerServiceImpl customerService;
+
+    public UserController(UserServiceImpl userService, EmployeeServiceImpl employeeService,
+            CustomerServiceImpl customerService) {
         this.userService = userService;
         this.employeeService = employeeService;
+        this.customerService = customerService;
     }
 
     @GetMapping("/registration/user")
@@ -76,11 +82,18 @@ public class UserController {
 
     @GetMapping("/home")
     public String getHomePage(Model model, Authentication authentication) {
-        model.addAttribute("authentication", authentication);
         String username = authentication.getName();
         Employee employee = employeeService.getEmployeeByEmail(username);
+        Customer customer = customerService.getCustomerByEmail(username);
+
+        if (employee != null) {
+            model.addAttribute("employee", employee);
+        } else {
+            model.addAttribute("customer", customer);
+        }
+
         model.addAttribute("username", username);
-        model.addAttribute("employee", employee);
+        model.addAttribute("authentication", authentication);
         return "home";
     }
 

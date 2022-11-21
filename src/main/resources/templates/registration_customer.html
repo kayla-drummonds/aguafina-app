@@ -14,7 +14,7 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
 			rel="stylesheet" />
-		<title>User Registration</title>
+		<title>Customer Account Registration</title>
 	</head>
 
 	<body>
@@ -24,7 +24,7 @@
 					<!-- success message -->
 					<div th:if="${param.success}">
 						<div class="alert alert-info">
-							You've successfully registered a user account. Please
+							You've successfully registered a customer user account. Please
 							<a th:href="@{/login}">log in.</a>
 						</div>
 					</div>
@@ -32,7 +32,7 @@
 					<h1>User Registration</h1>
 
 					<form
-						th:action="@{/registration/user}"
+						th:action="@{/registration/customer}"
 						method="post"
 						th:object="${user}">
 						<div class="form-group">
