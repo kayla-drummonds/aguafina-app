@@ -44,22 +44,22 @@
 					>Edit My Information</a
 				>
 			</section>
-			<section
-				class="navbar-section"
-				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
-				<a class="btn btn-link active" th:href="@{/customers}">Customers</a>
+			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
+				<a class="btn btn-link" th:href="@{/customers}">Customers</a>
 			</section>
 			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
 				<a class="btn btn-link" th:href="@{/employees}">Employees</a>
 			</section>
-			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 				<a class="btn btn-link" th:href="@{/orders}">All Orders</a>
 			</section>
 			<section
 				class="navbar-section"
 				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 				<a
-					class="btn btn-link"
+					class="btn btn-link active"
 					th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
 					>My Orders</a
 				>
@@ -91,11 +91,7 @@
 						<td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">
 							Creation Date
 						</td>
-						<td>
-							<a
-								th:href="@{/orders/customer/{customer}(customer=${order.customer.id})}"
-								th:text="${order.customer.id}"></a>
-						</td>
+						<td th:text="${order.customer.id}">Customer ID</td>
 						<td th:text="${order.employee.id}">Employee ID</td>
 						<td th:text="${order.product}">Product</td>
 						<td th:text="${order.quantity}">Quantity</td>
