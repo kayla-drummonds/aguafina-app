@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
+		<link rel="stylesheet" th:href="@{/css/styles.css}" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
+			rel="stylesheet" />
+		<title th:text="'Error: Status Code ' + ${status}">Error</title>
+	</head>
+	<body>
+		<div class="empty">
+			<div class="empty-icon">
+				<em class="icon icon-4x icon-stop"></em>
+			</div>
+			<p class="empty-title h5" th:text="'Error: Status Code ' + ${status}">
+				Error Status Code
+			</p>
+			<p class="empty-subtitle" th:text="${message} + '.'">Exception</p>
+			<div class="empty-action">
+				<p th:text="'Exception: ' + ${exception}">Exception</p>
+				<p><code th:text="'Stack Trace: ' + ${trace}">Stack Trace</code></p>
+				<a class="btn" th:href="@{/home}">Return Home</a>
+			</div>
+		</div>
+	</body>
+</html>
