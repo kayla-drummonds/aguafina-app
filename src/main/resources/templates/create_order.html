@@ -1,86 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
+			rel="stylesheet" />
+		<title>New Order</title>
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.10/dist/css/uikit.min.css" />
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap" rel="stylesheet">
-    <title>New Order</title>
-</head>
-
-<body>
-    <header>
-        <nav class="navbar">
-            <ul>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Shop</a>
-                    <div class="dropdown-content">
-                        <a th:href="@{/products}">All Products</a>
-                        <a th:href="@{/products/new}">Add New Product</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Orders</a>
-                    <div class="dropdown-content">
-                        <a th:href="@{/orders}">All Orders</a>
-                        <a th:href="@{/orders/new}">Add New Order</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Customers</a>
-                    <div class="dropdown-content">
-                        <a th:href="@{/customers}">All Customers</a>
-                        <a th:href="@{/customers/new}">Add New Customer</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Employees</a>
-                    <div class="dropdown-content">
-                        <a th:href="@{/employees}">All Employees</a>
-                        <a th:href="@{/employees/new}">Add New Employee</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <div id="new-order-form" class="grid-container">
-        <form class="uk-form-horizontal" th:action="@{/orders}" th:object="${order}" method="POST">
-            <h3>Add New Order</h3>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="customers">Customer ID:</label>
-                <div class="uk-form-controls">
-                    <select class="uk-select" id="customers" th:field="*{customer.id}">
-                        <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.id}">
-                            Customer ID
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="employees">Employee ID:</label>
-                <div class="uk-form-controls">
-                    <select class="uk-select" id="employees" th:field="*{employee.id}">
-                        <option th:each="employee : ${employees}" th:value="${employee.id}" th:text="${employee.id}">
-                            Employee ID
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="uk-margin">
-                <label class="uk-form-label" for="orderDetails">Order Details ID:</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" type="number" th:field="*{orderDetails}" id="orderDetails">
-                </div>
-            </div>
-            <button class="uk-button" type="submit">Submit</button>
-        </form>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.10/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.10/dist/js/uikit-icons.min.js"></script>
-</body>
-
+	<body>
+		<header class="navbar">
+			<section class="navbar-section">
+				<a href="#" class="navbar-brand mr-2">Aguafina</a>
+			</section>
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+				<a class="btn btn-link" th:href="@{/orders}">Orders</a>
+			</section>
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+				<a class="btn btn-link active" th:href="@{/customers}">Customers</a>
+			</section>
+			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
+				<a class="btn btn-link" th:href="@{/employees}">Employees</a>
+			</section>
+			<section class="navbar-section">
+				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
+			</section>
+		</header>
+		<div id="new-order-form" class="container">
+			<form
+				class="form-horizontal px-2"
+				th:action="@{/orders}"
+				th:object="${order}"
+				method="POST"
+				oninput="total.value=parseFloat(p.value)*parseFloat(q.value)">
+				<h3>Add New Order</h3>
+				<div class="columns">
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label form-inline" for="customer">
+									Customer:
+								</label>
+							</div>
+							<div class="column col-8">
+								<select
+									class="form-select"
+									title="customer"
+									th:field="*{customer.id}"
+									id="customer">
+									<option
+										th:each="customer : ${customers}"
+										th:value="${customer.id}"
+										th:text="${customer.id} + ': ' + ${customer.lastName} + ', ' + ${customer.firstName}">
+										Customer ID: Last, First
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="column col-12 py-2">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label form-label-inline" for="employee"
+									>Employee ID:
+								</label>
+							</div>
+							<div class="column col-8">
+								<select
+									class="form-select"
+									title="employee"
+									th:field="*{employee.id}"
+									id="employee">
+									<option
+										th:each="employee : ${employees}"
+										th:value="${employee.id}"
+										th:text="${employee.id}">
+										Employee ID
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="column col-12">
+						<div class="form-group">
+							<div class="column col-4">
+								<label class="form-label form-label-inline" for="product"
+									>Product:
+								</label>
+							</div>
+							<div class="column col-8">
+								<select
+									class="form-select"
+									title="product"
+									id="product"
+									name="product"
+									th:field="*{product}">
+									<option value="" selected>--Select Variety--</option>
+									<option th:value="MWBLU20">Blueberry 20 oz.</option>
+									<option th:value="MWBLU32">Blueberry 32 oz.</option>
+									<option th:value="MWCRA20">Cranberry 20 oz.</option>
+									<option th:value="MWCRA32">Cranberry 32 oz.</option>
+									<option th:value="MWMAN20">Mango 20 oz.</option>
+									<option th:value="MWMAN32">Mango 32 oz.</option>
+									<option th:value="MWPEA20">Peach 20 oz.</option>
+									<option th:value="MWPEA32">Peach 32 oz.</option>
+									<option th:value="MWSTR20">Strawberry 20 oz.</option>
+									<option th:value="MWSTR32">Strawberry 20 oz.</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="column col-">
+						<div class="col">
+							<div class="row">
+								<label class="col-4 col-form-label" for="q">Quantity:</label>
+								<div class="col-8">
+									<input class="form-control" type="number" name="q" id="q" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col">
+							<div class="row">
+								<label class="col-4 col-form-label" for="p">Price:</label>
+								<div class="col-8">
+									<input class="form-control" type="number" name="p" id="p" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col">
+							<div class="row">
+								<output name="calcTotal" for="p q"></output>
+								<label class="col-4 col-form-label" for="total">Total:</label>
+								<div class="col-8">
+									<input
+										class="form-control"
+										type="number"
+										name="total"
+										id="total"
+										readonly />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button class="uk-button" type="submit">Submit</button>
+			</form>
+		</div>
+	</body>
 </html>
