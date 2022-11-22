@@ -1,12 +1,12 @@
 function validateCustomer() {
-    var firstName = document.newCustomerForm.firstName;
-    var lastName = document.newCustomerForm.lastName;
-    var email = document.newCustomerForm.email;
-    var phone = document.newCustomerForm.phone;
-    var address = document.newCustomerForm.address;
-    var city = document.newCustomerForm.city;
-    var state = document.newCustomerForm.state;
-    var zip = document.newCustomerForm.zipCode;
+    let firstName = document.newCustomerForm.firstName;
+    let lastName = document.newCustomerForm.lastName;
+    let email = document.newCustomerForm.email;
+    let phone = document.newCustomerForm.phone;
+    let address = document.newCustomerForm.address;
+    let city = document.newCustomerForm.city;
+    let state = document.newCustomerForm.state;
+    let zip = document.newCustomerForm.zipCode;
 
     if (firstName.value == "") {
         alert("Please provide first name.");

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.michaeladrummonds.aguafina.models.Customer;
+import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
+import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 
 @Controller
 @RequestMapping
@@ -23,10 +26,19 @@ public class CustomerController {
     @Autowired
     private CustomerServiceImpl customerService;
 
+    @Autowired
+    private EmployeeServiceImpl employeeService;
+
     // displays all customers
     @GetMapping("/customers")
-    public String listCustomers(@ModelAttribute("customer") Customer customer, Model model,
-            @RequestParam(value = "email", required = false) String email) {
+    public String listCustomers(Model model,
+            @RequestParam(value = "email", required = false) String email,
+            @ModelAttribute("authentication") Authentication authentication) {
+
+        String username = authentication.getName();
+        Employee employee = employeeService.getEmployeeByEmail(username);
+
+        model.addAttribute("employee", employee);
 
         if (email != null) {
             List<Customer> customers = customerService.getCustomerByEmailContaining(email);
