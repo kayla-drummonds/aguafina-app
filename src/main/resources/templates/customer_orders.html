@@ -72,11 +72,10 @@
 			<div class="hero-body" th:object="${customer}">
 				<div class="columns">
 					<div class="column">
-						<div class="h3 text-uppercase text-center"
-							th:text="${customer.firstName} + ' ' + ${customer.lastName}"></div>
 						<div
-							class="h4 text-center"
-							th:text="${customer.id}"></div>
+							class="h3 text-uppercase text-center"
+							th:text="${customer.firstName} + ' ' + ${customer.lastName}"></div>
+						<div class="h4 text-center" th:text="${customer.id}"></div>
 					</div>
 					<div class="divider-vert"></div>
 					<div class="column">
@@ -87,7 +86,8 @@
 							<dd th:text="${customer.phone}"></dd>
 							<dt>Address:</dt>
 							<dd th:text="${customer.address}"></dd>
-							<dd th:text="${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}">
+							<dd
+								th:text="${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}"></dd>
 						</dl>
 					</div>
 					<div class="divider-vert"></div>
@@ -96,42 +96,39 @@
 							<dt>Orders:</dt>
 							<dd th:text="${customer.orders.size()}"></dd>
 							<dt>Grand Total:</dt>
-							<dd th:object="${total}"
-							th:text="${#numbers.formatCurrency(total.doubleValue)}"></dd>
+							<dd
+								th:object="${total}"
+								th:text="${#numbers.formatCurrency(total.doubleValue)}"></dd>
 						</dl>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="container">
-				
-		</div>
-			<div class="table-responsive-md" id="orders">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th scope="col">Order ID</th>
-							<th scope="col">Creation date</th>
-							<th scope="col">Employee ID</th>
-							<th scope="col">Product Code</th>
-							<th scope="col">Quantity</th>
-							<th scope="col">Total</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="order: ${ordersByCustomer}">
-							<td th:text="${order.id}">Order ID</td>
-							<td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">
-								Creation Date
-							</td>
-							<td th:text="${order.employee.id}">Employee ID</td>
-							<td th:text="${order.product}">Product Code</td>
-							<td th:text="${order.quantity}">Quantity</td>
-							<td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		<div class="table-responsive-md" id="orders">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Order ID</th>
+						<th scope="col">Creation date</th>
+						<th scope="col">Employee ID</th>
+						<th scope="col">Product Code</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="order: ${ordersByCustomer}">
+						<td th:text="${order.id}">Order ID</td>
+						<td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">
+							Creation Date
+						</td>
+						<td th:text="${order.employee.id}">Employee ID</td>
+						<td th:text="${order.product}">Product Code</td>
+						<td th:text="${order.quantity}">Quantity</td>
+						<td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</body>
 </html>

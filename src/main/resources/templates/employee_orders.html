@@ -78,11 +78,9 @@
 						<th scope="col">Order ID</th>
 						<th scope="col">Creation date</th>
 						<th scope="col">Customer ID</th>
-						<th scope="col">Employee ID</th>
 						<th scope="col">Product</th>
 						<th scope="col">Quantity</th>
 						<th scope="col">Total</th>
-						<th scope="col">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -92,18 +90,9 @@
 							Creation Date
 						</td>
 						<td th:text="${order.customer.id}">Customer ID</td>
-						<td th:text="${order.employee.id}">Employee ID</td>
 						<td th:text="${order.product}">Product</td>
 						<td th:text="${order.quantity}">Quantity</td>
 						<td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
-						<td>
-							<a
-								th:href="@{/orders/{id}(id=${order.id})}"
-								class="btn"
-								id="delete-button"
-								>Delete</a
-							>
-						</td>
 					</tr>
 				</tbody>
 			</table>
