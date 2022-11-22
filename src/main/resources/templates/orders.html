@@ -1,95 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
+		<link rel="stylesheet" th:href="@{/css/styles.css}" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
+			rel="stylesheet" />
+		<title>Orders</title>
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap" rel="stylesheet">
-    <title>Orders</title>
-</head>
-
-<body>
-    <header class="navbar">
-        <section class="navbar-section">
-            <a href="..." class="navbar-brand mr-2">Aguafina</a>
-        </section>
-        <section class="navbar-section">
-            <div class="dropdown">
-                <div class="btn-group">
-                    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0"
-                        sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-                        Orders
-                    </a>
-                    <ul class="menu">
-                        <li><a class="btn btn-link" th:href="@{/orders}">All Orders</a></li>
-                        <li><a class="btn btn-link" th:href="@{/orders/new}">New Order</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <section class="navbar-section">
-            <a class="btn btn-link" th:href="@{/customers}">Customers</a>
-            <div class="dropdown">
-                <div class="btn-group">
-                    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0"
-                        sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
-                        Customers
-                    </a>
-                    <ul class="menu">
-                        <li><a class="btn btn-link" th:href="@{/customers}">All Customers</a></li>
-                        <li><a class="btn btn-link" th:href="@{/customers/new}">New Customer</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <section class="navbar-section">
-            <a class="btn btn-link" th:href="@{/employees}" sec:authorize="hasAnyAuthority('ADMIN')">Employees</a>
-        </section>
-        <section class="navbar-section">
-            <a class="btn btn-link" th:href="@{/logout}">Log Out</a>
-        </section>
-    </header>
-    <a class="btn" th:href="@{/orderdetails/new}" id="create-button">Create New
-        Order</a>
-    <div class="table-responsive-md" id="orders">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">Creation date</th>
-                    <th scope="col">Customer ID</th>
-                    <th scope="col">Employee ID</th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="order: ${orders}">
-                    <td th:text="${order.id}">Order ID</td>
-                    <td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">Creation Date</td>
-                    <td>
-                        <a th:href="@{/orders/customer/{customer}(customer=${order.customer.id})}"
-                            th:text="${order.customer.id}"></a>
-                    </td>
-                    <td th:text="${order.employee.id}">Employee ID</td>
-                    <td th:text="${order.product}">Product</td>
-                    <td th:text="${order.quantity}">Quantity</td>
-                    <td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
-                    <td>
-                        <a th:href="@{/orders/{id}(id=${order.id})}" class="btn" id="delete-button">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</body>
-
+	<body>
+		<header class="navbar">
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE', 'CUSTOMER')">
+				<a class="btn btn-link" th:href="@{/home}">Home</a>
+			</section>
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('CUSTOMER')">
+				<a
+					th:href="@{/orders/customer/{customer}(customer = ${customer.id})}"
+					class="btn btn-link"
+					>My Orders</a
+				>
+			</section>
+			<section sec:authorize="hasAnyAuthority('CUSTOMER')">
+				<a
+					th:href="@{/customers/edit/{id}(id = ${customer.id})}"
+					class="btn btn-link"
+					>Edit My Information</a
+				>
+			</section>
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+				<a class="btn btn-link" th:href="@{/customers}">Customers</a>
+			</section>
+			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
+				<a class="btn btn-link" th:href="@{/employees}">Employees</a>
+			</section>
+			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
+				<a class="btn btn-link active" th:href="@{/orders}">All Orders</a>
+			</section>
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+				<a
+					class="btn btn-link"
+					th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
+					>My Orders</a
+				>
+			</section>
+			<section class="navbar-section">
+				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
+			</section>
+		</header>
+		<a class="btn" th:href="@{/orders/new}" id="create-button"
+			>Create New Order</a
+		>
+		<div class="table-responsive-md" id="orders">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Order ID</th>
+						<th scope="col">Creation date</th>
+						<th scope="col">Customer ID</th>
+						<th scope="col">Employee ID</th>
+						<th scope="col">Product</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Total</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="order: ${orders}">
+						<td th:text="${order.id}">Order ID</td>
+						<td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">
+							Creation Date
+						</td>
+						<td>
+							<a
+								th:href="@{/orders/customer/{customer}(customer=${order.customer.id})}"
+								th:text="${order.customer.id}"></a>
+						</td>
+						<td th:text="${order.employee.id}">Employee ID</td>
+						<td th:text="${order.product}">Product</td>
+						<td th:text="${order.quantity}">Quantity</td>
+						<td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
+						<td>
+							<a
+								th:href="@{/orders/{id}(id=${order.id})}"
+								class="btn"
+								id="delete-button"
+								>Delete</a
+							>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
 </html>
