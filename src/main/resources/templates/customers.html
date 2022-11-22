@@ -55,12 +55,16 @@
 			<section
 				class="navbar-section"
 				sec:authorize="hasAnyAuthority('CUSTOMER')">
-				<a th:href="@{/orders/customer/{customer}(customer = ${customer.id})}"
+				<a
+					th:href="@{/orders/customer/{customer}(customer = ${customer.id})}"
+					class="btn btn-link"
 					>My Orders</a
 				>
 			</section>
 			<section sec:authorize="hasAnyAuthority('CUSTOMER')">
-				<a th:href="@{/customers/edit/{id}(id = ${customer.id})}"
+				<a
+					th:href="@{/customers/edit/{id}(id = ${customer.id})}"
+					class="btn btn-link"
 					>Edit My Information</a
 				>
 			</section>
@@ -73,12 +77,14 @@
 				<a class="btn btn-link" th:href="@{/employees}">Employees</a>
 			</section>
 			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
-				<a th:href="@{/orders}">All Orders</a>
+				<a class="btn btn-link" th:href="@{/orders}">All Orders</a>
 			</section>
 			<section
 				class="navbar-section"
 				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
-				<a th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
+				<a
+					class="btn btn-link"
+					th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
 					>My Orders</a
 				>
 			</section>

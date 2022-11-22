@@ -32,8 +32,7 @@ public class CustomerController {
     // displays all customers
     @GetMapping("/customers")
     public String listCustomers(Model model,
-            @RequestParam(value = "email", required = false) String email,
-            @ModelAttribute("authentication") Authentication authentication) {
+            @RequestParam(value = "email", required = false) String email, Authentication authentication) {
 
         String username = authentication.getName();
         Employee employee = employeeService.getEmployeeByEmail(username);
@@ -48,14 +47,19 @@ public class CustomerController {
             List<Customer> customers = customerService.getAllCustomers();
             model.addAttribute("customers", customers);
             model.addAttribute("email", email);
-            return findPaginated(1, "id", "asc", model);
+            return findPaginated(1, "id", "asc", model, authentication);
         }
         return "customers";
     }
 
     @GetMapping("/customers/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField,
-            @RequestParam("sortDir") String sortDir, Model model) {
+            @RequestParam("sortDir") String sortDir, Model model, Authentication authentication) {
+
+        String username = authentication.getName();
+        Employee employee = employeeService.getEmployeeByEmail(username);
+        model.addAttribute("employee", employee);
+
         int pageSize = 12;
         Page<Customer> page = customerService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Customer> customers = page.getContent();
