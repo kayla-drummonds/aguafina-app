@@ -131,7 +131,12 @@
 							<div class="row">
 								<label class="col-4 col-form-label" for="q">Quantity:</label>
 								<div class="col-8">
-									<input class="form-control" type="number" name="q" id="q" />
+									<input
+										class="form-control"
+										type="number"
+										name="q"
+										id="q"
+										th:field="*{quantity}" />
 								</div>
 							</div>
 						</div>
@@ -157,13 +162,14 @@
 										type="number"
 										name="total"
 										id="total"
+										th:field="*{total}"
 										readonly />
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<button class="uk-button" type="submit">Submit</button>
+				<button class="btn" type="submit">Submit</button>
 			</form>
 		</div>
 	</body>
