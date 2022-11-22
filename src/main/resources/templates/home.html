@@ -23,42 +23,58 @@
 
 	<body>
 		<div class="container">
-			Welcome! Choose one of the options below.
-			<div sec:authorize="isAuthenticated()">
-				Authenticated as <span sec:authentication="name"></span>
+			<div class="empty">
+				<p class="empty-title h5" th:text="'Welcome, ' + ${username} + '!'"></p>
+				<p class="empty-subtitle">
+					Please choose one of the following options:
+				</p>
+				<div class="empty-action">
+					<ul class="menu">
+						<li
+							class="divider"
+							data-content="CUSTOMER"
+							sec:authorize="hasAnyAuthority('CUSTOMER')"></li>
+						<li class="menu-item" sec:authorize="hasAnyAuthority('CUSTOMER')">
+							<a
+								th:href="@{/orders/customer/{customer}(customer = ${customer.id})}"
+								>View My Orders</a
+							>
+						</li>
+						<li sec:authorize="hasAnyAuthority('CUSTOMER')">
+							<a th:href="@{/customers/edit/{id}(id = ${customer.id})}"
+								>Edit My Information</a
+							>
+						</li>
+						<li
+							class="divider"
+							data-content="EMPLOYEE"
+							sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')"></li>
+						<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+							<a
+								th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
+								>View My Orders</a
+							>
+						</li>
+						<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+							<a th:href="@{/customers}">View All Customers</a>
+						</li>
+						<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+							<a th:href="@{/orders}">View All Orders</a>
+						</li>
+						<li
+							class="divider"
+							data-content="ADMIN"
+							sec:authorize="hasAnyAuthority('ADMIN')"></li>
+						<li sec:authorize="hasAnyAuthority('ADMIN')">
+							<a th:href="@{/employees}">View All Employees</a>
+						</li>
+						<li class="divider"></li>
+						<li sec:authorization="isAuthenticated()">
+							<a th:href="@{/logout}">Log out</a>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<div>
-				<p th:text="${username}"></p>
-			</div>
-			<ul>
-				<li sec:authorize="hasAnyAuthority('CUSTOMER')">
-					<a th:href="@{/orders/customer/{customer}(customer = ${customer.id})}"
-						>My Orders</a
-					>
-				</li>
-				<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
-					<a th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
-						>Orders By Employee</a
-					>
-				</li>
-				<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
-					<a th:href="@{/customers}">All Customers</a>
-				</li>
-				<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
-					<a th:href="@{/orders}">All Orders</a>
-				</li>
-				<li sec:authorize="hasAnyAuthority('CUSTOMER')">
-					<a th:href="@{/customers/edit/{id}(id = ${customer.id})}"
-						>Edit My Information</a
-					>
-				</li>
-				<li sec:authorize="hasAnyAuthority('ADMIN')">
-					<a th:href="@{/employees}">All Employees</a>
-				</li>
-				<li>
-					<a th:href="@{/logout}">Log out</a>
-				</li>
-			</ul>
 		</div>
 	</body>
 </html>
