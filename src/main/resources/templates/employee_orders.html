@@ -44,7 +44,9 @@
 					>Edit My Information</a
 				>
 			</section>
-			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
+			<section
+				class="navbar-section"
+				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 				<a class="btn btn-link" th:href="@{/customers}">Customers</a>
 			</section>
 			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
@@ -68,9 +70,39 @@
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
 		</header>
-		<a class="btn" th:href="@{/orders/new}" id="create-button"
-			>Create New Order</a
-		>
+		<div class="hero hero-sm bg-gray">
+			<div class="hero-body" th:object="${employee}">
+				<div class="columns">
+					<div class="column">
+						<div
+							class="h3 text-uppercase text-center"
+							th:text="${employee.firstName} + ' ' + ${employee.lastName}"></div>
+						<div class="h4 text-center" th:text="${employee.id}"></div>
+					</div>
+					<div class="divider-vert"></div>
+					<div class="column">
+						<dl>
+							<dt>Email:</dt>
+							<dd th:text="${employee.email}"></dd>
+							<dt>Address:</dt>
+							<dd th:text="${employee.address}"></dd>
+							<dd
+								th:text="${employee.city} + ', ' + ${employee.state} + ' ' + ${employee.zipCode}"></dd>
+						</dl>
+					</div>
+					<div class="divider-vert"></div>
+					<div class="column">
+						<dl>
+							<dt>Orders:</dt>
+							<dd th:text="${employee.orders.size()}"></dd>
+						</dl>
+						<a class="btn" th:href="@{/orders/new}" id="create-button"
+							>Create New Order</a
+						>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="table-responsive-md" id="orders">
 			<table class="table table-hover">
 				<thead>
