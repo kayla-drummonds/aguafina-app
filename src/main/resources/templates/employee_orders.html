@@ -78,6 +78,20 @@
 							class="h3 text-uppercase text-center"
 							th:text="${employee.firstName} + ' ' + ${employee.lastName}"></div>
 						<div class="h4 text-center" th:text="${employee.id}"></div>
+						<div class="d-invisible"><p>Invisible placeholder</p></div>
+						<div class="text-center" th:switch="${employee.orders.size}">
+							<h5
+								th:case="'1'"
+								th:text="${employee.orders.size} + ' order'"></h5>
+							<h5
+								th:case="'*'"
+								th:text="${employee.orders.size} + ' orders"></h5>
+						</div>
+						<div class="text-center">
+							<a class="btn" th:href="@{/orders/new}" id="create-button"
+								>Create New Order</a
+							>
+						</div>
 					</div>
 					<div class="divider-vert"></div>
 					<div class="column">
@@ -89,16 +103,6 @@
 							<dd
 								th:text="${employee.city} + ', ' + ${employee.state} + ' ' + ${employee.zipCode}"></dd>
 						</dl>
-					</div>
-					<div class="divider-vert"></div>
-					<div class="column">
-						<dl>
-							<dt>Orders:</dt>
-							<dd th:text="${employee.orders.size()}"></dd>
-						</dl>
-						<a class="btn" th:href="@{/orders/new}" id="create-button"
-							>Create New Order</a
-						>
 					</div>
 				</div>
 			</div>
