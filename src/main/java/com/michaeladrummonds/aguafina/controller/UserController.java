@@ -3,8 +3,6 @@ package com.michaeladrummonds.aguafina.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -65,12 +63,6 @@ public class UserController {
         return "redirect:/login?success";
     }
 
-    @PostMapping("/registration/admin")
-    public String registerAdmin(@ModelAttribute("user") UserRegistrationDto registrationDto) {
-        userService.saveAdmin(registrationDto);
-        return "redirect:/login?success";
-    }
-
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpSession session) {
         session.setAttribute("SPRING_SECURITY_LAST_EXCEPTION", request);
@@ -79,11 +71,6 @@ public class UserController {
             return "login";
         }
         return "redirect:/home";
-    }
-
-    @GetMapping("/logout-success")
-    public String getLogoutPage(Model model) {
-        return "logout";
     }
 
     @GetMapping("/home")
@@ -103,13 +90,4 @@ public class UserController {
         return "home";
     }
 
-    @GetMapping("/user/customer")
-    public ResponseEntity<String> defaultCustomerUserPage(Model model) {
-        return new ResponseEntity<>("You have CUSTOMER USER role.", HttpStatus.OK);
-    }
-
-    @GetMapping("/user/employee")
-    public ResponseEntity<String> defaultEmployeeUserPage(Model model) {
-        return new ResponseEntity<>("You have EMPLOYEE USER role.", HttpStatus.OK);
-    }
 }
