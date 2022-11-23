@@ -5,62 +5,82 @@
 		<meta name="viewport" content="width=device-width" />
 		<link
 			rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-			integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-			crossorigin="anonymous" />
+			href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
 		<link rel="stylesheet" th:href="@{/css/styles.css}" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
 			rel="stylesheet" />
+		<style>
+			#employee-register-container {
+				background-color: #135c9e;
+				color: #e3e3e3;
+			}
+
+			#employee-register-container h3 {
+				color: #e3e3e3;
+			}
+		</style>
 		<title>Employee Account Registration</title>
 	</head>
 
 	<body>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
-					<!-- success message -->
-					<div th:if="${param.success}">
-						<div class="alert alert-info">
-							You've successfully registered an employee user account. Please
-							<a th:href="@{/login}">log in.</a>
-						</div>
-					</div>
-
-					<h1>Registration</h1>
-
+		<div class="container py-2 px-2">
+			<div
+				class="card p-centered col-6 col-sm-12 px-2 py-2"
+				id="employee-register-container">
+				<div class="card-header">
+					<h3 class="card-title text-center">Employee Account Registration</h3>
+				</div>
+				<div class="card-body">
 					<form
+						class="form-horizontal px-2 s-rounded"
 						th:action="@{/registration/employee}"
 						method="post"
 						th:object="${user}">
-						<div class="form-group">
-							<label class="control-label" for="email"> Email </label>
-							<input
-								id="email"
-								class="form-control"
-								th:field="*{email}"
-								required
-								autofocus="autofocus" />
+						<div class="columns">
+							<div class="column col-12 py-2">
+								<div class="form-group">
+									<div class="column col-4">
+										<label class="form-label form-label-inline" for="email">
+											Email
+										</label>
+									</div>
+									<div class="column col-8">
+										<input
+											id="email"
+											class="form-input"
+											th:field="*{email}"
+											required />
+									</div>
+								</div>
+							</div>
+							<div class="column col-12 py-2">
+								<div class="form-group">
+									<div class="column col-4">
+										<label class="form-label form-label-inline" for="password">
+											Password
+										</label>
+									</div>
+									<div class="column col-8">
+										<input
+											id="password"
+											class="form-control"
+											type="password"
+											th:field="*{password}"
+											required />
+									</div>
+								</div>
+							</div>
 						</div>
-
-						<div class="form-group">
-							<label class="control-label" for="password"> Password </label>
-							<input
-								id="password"
-								class="form-control"
-								type="password"
-								th:field="*{password}"
-								required
-								autofocus="autofocus" />
-						</div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-success">Register</button>
-							<span
-								>Already registered? <a th:href="@{/login}">Login here</a></span
-							>
-						</div>
+						<button type="submit" class="btn btn-success">Register</button>
 					</form>
 				</div>
 			</div>
