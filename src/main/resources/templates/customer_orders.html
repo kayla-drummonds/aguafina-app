@@ -18,6 +18,12 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
 			rel="stylesheet" />
+		<style>
+			.hero-body {
+				background-color: #afc1d2;
+				color: #e3e3e3;
+			}
+		</style>
 		<title>Customer Orders</title>
 	</head>
 
@@ -68,38 +74,40 @@
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
 		</header>
-		<div class="hero hero-sm bg-gray">
-			<div class="hero-body" th:object="${customer}">
-				<div class="columns">
-					<div class="column">
-						<div
-							class="h3 text-uppercase text-center"
-							th:text="${customer.firstName} + ' ' + ${customer.lastName}"></div>
-						<div class="h4 text-center" th:text="${customer.id}"></div>
-					</div>
-					<div class="divider-vert"></div>
-					<div class="column">
-						<dl>
-							<dt>Email:</dt>
-							<dd th:text="${customer.email}"></dd>
-							<dt>Phone:</dt>
-							<dd th:text="${customer.phone}"></dd>
-							<dt>Address:</dt>
-							<dd th:text="${customer.address}"></dd>
-							<dd
-								th:text="${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}"></dd>
-						</dl>
-					</div>
-					<div class="divider-vert"></div>
-					<div class="column">
-						<dl>
-							<dt>Orders:</dt>
-							<dd th:text="${customer.orders.size()}"></dd>
-							<dt>Grand Total:</dt>
-							<dd
-								th:object="${total}"
-								th:text="${#numbers.formatCurrency(total.doubleValue)}"></dd>
-						</dl>
+		<div class="container">
+			<div class="hero hero-sm">
+				<div class="hero-body" th:object="${customer}">
+					<div class="columns">
+						<div class="column">
+							<div
+								class="h3 text-uppercase text-center"
+								th:text="${customer.firstName} + ' ' + ${customer.lastName}"></div>
+							<div class="h4 text-center" th:text="${customer.id}"></div>
+						</div>
+						<div class="divider-vert"></div>
+						<div class="column">
+							<dl>
+								<dt>Email:</dt>
+								<dd th:text="${customer.email}"></dd>
+								<dt>Phone:</dt>
+								<dd th:text="${customer.phone}"></dd>
+								<dt>Address:</dt>
+								<dd th:text="${customer.address}"></dd>
+								<dd
+									th:text="${customer.city} + ', ' + ${customer.state} + ' ' + ${customer.zipCode}"></dd>
+							</dl>
+						</div>
+						<div class="divider-vert"></div>
+						<div class="column">
+							<dl>
+								<dt>Orders:</dt>
+								<dd th:text="${customer.orders.size()}"></dd>
+								<dt>Grand Total:</dt>
+								<dd
+									th:object="${total}"
+									th:text="${#numbers.formatCurrency(total.doubleValue)}"></dd>
+							</dl>
+						</div>
 					</div>
 				</div>
 			</div>
