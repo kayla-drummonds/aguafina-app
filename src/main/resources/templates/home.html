@@ -18,6 +18,16 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
 			rel="stylesheet" />
+		<style>
+			.empty {
+				background-color: #135c9e;
+				color: white;
+			}
+
+			.empty-action ul li a {
+				color: #135c9e;
+			}
+		</style>
 		<title>Home</title>
 	</head>
 
@@ -76,5 +86,6 @@
 				</div>
 			</div>
 		</div>
+		<div th:insert="~{footer :: copy}"></div>
 	</body>
 </html>
