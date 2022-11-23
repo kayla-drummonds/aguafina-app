@@ -27,6 +27,10 @@
 			#employee-register-container h3 {
 				color: #e3e3e3;
 			}
+
+			label {
+				color: #135c9e;
+			}
 		</style>
 		<title>Employee Account Registration</title>
 	</head>
@@ -50,7 +54,7 @@
 								<div class="form-group">
 									<div class="column col-4">
 										<label class="form-label form-label-inline" for="email">
-											Email
+											Email:
 										</label>
 									</div>
 									<div class="column col-8">
@@ -66,13 +70,13 @@
 								<div class="form-group">
 									<div class="column col-4">
 										<label class="form-label form-label-inline" for="password">
-											Password
+											Password:
 										</label>
 									</div>
 									<div class="column col-8">
 										<input
 											id="password"
-											class="form-control"
+											class="form-input"
 											type="password"
 											th:field="*{password}"
 											required />
@@ -80,7 +84,9 @@
 								</div>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-success">Register</button>
+						<button type="submit" class="btn btn-success p-centered">
+							Register
+						</button>
 					</form>
 				</div>
 			</div>
