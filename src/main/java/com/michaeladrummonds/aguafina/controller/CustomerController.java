@@ -91,7 +91,13 @@ public class CustomerController {
     @GetMapping("/customers/edit/{id}")
     public String editCustomer(@PathVariable Integer id, Model model) {
         model.addAttribute("customer", customerService.getCustomerById(id));
-        return "edit_customer";
+
+        if (customerService.getCustomerById(id) != null) {
+            return "edit_customer";
+        } else {
+            return "error";
+        }
+
     }
 
     @PostMapping("/customers/{id}")
