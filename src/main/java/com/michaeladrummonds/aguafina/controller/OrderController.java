@@ -63,6 +63,7 @@ public class OrderController {
 
     @GetMapping("/orders/{id}")
     public String deleteOrderById(@PathVariable Integer id) {
+
         orderService.deleteOrderById(id);
         return "redirect:/orders";
     }
