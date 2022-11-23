@@ -24,15 +24,16 @@
 				color: white;
 			}
 
-			.empty-action ul li a {
+			.menu-item {
 				color: #135c9e;
+				background-color: white;
 			}
 		</style>
 		<title>Home</title>
 	</head>
 
 	<body>
-		<div class="container">
+		<div class="container pt-2">
 			<div class="empty">
 				<p class="empty-title h5" th:text="'Welcome, ' + ${username} + '!'"></p>
 				<p class="empty-subtitle">
@@ -50,7 +51,7 @@
 								>View My Orders</a
 							>
 						</li>
-						<li sec:authorize="hasAnyAuthority('CUSTOMER')">
+						<li class="menu-item" sec:authorize="hasAnyAuthority('CUSTOMER')">
 							<a th:href="@{/customers/edit/{id}(id = ${customer.id})}"
 								>Edit My Information</a
 							>
@@ -59,27 +60,33 @@
 							class="divider"
 							data-content="EMPLOYEE"
 							sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')"></li>
-						<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+						<li
+							class="menu-item"
+							sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 							<a
 								th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
 								>View My Orders</a
 							>
 						</li>
-						<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+						<li
+							class="menu-item"
+							sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 							<a th:href="@{/customers}">View All Customers</a>
 						</li>
-						<li sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+						<li
+							class="menu-item"
+							sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 							<a th:href="@{/orders}">View All Orders</a>
 						</li>
 						<li
 							class="divider"
 							data-content="ADMIN"
 							sec:authorize="hasAnyAuthority('ADMIN')"></li>
-						<li sec:authorize="hasAnyAuthority('ADMIN')">
+						<li class="menu-item" sec:authorize="hasAnyAuthority('ADMIN')">
 							<a th:href="@{/employees}">View All Employees</a>
 						</li>
 						<li class="divider"></li>
-						<li sec:authorization="isAuthenticated()">
+						<li class="menu-item" sec:authorization="isAuthenticated()">
 							<a th:href="@{/logout}">Log out</a>
 						</li>
 					</ul>
