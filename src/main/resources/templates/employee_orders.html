@@ -80,7 +80,6 @@
 						<div class="h4 text-center" th:text="${employee.id}"></div>
 						<div class="d-invisible"><p>Invisible placeholder</p></div>
 						<div class="text-center" th:switch="${employee.orders.size}">
-							<h5 th:case="'0'" th:text="'No orders'"></h5>
 							<h5
 								th:case="'1'"
 								th:text="${employee.orders.size} + ' order'"></h5>
