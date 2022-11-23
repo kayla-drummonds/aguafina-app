@@ -16,8 +16,6 @@ public interface CustomerService {
 
     Customer getCustomerByEmail(String email);
 
-    Customer saveCustomer(Customer customer);
-
     Customer updateCustomer(Customer customer);
 
     List<Customer> getCustomerByEmailContaining(String email);

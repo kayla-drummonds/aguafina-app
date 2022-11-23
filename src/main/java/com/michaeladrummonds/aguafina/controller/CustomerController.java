@@ -73,21 +73,6 @@ public class CustomerController {
         return "customers";
     }
 
-    // displays the form to construct a new customer object
-    @GetMapping("/customers/new")
-    public String createNewCustomer(Model model) {
-        Customer customer = new Customer();
-        model.addAttribute("customer", customer);
-        return "create_customer";
-    }
-
-    // saves the new customer object and redirects to the customers page
-    @PostMapping("/customers")
-    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
-        customerService.saveCustomer(customer);
-        return "redirect:/customers";
-    }
-
     @GetMapping("/customers/edit/{id}")
     public String editCustomer(@PathVariable Integer id, Model model) {
         model.addAttribute("customer", customerService.getCustomerById(id));
