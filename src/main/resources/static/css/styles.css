@@ -40,10 +40,6 @@ body {
 	background-color: #afc1d2;
 }
 
-.row {
-	text-align: center;
-}
-
 /* button properties */
 #update-button {
 	background-color: #135c9eff;
@@ -85,9 +81,6 @@ body {
 }
 
 /* global form properties */
-.uk-input {
-	width: 250px;
-}
 
 form {
 	margin: auto;
@@ -99,15 +92,6 @@ form {
 h3 {
 	text-align: center;
 	color: #477eaf;
-}
-
-.uk-form-label {
-	font-size: 18px;
-	color: #477eaf;
-}
-
-.uk-select {
-	width: 250px;
 }
 
 /* global table properties */
@@ -135,11 +119,6 @@ h3 {
 .table th {
 	background-color: #477eaf;
 	color: #e3e3e3ff;
-}
-
-/* global modal properties */
-.uk-modal-header {
-	text-align: center;
 }
 
 #customer-tile {
