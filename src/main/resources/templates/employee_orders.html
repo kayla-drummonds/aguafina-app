@@ -18,6 +18,22 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
 			rel="stylesheet" />
+		<style>
+			.hero-body {
+				background-color: #afc1d2;
+				color: #e3e3e3;
+			}
+
+			#employee-order-tile {
+				border: #e3e3e3 solid 3px;
+				background-color: #477eaf;
+				color: #e3e3e3;
+			}
+			.order-id-date h5,
+			.order-id-date p {
+				margin: auto;
+			}
+		</style>
 		<title>My Orders</title>
 	</head>
 
@@ -70,68 +86,72 @@
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
 		</header>
-		<div class="hero hero-sm bg-gray">
-			<div class="hero-body" th:object="${employee}">
-				<div class="columns">
-					<div class="column">
-						<div
-							class="h3 text-uppercase text-center"
-							th:text="${employee.firstName} + ' ' + ${employee.lastName}"></div>
-						<div class="h4 text-center" th:text="${employee.id}"></div>
-						<div class="d-invisible"><p>Invisible placeholder</p></div>
-						<div class="text-center" th:switch="${employee.orders.size}">
-							<h5
-								th:case="'1'"
-								th:text="${employee.orders.size} + ' order'"></h5>
-							<h5
-								th:case="'*'"
-								th:text="${employee.orders.size} + ' orders"></h5>
-						</div>
-						<div class="text-center">
+		<div class="container">
+			<div class="hero hero-sm">
+				<div class="hero-body" th:object="${employee}">
+					<div class="columns">
+						<div class="column text-center">
+							<div
+								class="h3 text-uppercase"
+								th:text="${employee.firstName} + ' ' + ${employee.lastName}"></div>
+							<div class="h4" th:text="${employee.id}"></div>
+							<div
+								class="h5"
+								th:text="${employee.orders.size()} + ' orders'"></div>
 							<a class="btn" th:href="@{/orders/new}" id="create-button"
 								>Create New Order</a
 							>
 						</div>
-					</div>
-					<div class="divider-vert"></div>
-					<div class="column">
-						<dl>
-							<dt>Email:</dt>
-							<dd th:text="${employee.email}"></dd>
-							<dt>Address:</dt>
-							<dd th:text="${employee.address}"></dd>
-							<dd
-								th:text="${employee.city} + ', ' + ${employee.state} + ' ' + ${employee.zipCode}"></dd>
-						</dl>
+						<div class="divider-vert"></div>
+						<div class="column">
+							<dl>
+								<dt>Email:</dt>
+								<dd th:text="${employee.email}"></dd>
+								<dt>Address:</dt>
+								<dd th:text="${employee.address}"></dd>
+								<dd
+									th:text="${employee.city} + ', ' + ${employee.state} + ' ' + ${employee.zipCode}"></dd>
+							</dl>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="table-responsive-md" id="orders">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th scope="col">Order ID</th>
-						<th scope="col">Creation date</th>
-						<th scope="col">Customer ID</th>
-						<th scope="col">Product</th>
-						<th scope="col">Quantity</th>
-						<th scope="col">Total</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="order: ${ordersByEmployee}">
-						<td th:text="${order.id}">Order ID</td>
-						<td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">
-							Creation Date
-						</td>
-						<td th:text="${order.customer.id}">Customer ID</td>
-						<td th:text="${order.product}">Product</td>
-						<td th:text="${order.quantity}">Quantity</td>
-						<td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
-					</tr>
-				</tbody>
-			</table>
+		<div class="container">
+			<div class="columns">
+				<div
+					class="tile column col-6 col-sm-12 col-md-12 my-2"
+					th:each="order : ${ordersByEmployee}"
+					id="employee-order-tile">
+					<div class="tile-content">
+						<div class="columns">
+							<div class="column col-3 text-center" id="order-id-date">
+								<h5 class="tile-title" th:text="${order.id}"></h5>
+								<p
+									class="tile-subtitle"
+									th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}"></p>
+							</div>
+							<div class="divider-vert"></div>
+							<div class="column col-8">
+								<div class="columns">
+									<div class="column col-4">Customer ID:</div>
+									<div
+										class="column col-8"
+										th:text="${order.customer.id}"></div>
+									<div class="column col-4">Product:</div>
+									<div class="column col-8" th:text="${order.product}"></div>
+									<div class="column col-4">Quantity:</div>
+									<div class="column col-8" th:text="${order.quantity}"></div>
+									<div class="column col-4">Total:</div>
+									<div
+										class="column col-8"
+										th:text="${#numbers.formatCurrency(order.total)}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div th:insert="~{footer :: copy}"></div>
 	</body>

@@ -112,31 +112,42 @@
 				</div>
 			</div>
 		</div>
-		<div class="table-responsive-md" id="orders">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th scope="col">Order ID</th>
-						<th scope="col">Creation date</th>
-						<th scope="col">Employee ID</th>
-						<th scope="col">Product Code</th>
-						<th scope="col">Quantity</th>
-						<th scope="col">Total</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="order: ${ordersByCustomer}">
-						<td th:text="${order.id}">Order ID</td>
-						<td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">
-							Creation Date
-						</td>
-						<td th:text="${order.employee.id}">Employee ID</td>
-						<td th:text="${order.product}">Product Code</td>
-						<td th:text="${order.quantity}">Quantity</td>
-						<td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
-					</tr>
-				</tbody>
-			</table>
+		<div class="container">
+			<div class="columns">
+				<div
+					class="tile column col-6 col-sm-12 col-md-12 my-2"
+					th:each="order : ${ordersByCustomer}">
+					<div class="tile-content">
+						<div class="columns">
+							<div class="column col-3">
+								<div
+									class="tile-title h5 text-center"
+									th:text="${order.id}"></div>
+								<div
+									class="tile-subtitle text-center"
+									th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}"></div>
+							</div>
+							<div class="divider-vert"></div>
+							<div class="column col-8">
+								<div class="columns">
+									<div class="column col-4">Employee ID:</div>
+									<div
+										class="column col-8"
+										th:text="${order.employee.id}"></div>
+									<div class="column col-4">Product Code:</div>
+									<div class="column col-8" th:text="${order.product}"></div>
+									<div class="column col-4">Quantity:</div>
+									<div class="column col-8" th:text="${order.quantity}"></div>
+									<div class="column col-4">Total:</div>
+									<div
+										class="column col-8"
+										th:text="${#numbers.formatCurrency(order.total)}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div th:insert="~{footer :: copy}"></div>
 	</body>
