@@ -23,6 +23,11 @@
 				background-color: #afc1d2;
 				color: #e3e3e3;
 			}
+			#customer-order-tile {
+				border: #e3e3e3 solid 3px;
+				background-color: #477eaf;
+				color: #e3e3e3;
+			}
 		</style>
 		<title>Customer Orders</title>
 	</head>
@@ -78,11 +83,11 @@
 			<div class="hero hero-sm">
 				<div class="hero-body" th:object="${customer}">
 					<div class="columns">
-						<div class="column">
+						<div class="column text-center">
 							<div
-								class="h3 text-uppercase text-center"
+								class="h3 text-uppercase"
 								th:text="${customer.firstName} + ' ' + ${customer.lastName}"></div>
-							<div class="h4 text-center" th:text="${customer.id}"></div>
+							<div class="h4" th:text="${customer.id}"></div>
 						</div>
 						<div class="divider-vert"></div>
 						<div class="column">
@@ -116,15 +121,14 @@
 			<div class="columns">
 				<div
 					class="tile column col-6 col-sm-12 col-md-12 my-2"
-					th:each="order : ${ordersByCustomer}">
+					th:each="order : ${ordersByCustomer}"
+					id="customer-order-tile">
 					<div class="tile-content">
 						<div class="columns">
-							<div class="column col-3">
+							<div class="column col-3 text-center">
+								<div class="tile-title h5" th:text="${order.id}"></div>
 								<div
-									class="tile-title h5 text-center"
-									th:text="${order.id}"></div>
-								<div
-									class="tile-subtitle text-center"
+									class="tile-subtitle"
 									th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}"></div>
 							</div>
 							<div class="divider-vert"></div>
@@ -134,7 +138,7 @@
 									<div
 										class="column col-8"
 										th:text="${order.employee.id}"></div>
-									<div class="column col-4">Product Code:</div>
+									<div class="column col-4">Product:</div>
 									<div class="column col-8" th:text="${order.product}"></div>
 									<div class="column col-4">Quantity:</div>
 									<div class="column col-8" th:text="${order.quantity}"></div>

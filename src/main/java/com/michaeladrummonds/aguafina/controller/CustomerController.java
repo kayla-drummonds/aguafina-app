@@ -74,15 +74,14 @@ public class CustomerController {
     }
 
     @GetMapping("/customers/edit/{id}")
-    public String editCustomer(@PathVariable Integer id, Model model) {
+    public String editCustomer(@PathVariable Integer id, Model model, Authentication authentication) {
         model.addAttribute("customer", customerService.getCustomerById(id));
 
-        if (customerService.getCustomerById(id) != null) {
-            return "edit_customer";
-        } else {
-            return "error";
-        }
+        String username = authentication.getName();
+        Employee employee = employeeService.getEmployeeByEmail(username);
+        model.addAttribute("employee", employee);
 
+        return "edit_customer";
     }
 
     @PostMapping("/customers/{id}")
