@@ -70,9 +70,38 @@
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
 		</header>
-		<a class="btn" th:href="@{/orders/new}" id="create-button"
-			>Create New Order</a
-		>
+		<div class="container p-2">
+			<div class="columns">
+				<div class="column col-4">
+					<a class="btn" th:href="@{/orders/new}" id="create-button"
+						>Create New Order</a
+					>
+				</div>
+				<div class="column col-4">
+					<h2>All Orders</h2>
+				</div>
+				<div class="column col-4">
+					<span class="chip"
+						><a
+							th:href="@{'/orders/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}"
+							>Reset</a
+						></span
+					>
+					<span class="chip"
+						><a
+							th:href="@{'/orders/' + ${currentPage} + '?sortField=employee&sortDir=' + ${reverseSortDir}}"
+							>Sort By Employee ID</a
+						></span
+					>
+					<span class="chip"
+						><a
+							th:href="@{'/orders/' + ${currentPage} + '?sortField=customer&sortDir=' + ${reverseSortDir}}"
+							>Sort By Customer ID</a
+						></span
+					>
+				</div>
+			</div>
+		</div>
 		<div class="table-responsive-md" id="orders">
 			<table class="table">
 				<thead>
@@ -89,7 +118,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="order: ${orders}">
-						<td th:text="${order.id}">Order ID</td>
+						<td th:text="${order.id}"></td>
 						<td th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}">
 							Creation Date
 						</td>
@@ -109,6 +138,22 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+		<br />
+		<div class="divider"></div>
+		<div th:if="${totalPages > 1}" class="text-center">
+			<ul class="pagination">
+				<li class="page-item column col-sm-12">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a
+							th:if="${currentPage != i}"
+							th:href="@{'/orders/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+							>[[${i}]]</a
+						>
+						<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+					</span>
+				</li>
+			</ul>
 		</div>
 		<div th:insert="~{footer :: copy}"></div>
 	</body>

@@ -2,6 +2,7 @@ package com.michaeladrummonds.aguafina.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.michaeladrummonds.aguafina.models.Customer;
@@ -20,8 +21,10 @@ public interface OrderService {
     List<Order> getOrderByCustomerId(Integer id, Customer customer);
 
     Double getTotalByCustomerId(Integer id, Customer customer);
-    
+
     Double countOrdersByEmployeeId(Employee employee, Integer id);
-    
+
     List<Order> getOrderByEmployeeId(Employee employee, Integer id);
+
+    public Page<Order> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 }
