@@ -126,7 +126,9 @@
 					<div class="tile-content">
 						<div class="columns">
 							<div class="column col-3 text-center" id="order-id-date">
-								<h5 class="tile-title" th:text="${order.id}"></h5>
+								<h5
+									class="tile-title text-uppercase"
+									th:text="'#' + ${order.id}"></h5>
 								<p
 									class="tile-subtitle"
 									th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}"></p>
