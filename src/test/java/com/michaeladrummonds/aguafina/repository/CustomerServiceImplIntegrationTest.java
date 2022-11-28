@@ -46,7 +46,7 @@ public class CustomerServiceImplIntegrationTest {
         c.setUser(u);
         customerRepository.save(c);
 
-        List<Customer> found = customerRepository.findCustomerByEmailOrPhoneLike("cshaw", "206-804-8771");
+        List<Customer> found = customerRepository.findCustomerByKeyword("cshaw");
         assertNotEquals(0, found.size());
     }
 

@@ -159,8 +159,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="divider"></div>
-		<div th:if="${totalPages > 1}" class="text-center">
+		<div th:if="${totalPages > 1}" class="container py-2 text-center">
 			<ul class="pagination">
 				<li class="page-item column col-sm-12">
 					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
