@@ -66,7 +66,11 @@ public class OrderController {
     }
 
     @GetMapping("/orders/new")
-    public String createOrder(Model model) {
+    public String createOrder(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Employee employee = employeeService.getEmployeeByEmail(username);
+        model.addAttribute("employee", employee);
+
         Order order = new Order();
         List<Customer> customers = customerService.getAllCustomers();
         List<Employee> employees = employeeService.getAllEmployees();
