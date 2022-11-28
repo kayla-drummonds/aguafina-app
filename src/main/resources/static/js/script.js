@@ -84,71 +84,64 @@ function validateCustomer() {
     return true;
 }
 
-function validateEmployee() {
-    if (document.newEmployeeForm.firstName.value == "") {
-        alert("Please provide first name.");
-        document.newCustomerForm.firstName.focus();
+function validateOrder() {
+    let creationDate = document.newOrderForm.creationDate;
+    let customer = document.newOrderForm.customer;
+    let employee = document.newOrderForm.employee;
+    let product = document.newOrderForm.product;
+    let quantity = document.newOrderForm.q;
+    let price = document.newOrderForm.p;
+
+    if (creationDate.value == "") {
+        alert("Please enter today's date.");
+        creationDate.focus();
         return false;
     } else {
-        let firstName = document.getElementById("firstName").value;
+        creationDate = document.getElementById("creationDate").value;
     }
 
-    if (document.newEmployeeForm.lastName.value == "") {
-        alert("Please provide last name.");
-        document.newEmployeeForm.lastName.focus();
+    if (customer.value == "") {
+        alert("Please select a customer ID.");
+        customer.focus();
         return false;
     } else {
-        let lastName = document.getElementById("lastName").value;
+        customer = document.getElementById("customer").value;
     }
 
-    if (document.newEmployeeForm.email.value == "") {
-        alert("Please provide email address.");
-        document.newEmployeeForm.email.focus();
+    if (employee.value == "") {
+        alert("Please select an employee ID.");
+        employee.focus();
         return false;
     } else {
-        let emailID = document.newEmployeeForm.email.value;
-        atpos = emailID.indexOf("@");
-        dotpos = emailID.lastIndexOf(".");
-        if (atpos < 1 || (dotpos - atpos < 2)) {
-            alert("Please enter correct email format.")
-            document.newEmployeeForm.email.focus();
-            return false;
-        } else {
-            let email = document.getElementById("email").value;
+        employee = document.getElementById("employee").value;
+    }
+
+    if (product.value == "") {
+        alert("Please select a product.");
+        product.focus();
+        return false;
+    } else {
+        product = document.getElementById("product").value;
+    }
+
+    if (quantity.value == "" || quantity.value == 0 || quantity.value < 0 || quantity.value >= 10) {
+        alert("Please enter a positive nonzero quantity less than 10.");
+        quantity.focus();
+        return false;
+    } else {
+        q = document.getElementById("q").value;
+    }
+
+    if (price.value == "" || price.value == 0 || price.value < 2 || price.value > 4 || isNaN(price.value)) {
+        if (price.value == "" || price.value == 0 || isNaN(price.value)) {
+            alert("Please enter a positive nonzero dollar amount.");
+        } else if (price.value < 2 || price.value > 4) {
+            alert("Enter either 2 for 20 oz. or 4 for 32 oz.");
         }
-    }
 
-    if (document.newEmployeeForm.address.value == "") {
-        alert("Please provide address.");
-        document.newEmployeeForm.address.focus();
+        price.focus();
         return false;
     } else {
-        let address = document.getElementById("address").value;
+        price = document.getElementById("p").value;
     }
-
-    if (document.newEmployeeForm.city.value == "") {
-        alert("Please provide city.");
-        document.newEmployeeForm.city.focus();
-        return false;
-    } else {
-        let city = document.getElementById("city").value;
-    }
-
-    if (document.newEmployeeForm.state.value == "") {
-        alert("Please provide state.");
-        document.newEmployeeForm.state.focus();
-        return false;
-    } else {
-        let state = document.getElementById("state").value;
-    }
-
-    if (document.newEmployeeForm.zip.value == "" || isNaN(document.newEmployeeForm.zip.value) || document.newEmployeeForm.zip.value != 5) {
-        alert("Please provide 5-digit ZIP code.");
-        document.newEmployeeForm.zip.focus();
-        return false;
-    } else {
-        let zip = document.getElementById("zipCode").value;
-    }
-
-    return true;
 }

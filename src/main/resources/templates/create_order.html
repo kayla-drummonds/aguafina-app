@@ -96,7 +96,9 @@
 						th:action="@{/orders}"
 						th:object="${order}"
 						method="POST"
-						oninput="total.value=parseFloat(p.value)*parseFloat(q.value)">
+						oninput="total.value=parseFloat(p.value)*parseFloat(q.value)"
+						onsubmit="return validateOrder();"
+						name="newOrderForm">
 						<div class="columns">
 							<div class="column col-12 py-2">
 								<div class="form-group">
@@ -111,7 +113,7 @@
 										<input
 											class="form-control"
 											type="date"
-											name="p"
+											name="creationDate"
 											id="creationDate"
 											th:field="*{creationDate}" />
 									</div>
@@ -129,7 +131,9 @@
 											class="form-select"
 											title="customer"
 											th:field="*{customer.id}"
-											id="customer">
+											id="customer"
+											name="customer">
+											<option value="" selected>--Select Customer--</option>
 											<option
 												th:each="customer : ${customers}"
 												th:value="${customer.id}"
@@ -152,7 +156,9 @@
 											class="form-select"
 											title="employee"
 											th:field="*{employee.id}"
-											id="employee">
+											id="employee"
+											name="employee">
+											<option value="" selected>--Select Employee--</option>
 											<option
 												th:each="employee : ${employees}"
 												th:value="${employee.id}"
@@ -247,5 +253,6 @@
 			</div>
 		</div>
 		<div th:insert="~{footer :: copy}"></div>
+		<script th:src="@{/js/script.js}"></script>
 	</body>
 </html>
