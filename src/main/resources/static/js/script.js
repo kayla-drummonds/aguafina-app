@@ -93,55 +93,62 @@ function validateOrder() {
     let price = document.newOrderForm.p;
 
     if (creationDate.value == "") {
-        alert("Please enter today's date.");
-        creationDate.focus();
+        document.getElementById("creationDate").classList.add("is-error");
+        document.getElementById("creationDateHint").innerHTML = "Please enter a valid date.";
         return false;
     } else {
         creationDate = document.getElementById("creationDate").value;
+        document.getElementById("creationDate").classList.add("is-success");
     }
 
     if (customer.value == "") {
-        alert("Please select a customer ID.");
-        customer.focus();
+        document.getElementById("customer").classList.add("is-error");
+        document.getElementById("customerHint").innerHTML = "Please select a customer ID.";
         return false;
     } else {
         customer = document.getElementById("customer").value;
+        document.getElementById("customer").classList.add("is-success");
     }
 
     if (employee.value == "") {
-        alert("Please select an employee ID.");
-        employee.focus();
+        document.getElementById("employee").classList.add("is-error");
+        document.getElementById("employeeHint").innerHTML = "Please select an employee ID.";
         return false;
     } else {
         employee = document.getElementById("employee").value;
+        document.getElementById("employee").classList.add("is-success");
     }
 
     if (product.value == "") {
-        alert("Please select a product.");
-        product.focus();
+        document.getElementById("product").classList.add("is-error");
+        document.getElementById("productHint").innerHTML = "Please select a product.";
         return false;
     } else {
         product = document.getElementById("product").value;
+        document.getElementById("product").classList.add("is-success");
     }
 
     if (quantity.value == "" || quantity.value == 0 || quantity.value < 0 || quantity.value >= 10) {
-        alert("Please enter a positive nonzero quantity less than 10.");
-        quantity.focus();
+        document.getElementById("q").classList.add("is-error");
+        document.getElementById("quantityHint").innerHTML = "Please enter a quantity between 1 and 10.";
         return false;
     } else {
         q = document.getElementById("q").value;
+        document.getElementById("q").classList.add("is-success");
     }
 
     if (price.value == "" || price.value == 0 || price.value < 2 || price.value > 4 || isNaN(price.value)) {
-        if (price.value == "" || price.value == 0 || isNaN(price.value)) {
-            alert("Please enter a positive nonzero dollar amount.");
-        } else if (price.value < 2 || price.value > 4) {
-            alert("Enter either 2 for 20 oz. or 4 for 32 oz.");
-        }
 
-        price.focus();
+        if (price.value == "" || price.value == 0 || isNaN(price.value)) {
+            document.getElementById("p").classList.add("is-error");
+            document.getElementById("priceHint").innerHTML = "Please enter a positive nonzero dollar amount.";
+        } else if (price.value < 2 || price.value > 4) {
+            document.getElementById("p").classList.add("is-error");
+            document.getElementById("priceHint").innerHTML = "Enter either 2 for 20 oz. or 4 for 32 oz.";
+        }
         return false;
     } else {
         price = document.getElementById("p").value;
+        document.getElementById("p").classList.add("is-success");
     }
 }
