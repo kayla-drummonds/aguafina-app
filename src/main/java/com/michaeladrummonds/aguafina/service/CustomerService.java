@@ -18,7 +18,7 @@ public interface CustomerService {
 
     Customer updateCustomer(Customer customer);
 
-    List<Customer> getCustomerByEmailOrPhoneContaining(String email, String phone);
+    List<Customer> getCustomerByKeyword(String keyword);
 
     Page<Customer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 }

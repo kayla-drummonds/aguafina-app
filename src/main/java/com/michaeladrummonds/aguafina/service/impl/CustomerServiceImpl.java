@@ -40,8 +40,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getCustomerByEmailOrPhoneContaining(String email, String phone) {
-        return customerRepository.findCustomerByEmailOrPhoneLike(email, phone);
+    public List<Customer> getCustomerByKeyword(String keyword) {
+        return customerRepository.findCustomerByKeyword(keyword);
     }
 
     @Override

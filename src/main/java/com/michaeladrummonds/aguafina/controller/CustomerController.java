@@ -32,24 +32,21 @@ public class CustomerController {
     // displays all customers
     @GetMapping("/customers")
     public String listCustomers(Model model,
-            @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "phone", required = false) String phone, Authentication authentication) {
+            @RequestParam(value = "keyword", required = false) String keyword, Authentication authentication) {
 
         String username = authentication.getName();
         Employee employee = employeeService.getEmployeeByEmail(username);
 
         model.addAttribute("employee", employee);
 
-        if (email != null || phone != null) {
-            List<Customer> customers = customerService.getCustomerByEmailOrPhoneContaining(email, phone);
+        if (keyword != null) {
+            List<Customer> customers = customerService.getCustomerByKeyword(keyword);
             model.addAttribute("customers", customers);
-            model.addAttribute("email", email);
-            model.addAttribute("phone", phone);
+            model.addAttribute("keyword", keyword);
         } else {
             List<Customer> customers = customerService.getAllCustomers();
             model.addAttribute("customers", customers);
-            model.addAttribute("email", email);
-            model.addAttribute("phone", phone);
+            model.addAttribute("keyword", keyword);
             return findPaginated(1, "id", "asc", model, authentication);
         }
         return "customers";
