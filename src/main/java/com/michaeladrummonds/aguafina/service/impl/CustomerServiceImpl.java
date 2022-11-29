@@ -25,8 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public Page<Customer> getAllCustomersPageable(Pageable pageable) {
+        return customerRepository.findAll(pageable);
     }
 
     @Override
@@ -56,6 +56,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomerByEmail(String email) {
         return customerRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
     }
 
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,46 +32,34 @@ public class CustomerController {
     private EmployeeServiceImpl employeeService;
 
     // displays all customers
-    @GetMapping("/customers")
+    @GetMapping({ "/customers", "/customers/page/{pageNo}" })
     public String listCustomers(Model model,
-            @RequestParam(value = "keyword", required = false) String keyword, Authentication authentication) {
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size, Authentication authentication) {
 
         String username = authentication.getName();
         Employee employee = employeeService.getEmployeeByEmail(username);
 
         model.addAttribute("employee", employee);
+
+        Pageable paging = PageRequest.of(page, size);
+        Page<Customer> pageCustomers = customerService.getAllCustomersPageable(paging);
 
         if (keyword != null) {
             List<Customer> customers = customerService.getCustomerByKeyword(keyword);
             model.addAttribute("customers", customers);
             model.addAttribute("keyword", keyword);
         } else {
-            List<Customer> customers = customerService.getAllCustomers();
+            pageCustomers = customerService.getAllCustomersPageable(paging);
+            List<Customer> customers = pageCustomers.getContent();
             model.addAttribute("customers", customers);
             model.addAttribute("keyword", keyword);
-            return findPaginated(1, "id", "asc", model, authentication);
         }
-        return "customers";
-    }
 
-    @GetMapping("/customers/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField,
-            @RequestParam("sortDir") String sortDir, Model model, Authentication authentication) {
-
-        String username = authentication.getName();
-        Employee employee = employeeService.getEmployeeByEmail(username);
-        model.addAttribute("employee", employee);
-
-        int pageSize = 12;
-        Page<Customer> page = customerService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<Customer> customers = page.getContent();
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        model.addAttribute("customers", customers);
+        model.addAttribute("currentPage", pageCustomers.getNumber());
+        model.addAttribute("totalItems", pageCustomers.getTotalElements());
+        model.addAttribute("totalPages", pageCustomers.getTotalPages());
         return "customers";
     }
 
