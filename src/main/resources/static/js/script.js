@@ -9,76 +9,84 @@ function validateCustomer() {
     let zip = document.newCustomerForm.zipCode;
 
     if (firstName.value == "") {
-        alert("Please provide first name.");
-        firstName.focus();
+        document.getElementById("firstName").classList.add("is-error");
+        document.getElementById("firstNameHint").innerHTML = "Please provide first name.";
         return false;
     } else {
         let firstName = document.getElementById("firstName").value;
+        document.getElementById("firstName").classList.add("is-success");
     }
 
     if (lastName.value == "") {
-        alert("Please provide last name.");
-        lastName.focus();
+        document.getElementById("lastName").classList.add("is-error");
+        document.getElementById("lastNameHint").innerHTML = "Please provide last name.";
         return false;
     } else {
         let lastName = document.getElementById("lastName").value;
+        document.getElementById("lastName").classList.add("is-success");
     }
 
     if (email.value == "") {
-        alert("Please provide email address.");
-        email.focus();
+        document.getElementById("email").classList.add("is-error");
+        document.getElementById("emailHint").innerHTML = "Please provide email address.";
         return false;
     } else {
         let emailID = email.value;
         atpos = emailID.indexOf("@");
         dotpos = emailID.lastIndexOf(".");
         if (atpos < 1 || (dotpos - atpos < 2)) {
-            alert("Please enter correct email format.")
-            email.focus();
+            document.getElementById("email").classList.add("is-error");
+            document.getElementById("emailHint").innerHTML = "Please enter email in correct format.";
             return false;
         } else {
             let email = document.getElementById("email").value;
+            document.getElementById("email").classList.add("is-success");
         }
     }
 
     if (phone.value == "") {
-        alert("Please provide phone number.");
-        phone.focus();
+        document.getElementById("phone").classList.add("is-error");
+        document.getElementById("phoneHint").innerHTML = "Please provide phone number.";
         return false;
     } else {
         let phone = document.getElementById("phone").value;
+        document.getElementById("phone").classList.add("is-success");
     }
 
     if (address.value == "") {
-        alert("Please provide address.");
-        address.focus();
+        document.getElementById("address").classList.add("is-error");
+        document.getElementById("addressHint").innerHTML = "Please provide street address.";
         return false;
     } else {
         let address = document.getElementById("address").value;
+        document.getElementById("address").classList.add("is-success");
     }
 
     if (city.value == "") {
-        alert("Please provide city.");
-        city.focus();
+        document.getElementById("city").classList.add("is-error");
+        document.getElementById("cityHint").innerHTML = "Please provide city.";
         return false;
     } else {
         let city = document.getElementById("city").value;
+        document.getElementById("city").classList.add("is-success");
     }
 
     if (state.value == "") {
-        alert("Please provide state.");
-        state.focus();
+        document.getElementById("state").classList.add("is-error");
+        document.getElementById("stateHint").innerHTML = "Please provide state.";
         return false;
     } else {
         let state = document.getElementById("state").value;
+        document.getElementById("state").classList.add("is-success");
     }
 
-    if (zip.value == "" || isNaN(zip.value) || zip.value != 5) {
-        alert("Please provide 5-digit ZIP code.");
-        zip.focus();
+    if (zip.value == "" || !zip.value.match("^[0-9]{5}$")) {
+        document.getElementById("zipCode").classList.add("is-error");
+        document.getElementById("zipCodeHint").innerHTML = "Please provide 5-digit ZIP code.";
         return false;
     } else {
         let zip = document.getElementById("zipCode").value;
+        document.getElementById("zipCode").classList.add("is-success");
     }
 
     return true;

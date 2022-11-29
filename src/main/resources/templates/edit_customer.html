@@ -88,7 +88,8 @@
 			<div
 				class="card p-centered col-6 col-12 p-2 s-rounded"
 				th:object="${customer}"
-				id="update-customer-form">
+				id="update-customer-form"
+				onsubmit="return validateCustomer();">
 				<div class="card-header">
 					<h3
 						class="card-title text-center"
@@ -117,6 +118,7 @@
 											th:field="*{id}"
 											id="id"
 											disabled />
+										<p class="form-input-hint" id="idHint"></p>
 									</div>
 								</div>
 							</div>
@@ -135,6 +137,7 @@
 											th:field="*{firstName}"
 											id="firstName"
 											placeholder="First Name" />
+										<p class="form-input-hint" id="firstNameHint"></p>
 									</div>
 								</div>
 							</div>
@@ -153,6 +156,7 @@
 											th:field="*{lastName}"
 											id="lastName"
 											placeholder="Last Name" />
+										<p class="form-input-hint" id="lastNameHint"></p>
 									</div>
 								</div>
 							</div>
@@ -171,6 +175,7 @@
 											th:field="*{email}"
 											id="email"
 											placeholder="Email" />
+										<p class="form-input-hint" id="emailHint"></p>
 									</div>
 								</div>
 							</div>
@@ -190,6 +195,7 @@
 											id="phone"
 											pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
 											placeholder="###-###-####" />
+										<p class="form-input-hint" id="phoneHint"></p>
 									</div>
 								</div>
 							</div>
@@ -208,6 +214,7 @@
 											th:field="*{address}"
 											id="address"
 											placeholder="Address" />
+										<p class="form-input-hint" id="addressHint"></p>
 									</div>
 								</div>
 							</div>
@@ -226,6 +233,7 @@
 											th:field="*{city}"
 											id="city"
 											placeholder="City" />
+										<p class="form-input-hint" id="cityHint"></p>
 									</div>
 								</div>
 							</div>
@@ -244,6 +252,7 @@
 											th:field="*{state}"
 											id="state"
 											placeholder="State" />
+										<p class="form-input-hint" id="stateHint"></p>
 									</div>
 								</div>
 							</div>
@@ -262,6 +271,7 @@
 											th:field="*{zipCode}"
 											id="zipCode"
 											placeholder="ZIP Code" />
+										<p class="form-input-hint" id="zipCodeHint"></p>
 									</div>
 								</div>
 							</div>
