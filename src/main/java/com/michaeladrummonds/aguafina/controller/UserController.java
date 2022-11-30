@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
@@ -48,12 +49,16 @@ public class UserController {
 
     @PostMapping("/registration/customer")
     public String registerCustomerUser(@ModelAttribute("user") @Valid UserRegistrationDto registrationDto,
-            @ModelAttribute("bindingResult") BindingResult bindingResult) {
+            BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors()) {
             userService.saveCustomerUser(registrationDto);
+            return "redirect:/login?success";
+        } else {
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("user", registrationDto);
+            return "redirect:/registration/customer?error";
         }
 
-        return "redirect:/login?success";
     }
 
     @GetMapping("/registration/employee")
@@ -64,12 +69,16 @@ public class UserController {
     }
 
     @PostMapping("/registration/employee")
-    public String registerEmployeeUser(@ModelAttribute("user") @Valid UserRegistrationDto registrationDto,
+    public ModelAndView registerEmployeeUser(@ModelAttribute("user") @Valid UserRegistrationDto registrationDto,
             @ModelAttribute("bindingResult") BindingResult bindingResult) {
+        ModelAndView mav = new ModelAndView("redirect:/login?success");
         if (!bindingResult.hasErrors()) {
             userService.saveEmployeeUser(registrationDto);
+        } else {
+            mav.addObject("bindingResult", bindingResult);
+            mav.addObject("user", registrationDto);
         }
-        return "redirect:/login?success";
+        return mav;
     }
 
     @GetMapping("/login")

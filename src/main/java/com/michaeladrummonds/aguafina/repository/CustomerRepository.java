@@ -15,5 +15,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("select c from Customer c where c.email like %:keyword% or c.phone like %:keyword%")
     public List<Customer> findCustomerByKeyword(@Param("keyword") String keyword);
 
+    @Query(value = "select c from customers c where c.email = :email", nativeQuery = true)
     public Customer findByEmail(String email);
 }
