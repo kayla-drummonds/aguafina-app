@@ -41,6 +41,8 @@ public class UserServiceImpl implements UserDetailsService {
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         user.setRole("CUSTOMER");
+        user.setFirstName(registrationDto.getFirstName());
+        user.setLastName(registrationDto.getLastName());
         return userRepository.save(user);
     }
 
@@ -49,6 +51,8 @@ public class UserServiceImpl implements UserDetailsService {
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         user.setRole("EMPLOYEE");
+        user.setFirstName(registrationDto.getFirstName());
+        user.setLastName(registrationDto.getLastName());
         return userRepository.save(user);
     }
 
@@ -57,6 +61,8 @@ public class UserServiceImpl implements UserDetailsService {
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         user.setRole("ADMIN");
+        user.setFirstName(registrationDto.getFirstName());
+        user.setLastName(registrationDto.getLastName());
         return userRepository.save(user);
     }
 
