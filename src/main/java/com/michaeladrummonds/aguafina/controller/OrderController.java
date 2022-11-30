@@ -1,5 +1,6 @@
 package com.michaeladrummonds.aguafina.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ public class OrderController {
 
     @PostMapping("/orders")
     public String saveOrder(@ModelAttribute("order") Order order) {
+        order.setCreationDate(new Date());
         orderService.saveOrder(order);
         return "redirect:/orders";
     }

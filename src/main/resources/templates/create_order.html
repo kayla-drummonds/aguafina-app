@@ -103,26 +103,6 @@
 							<div class="column col-12 py-2">
 								<div class="form-group">
 									<div class="column col-4 col-sm-12 col-md-12">
-										<label
-											class="form-label form-label-inline"
-											for="creationDate"
-											>Date:</label
-										>
-									</div>
-									<div class="column col-8 col-sm-12 col-md-12">
-										<input
-											class="form-input"
-											type="date"
-											name="creationDate"
-											id="creationDate"
-											th:field="*{creationDate}" />
-										<p class="form-input-hint" id="creationDateHint"></p>
-									</div>
-								</div>
-							</div>
-							<div class="column col-12 py-2">
-								<div class="form-group">
-									<div class="column col-4 col-sm-12 col-md-12">
 										<label class="form-label form-inline" for="customer">
 											Customer:
 										</label>
@@ -223,13 +203,17 @@
 							<div class="column col-12 py-2">
 								<div class="form-group">
 									<div class="column col-4 col-sm-12 col-md-12">
-										<label class="form-label form-label-inline" for="p"
-											>Price:</label
-										>
+										<label class="form-label" for="p">Price Each:</label>
 									</div>
 									<div class="column col-8 col-sm-12 col-md-12">
-										<input class="form-input" type="number" name="p" id="p" />
-										<p class="form-input-hint" id="priceHint"></p>
+										<label class="form-radio">
+											<input type="radio" name="p" value="2" checked />
+											<i class="form-icon"></i> $2.00
+										</label>
+										<label class="form-radio">
+											<input type="radio" name="p" value="4" />
+											<i class="form-icon"></i> $4.00
+										</label>
 									</div>
 								</div>
 							</div>
@@ -248,7 +232,7 @@
 											name="total"
 											id="total"
 											th:field="*{total}"
-											disabled />
+											readonly />
 									</div>
 								</div>
 							</div>

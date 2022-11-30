@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -48,10 +50,9 @@ public class Order {
     private Integer quantity;
 
     @Column
-    @NotNull
     private Double total;
 
     @Column
-    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 }

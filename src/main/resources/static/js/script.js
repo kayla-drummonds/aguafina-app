@@ -93,21 +93,12 @@ function validateCustomer() {
 }
 
 function validateOrder() {
-    let creationDate = document.newOrderForm.creationDate;
     let customer = document.newOrderForm.customer;
     let employee = document.newOrderForm.employee;
     let product = document.newOrderForm.product;
     let quantity = document.newOrderForm.q;
     let price = document.newOrderForm.p;
 
-    if (creationDate.value == "") {
-        document.getElementById("creationDate").classList.add("is-error");
-        document.getElementById("creationDateHint").innerHTML = "Please enter a valid date.";
-        return false;
-    } else {
-        creationDate = document.getElementById("creationDate").value;
-        document.getElementById("creationDate").classList.add("is-success");
-    }
 
     if (customer.value == "") {
         document.getElementById("customer").classList.add("is-error");
