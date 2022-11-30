@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,14 +40,18 @@ public class Order {
     private Employee employee;
 
     @Column
+    @NotNull
     private String product;
 
     @Column
+    @NotNull
     private Integer quantity;
 
     @Column
+    @NotNull
     private Double total;
 
     @Column
+    @NotNull
     private Date creationDate;
 }
