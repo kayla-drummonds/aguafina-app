@@ -1,4 +1,5 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <%@ taglib
+prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -13,7 +14,7 @@
 		<link
 			rel="stylesheet"
 			href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
-		<link rel="stylesheet" th:href="@{/css/styles.css}" />
+		<link rel="stylesheet" href="../static/css/styles.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
