@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.michaeladrummonds.aguafina.exceptions.UserNotAuthorizedException;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping
+@Slf4j
 public class CustomerController {
 
     @Autowired
@@ -31,23 +35,28 @@ public class CustomerController {
     // displays all customers
     @GetMapping({ "/customers", "/customers/page/{pageNo}" })
     public String listCustomers(Model model,
-            @RequestParam(value = "keyword", required = false) String keyword, Authentication authentication) {
+            @RequestParam(value = "keyword", required = false) String keyword, Authentication authentication)
+            throws UserNotAuthorizedException {
 
         String username = authentication.getName();
+
         Employee employee = employeeService.getEmployeeByEmail(username);
 
         model.addAttribute("employee", employee);
-
-        if (keyword != null) {
-            List<Customer> customers = customerService.getCustomerByKeyword(keyword);
-            model.addAttribute("customers", customers);
-            model.addAttribute("keyword", keyword);
-        } else {
-            List<Customer> customers = customerService.getAllCustomers();
-            model.addAttribute("customers", customers);
-            model.addAttribute("keyword", keyword);
+        if (employee != null) {
+            if (keyword != null) {
+                List<Customer> customers = customerService.getCustomerByKeyword(keyword);
+                model.addAttribute("customers", customers);
+                model.addAttribute("keyword", keyword);
+            } else {
+                List<Customer> customers = customerService.getAllCustomers();
+                model.addAttribute("customers", customers);
+                model.addAttribute("keyword", keyword);
+            }
         }
+
         return "customers";
+
     }
 
     @GetMapping("/customers/edit/{id}")
