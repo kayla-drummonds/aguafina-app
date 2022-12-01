@@ -92,7 +92,7 @@ public class UserController {
         return "redirect:/home";
     }
 
-    @PreAuthorize("hasAnyAuthority('isAuthenticated()')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE', 'CUSTOMER')")
     @GetMapping("/home")
     public String getHomePage(Model model, Authentication authentication) {
         String username = authentication.getName();

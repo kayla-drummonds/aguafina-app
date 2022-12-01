@@ -120,7 +120,7 @@
 						<td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
 						<td>
 							<a
-								th:href="@{/orders/{id}(id=${order.id})}"
+								th:href="@{/orders/delete/{id}(id=${order.id})}"
 								class="btn"
 								id="delete-button"
 								>Delete</a
