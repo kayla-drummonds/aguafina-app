@@ -9,12 +9,11 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
@@ -41,65 +40,87 @@ public class UserController {
     }
 
     @GetMapping("/registration/customer")
-    public String createNewCustomerUser(Model model) {
+    public ModelAndView createNewCustomerUser() {
+        ModelAndView mav = new ModelAndView("registration_customer");
+
         UserRegistrationDto user = new UserRegistrationDto();
-        model.addAttribute("user", user);
-        return "registration_customer";
+        mav.addObject("user", user);
+
+        return mav;
     }
 
     @PostMapping("/registration/customer")
-    public String registerCustomerUser(@Valid @ModelAttribute("user") UserRegistrationDto registrationDto,
-            BindingResult bindingResult, Model model) {
+    public ModelAndView registerCustomerUser(@Valid UserRegistrationDto registrationDto,
+            BindingResult bindingResult) {
+
+        ModelAndView mav = new ModelAndView();
+
         if (bindingResult.hasErrors()) {
-            return "redirect:/registration/customer?error";
+            mav.setViewName("redirect:/registration/customer?error");
+            return mav;
         }
         userService.saveCustomerUser(registrationDto);
-        return "redirect:/registration/customer?success";
+        mav.setViewName("redirect:/registration/customer?success");
+
+        return mav;
     }
 
     @GetMapping("/registration/employee")
-    public String createNewEmployeeUser(Model model) {
+    public ModelAndView createNewEmployeeUser() {
+        ModelAndView mav = new ModelAndView("registration_employee");
         UserRegistrationDto user = new UserRegistrationDto();
-        model.addAttribute("user", user);
-        return "registration_employee";
+        mav.addObject("user", user);
+        return mav;
     }
 
     @PostMapping("/registration/employee")
-    public String registerEmployeeUser(@Valid @ModelAttribute("user") UserRegistrationDto registrationDto,
-            BindingResult bindingResult, Model model) {
+    public ModelAndView registerEmployeeUser(@Valid UserRegistrationDto registrationDto,
+            BindingResult bindingResult) {
+        ModelAndView mav = new ModelAndView();
+
         if (bindingResult.hasErrors()) {
-            return "registration_employee";
+            mav.setViewName("redirect:/registration/employee?error");
+            return mav;
         }
         userService.saveCustomerUser(registrationDto);
-        return "redirect:/registration/employee?success";
+        mav.setViewName("redirect:/registration/employee?success");
+
+        return mav;
     }
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request, HttpSession session) {
+    public ModelAndView login(HttpServletRequest request, HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
         session.setAttribute("SPRING_SECURITY_LAST_EXCEPTION", request);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
+            mav.setViewName("login");
+            return mav;
         }
-        return "redirect:/home";
+
+        mav.setViewName("redirect:/home");
+        return mav;
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE', 'CUSTOMER')")
     @GetMapping("/home")
-    public String getHomePage(Model model, Authentication authentication) {
+    public ModelAndView getHomePage(Authentication authentication) {
+        ModelAndView mav = new ModelAndView("home");
+
         String username = authentication.getName();
         Employee employee = employeeService.getEmployeeByEmail(username);
         Customer customer = customerService.getCustomerByEmail(username);
 
         if (employee != null) {
-            model.addAttribute("employee", employee);
+            mav.addObject("employee", employee);
         } else {
-            model.addAttribute("customer", customer);
+            mav.addObject("customer", customer);
         }
 
-        model.addAttribute("username", username);
-        model.addAttribute("authentication", authentication);
-        return "home";
+        mav.addObject("username", username);
+        mav.addObject("authentication", authentication);
+        return mav;
     }
 
 }
