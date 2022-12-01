@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
@@ -32,48 +33,53 @@ public class CustomerController {
     @Autowired
     private EmployeeServiceImpl employeeService;
 
-    // displays all customers
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping({ "/customers", "/customers/page/{pageNo}" })
-    public String listCustomers(Model model,
-            @RequestParam(value = "keyword", required = false) String keyword, Authentication authentication) {
+    public ModelAndView listCustomers(@RequestParam(value = "keyword", required = false) String keyword,
+            Authentication authentication) {
+        ModelAndView mav = new ModelAndView("customers");
 
         String username = authentication.getName();
 
         Employee employee = employeeService.getEmployeeByEmail(username);
 
-        model.addAttribute("employee", employee);
-        if (employee != null) {
-            if (keyword != null) {
-                List<Customer> customers = customerService.getCustomerByKeyword(keyword);
-                model.addAttribute("customers", customers);
-                model.addAttribute("keyword", keyword);
-            } else {
-                List<Customer> customers = customerService.getAllCustomers();
-                model.addAttribute("customers", customers);
-                model.addAttribute("keyword", keyword);
-            }
+        mav.addObject("employee", employee);
+
+        if (keyword != null) {
+            List<Customer> customers = customerService.getCustomerByKeyword(keyword);
+            mav.addObject("customers", customers);
+            mav.addObject("keyword", keyword);
+        } else {
+            List<Customer> customers = customerService.getAllCustomers();
+            mav.addObject("customers", customers);
+            mav.addObject("keyword", keyword);
         }
 
-        return "customers";
+        return mav;
 
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
     @GetMapping("/customers/edit/{id}")
-    public String editCustomer(@PathVariable Integer id, Model model, Authentication authentication) {
-        model.addAttribute("customer", customerService.getCustomerById(id));
+    public ModelAndView editCustomer(@PathVariable Integer id, Model model, Authentication authentication) {
+
+        ModelAndView mav = new ModelAndView("edit_customer");
 
         String username = authentication.getName();
         Employee employee = employeeService.getEmployeeByEmail(username);
-        model.addAttribute("employee", employee);
 
-        return "edit_customer";
+        mav.addObject("customer", customerService.getCustomerById(id));
+        mav.addObject("employee", employee);
+
+        return mav;
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
     @PostMapping("/customers/{id}")
-    public String updateCustomer(@PathVariable Integer id, @ModelAttribute("customer") Customer customer, Model model) {
+    public ModelAndView updateCustomer(@PathVariable Integer id, Customer customer) {
+
+        ModelAndView mav = new ModelAndView("redirect:/home");
+
         Customer existingCustomer = customerService.getCustomerById(id);
         existingCustomer.setId(customer.getId());
         existingCustomer.setFirstName(customer.getFirstName());
@@ -85,6 +91,7 @@ public class CustomerController {
         existingCustomer.setZipCode(customer.getZipCode());
 
         customerService.updateCustomer(existingCustomer);
-        return "redirect:/home";
+
+        return mav;
     }
 }

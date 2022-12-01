@@ -29,21 +29,13 @@
 				<div class="card-header">
 					<h3 class="card-title text-center">Employee Account Registration</h3>
 				</div>
-				<div
-					th:object="${bindingResult}"
-					th:unless="${bindingResult.hasErrors()}">
-					<div
-						class="toast toast-error"
-						th:each="error: ${bindingResult.getAllErrors()}">
-						<p th:text="${error.getDefaultMessage()}"></p>
-					</div>
-				</div>
 				<div class="card-body">
 					<form
 						class="form-horizontal px-2 s-rounded"
 						th:action="@{/registration/employee}"
 						method="post"
-						th:object="${user}">
+						th:object="${user}"
+						name="newEmployeeUserForm">
 						<div class="columns">
 							<div class="column col-12 py-2">
 								<div class="form-group">
@@ -57,8 +49,14 @@
 											id="firstName"
 											class="form-input"
 											type="text"
-											th:field="*{firstName}" />
+											th:field="*{firstName}"
+											name="firstName" />
 									</div>
+									<p
+										th:if="${#fields.hasErrors('firstName')}"
+										th:errors="*{firstName}"
+										class="form-input-hint"
+										id="firstNameHint"></p>
 								</div>
 							</div>
 							<div class="column col-12 py-2">
@@ -73,8 +71,14 @@
 											id="lastName"
 											class="form-input"
 											type="text"
-											th:field="*{lastName}" />
+											th:field="*{lastName}"
+											name="lastName" />
 									</div>
+									<p
+										th:if="${#fields.hasErrors('lastName')}"
+										th:errors="*{lastName}"
+										class="form-input-hint"
+										id="lastNameHint"></p>
 								</div>
 							</div>
 							<div class="column col-12 py-2">
@@ -89,8 +93,14 @@
 											id="email"
 											class="form-input"
 											type="email"
-											th:field="*{email}" />
+											th:field="*{email}"
+											name="email" />
 									</div>
+									<p
+										th:if="${#fields.hasErrors('email')}"
+										th:errors="*{email}"
+										class="form-input-hint"
+										id="emailHint"></p>
 								</div>
 							</div>
 							<div class="column col-12 py-2">
@@ -105,8 +115,14 @@
 											id="password"
 											class="form-input"
 											type="password"
-											th:field="*{password}" />
+											th:field="*{password}"
+											name="password" />
 									</div>
+									<p
+										th:if="${#fields.hasErrors('password')}"
+										th:errors="*{password}"
+										class="form-input-hint"
+										id="passwordHint"></p>
 								</div>
 								<div class="form-group">
 									<div class="column col-4">
@@ -121,8 +137,14 @@
 											id="confirmPassword"
 											class="form-input"
 											type="password"
-											th:field="*{confirmPassword}" />
+											th:field="*{confirmPassword}"
+											name="confirmPassword" />
 									</div>
+									<p
+										th:if="${#fields.hasErrors('confirmPassword')}"
+										th:errors="*{confirmPassword}"
+										class="form-input-hint"
+										id="confirmPasswordHint"></p>
 								</div>
 							</div>
 						</div>
