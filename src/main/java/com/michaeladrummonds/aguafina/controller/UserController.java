@@ -1,5 +1,7 @@
 package com.michaeladrummonds.aguafina.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -11,11 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
@@ -49,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("/registration/customer")
-    public String registerCustomerUser(@ModelAttribute("user") @Valid UserRegistrationDto registrationDto,
+    public String registerCustomerUser(@Valid UserRegistrationDto registrationDto,
             BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors()) {
             userService.saveCustomerUser(registrationDto);
@@ -70,16 +72,16 @@ public class UserController {
     }
 
     @PostMapping("/registration/employee")
-    public ModelAndView registerEmployeeUser(@ModelAttribute("user") @Valid UserRegistrationDto registrationDto,
-            @ModelAttribute("bindingResult") BindingResult bindingResult) {
-        ModelAndView mav = new ModelAndView("redirect:/login?success");
+    public String registerEmployeeUser(@Valid @ModelAttribute("user") UserRegistrationDto registrationDto,
+            BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors()) {
-            userService.saveEmployeeUser(registrationDto);
+            userService.saveCustomerUser(registrationDto);
+            return "redirect:/login?success";
         } else {
-            mav.addObject("bindingResult", bindingResult);
-            mav.addObject("user", registrationDto);
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("user", registrationDto);
+            return "redirect:/registration/employee?error";
         }
-        return mav;
     }
 
     @GetMapping("/login")

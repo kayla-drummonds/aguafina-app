@@ -29,6 +29,15 @@
 				<div class="card-header">
 					<h3 class="card-title text-center">Employee Account Registration</h3>
 				</div>
+				<div
+					th:object="${bindingResult}"
+					th:unless="${bindingResult.hasErrors()}">
+					<div
+						class="toast toast-error"
+						th:each="error: ${bindingResult.getAllErrors()}">
+						<p th:text="${error.getDefaultMessage()}"></p>
+					</div>
+				</div>
 				<div class="card-body">
 					<form
 						class="form-horizontal px-2 s-rounded"
