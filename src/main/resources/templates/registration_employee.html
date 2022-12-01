@@ -3,21 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css" />
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
-		<link rel="stylesheet" th:href="@{/css/styles.css}" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic&display=swap"
-			rel="stylesheet" />
+		<div th:insert="~{fragments/header :: copy}"></div>
 		<style>
 			#employee-register-container {
 				background-color: #135c9e;
