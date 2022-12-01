@@ -66,7 +66,7 @@
 					>My Orders</a
 				>
 			</section>
-			<section class="navbar-section">
+			<section class="navbar-section" sec:authorize="isAuthenticated()">
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
 		</header>
