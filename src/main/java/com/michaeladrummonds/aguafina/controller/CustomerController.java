@@ -3,6 +3,7 @@ package com.michaeladrummonds.aguafina.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.michaeladrummonds.aguafina.exceptions.UserNotAuthorizedException;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
@@ -33,10 +33,10 @@ public class CustomerController {
     private EmployeeServiceImpl employeeService;
 
     // displays all customers
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping({ "/customers", "/customers/page/{pageNo}" })
     public String listCustomers(Model model,
-            @RequestParam(value = "keyword", required = false) String keyword, Authentication authentication)
-            throws UserNotAuthorizedException {
+            @RequestParam(value = "keyword", required = false) String keyword, Authentication authentication) {
 
         String username = authentication.getName();
 
@@ -59,6 +59,7 @@ public class CustomerController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
     @GetMapping("/customers/edit/{id}")
     public String editCustomer(@PathVariable Integer id, Model model, Authentication authentication) {
         model.addAttribute("customer", customerService.getCustomerById(id));
@@ -70,6 +71,7 @@ public class CustomerController {
         return "edit_customer";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
     @PostMapping("/customers/{id}")
     public String updateCustomer(@PathVariable Integer id, @ModelAttribute("customer") Customer customer, Model model) {
         Customer existingCustomer = customerService.getCustomerById(id);

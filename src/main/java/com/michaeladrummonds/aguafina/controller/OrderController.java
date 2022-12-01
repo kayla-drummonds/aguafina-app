@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class OrderController {
     @Autowired
     private EmployeeServiceImpl employeeService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping("/orders")
     public String listAllOrders(Model model, Authentication authentication) {
         String username = authentication.getName();
@@ -45,6 +47,7 @@ public class OrderController {
         return "orders";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping("/orders/new")
     public String createOrder(Model model, Authentication authentication) {
         String username = authentication.getName();
@@ -60,6 +63,7 @@ public class OrderController {
         return "create_order";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @PostMapping("/orders")
     public String saveOrder(@ModelAttribute("order") Order order) {
         order.setCreationDate(new Date());
@@ -67,6 +71,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/orders/delete/{id}")
     public String deleteOrderById(@PathVariable Integer id) {
 
@@ -74,6 +79,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    @PreAuthorize("hasAnyAuthority('CUSTOMER')")
     @GetMapping("/orders/customer/{customer}")
     public String getOrdersByCustomer(Model model, @Param("customer") @ModelAttribute("customer") Customer customer) {
         Integer customerId = customer.getId();
@@ -84,6 +90,7 @@ public class OrderController {
         return "customer_orders";
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping("/orders/employee/{employee}")
     public String getOrdersByEmployee(Model model, @Param("employee") @ModelAttribute("employee") Employee employee) {
         Integer employeeId = employee.getId();
