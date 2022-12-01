@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<div th:insert="~{fragments/header :: copy}"></div>
+		<th:block th:insert="~{fragments/header :: header}"></th:block>
 		<style>
 			#login-container {
 				background-color: #135c9e;
@@ -111,6 +111,6 @@
 				</div>
 			</div>
 		</div>
-		<div th:insert="~{fragments/footer :: copy}"></div>
+		<div th:insert="~{fragments/footer :: footer}"></div>
 	</body>
 </html>

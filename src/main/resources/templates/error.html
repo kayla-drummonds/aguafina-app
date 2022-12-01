@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<div th:insert="~{fragments/header :: copy}"></div>
+		<th:block th:insert="~{fragments/header :: header}"></th:block>
 		<title th:text="'Error: Status Code ' + ${status}">Error</title>
 	</head>
 	<body>
@@ -46,6 +46,6 @@
 				<p><code th:text="'Stack Trace: ' + ${trace}">Stack Trace</code></p>
 			</div>
 		</div>
-		<div th:insert="~{footer :: copy}"></div>
+		<div th:insert="~{fragments/footer :: footer}"></div>
 	</body>
 </html>

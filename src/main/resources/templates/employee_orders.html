@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<div th:insert="~{fragments/header :: copy}"></div>
+		<th:block th:insert="~{fragments/header :: header}"></th:block>
 		<style>
 			.hero-body {
 				background-color: #afc1d2;
@@ -141,6 +141,6 @@
 				</div>
 			</div>
 		</div>
-		<div th:insert="~{footer :: copy}"></div>
+		<div th:insert="~{fragments/footer :: footer}"></div>
 	</body>
 </html>
