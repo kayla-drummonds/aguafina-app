@@ -21,8 +21,11 @@ import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.OrderServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping
+@Slf4j
 public class OrderController {
 
     @Autowired
@@ -45,6 +48,8 @@ public class OrderController {
 
         mav.addObject("employee", employee);
         mav.addObject("orders", orders);
+
+        log.debug("There are currently " + orders.size() + " completed orders.");
 
         return mav;
     }
@@ -75,6 +80,8 @@ public class OrderController {
         order.setCreationDate(new Date());
         orderService.saveOrder(order);
 
+        log.debug(order.toString());
+
         return mav;
     }
 
@@ -85,6 +92,7 @@ public class OrderController {
 
         orderService.deleteOrderById(id);
 
+        log.debug("order with id: " + id + " has been deleted.");
         return mav;
     }
 
@@ -100,6 +108,9 @@ public class OrderController {
         mav.addObject("ordersByCustomer", ordersByCustomer);
         mav.addObject("total", total);
 
+        log.debug(customer.getFirstName() + " " + customer.getLastName() + " has " + ordersByCustomer.size()
+                + " orders.");
+
         return mav;
     }
 
@@ -114,6 +125,10 @@ public class OrderController {
 
         mav.addObject("ordersByEmployee", ordersByEmployee);
         mav.addObject("orderCount", orderCount);
+
+        log.debug(employee.getFirstName() + " " + employee.getLastName() + " has " + ordersByEmployee.size()
+                + " orders.");
+
         return mav;
     }
 }

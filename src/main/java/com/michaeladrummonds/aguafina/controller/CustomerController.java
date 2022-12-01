@@ -51,6 +51,7 @@ public class CustomerController {
             List<Customer> customers = customerService.getCustomerByKeyword(keyword);
             mav.addObject("customers", customers);
             mav.addObject("keyword", keyword);
+            log.debug("There were " + customers.size() + " customers found with keyword: " + keyword);
         } else {
             List<Customer> customers = customerService.getAllCustomers();
             mav.addObject("customers", customers);
@@ -95,6 +96,7 @@ public class CustomerController {
 
         customerService.updateCustomer(existingCustomer);
 
+        log.debug(existingCustomer.getFirstName() + " " + existingCustomer.getLastName() + " has just been updated.");
         return mav;
     }
 }
