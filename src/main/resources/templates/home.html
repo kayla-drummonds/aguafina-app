@@ -21,7 +21,9 @@
 	<body>
 		<div class="container pt-2">
 			<div class="empty">
-				<p class="empty-title h5" th:text="'Welcome, ' + ${username} + '!'"></p>
+				<p
+					class="empty-title h5"
+					th:text="'Welcome, ' + ${user.getEmail()} + '!'"></p>
 				<p class="empty-subtitle">
 					Please choose one of the following options:
 				</p>
