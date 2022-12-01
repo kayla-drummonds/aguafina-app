@@ -40,21 +40,18 @@ public class OrderServiceImplIntegrationTest {
         u1.setId(1);
         u1.setEmail("jpowell0@hplussport.com");
         u1.setPassword("jpowell0");
-        u1.setRole("ADMIN");
         userRepository.save(u1);
 
         User u2 = new User();
         u2.setId(4);
         u2.setEmail("cshaw0@mlb.com");
         u2.setPassword("cshaw0");
-        u2.setRole("CUSTOMER");
         userRepository.save(u2);
 
         User u3 = new User();
         u3.setId(3);
         u3.setEmail("rdean2@hplussport.com");
         u3.setPassword("rdean2");
-        u3.setRole("EMPLOYEE");
         userRepository.save(u3);
 
         User u4 = new User();

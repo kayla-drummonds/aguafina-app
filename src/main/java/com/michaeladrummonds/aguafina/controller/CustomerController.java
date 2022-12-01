@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.michaeladrummonds.aguafina.config.AuthenticatedUserService;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
+import com.michaeladrummonds.aguafina.models.User;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 
@@ -32,15 +33,17 @@ public class CustomerController {
     @Autowired
     private EmployeeServiceImpl employeeService;
 
+    @Autowired
+    private AuthenticatedUserService authService;
+
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping({ "/customers", "/customers/page/{pageNo}" })
-    public ModelAndView listCustomers(@RequestParam(value = "keyword", required = false) String keyword,
-            Authentication authentication) {
+    public ModelAndView listCustomers(@RequestParam(value = "keyword", required = false) String keyword) {
         ModelAndView mav = new ModelAndView("customers");
 
-        String username = authentication.getName();
+        User user = authService.getCurrentUser();
 
-        Employee employee = employeeService.getEmployeeByEmail(username);
+        Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
 
         mav.addObject("employee", employee);
 
@@ -60,12 +63,13 @@ public class CustomerController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
     @GetMapping("/customers/edit/{id}")
-    public ModelAndView editCustomer(@PathVariable Integer id, Model model, Authentication authentication) {
+    public ModelAndView editCustomer(@PathVariable Integer id, Model model) {
 
         ModelAndView mav = new ModelAndView("edit_customer");
 
-        String username = authentication.getName();
-        Employee employee = employeeService.getEmployeeByEmail(username);
+        User user = authService.getCurrentUser();
+
+        Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
 
         mav.addObject("customer", customerService.getCustomerById(id));
         mav.addObject("employee", employee);

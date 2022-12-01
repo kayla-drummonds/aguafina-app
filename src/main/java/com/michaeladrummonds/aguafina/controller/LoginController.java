@@ -166,7 +166,7 @@ public class LoginController {
             mav.addObject("customer", customer);
         }
 
-        mav.addObject("username", user);
+        mav.addObject("user", user);
         return mav;
     }
 

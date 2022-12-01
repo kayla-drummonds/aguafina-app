@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.michaeladrummonds.aguafina.config.AuthenticatedUserService;
 import com.michaeladrummonds.aguafina.models.Employee;
+import com.michaeladrummonds.aguafina.models.User;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 
 @Controller
@@ -20,13 +22,17 @@ public class EmployeeController {
     @Autowired
     private EmployeeServiceImpl employeeService;
 
+    @Autowired
+    private AuthenticatedUserService authService;
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/employees")
-    public ModelAndView listAllEmployees(Authentication authentication) {
+    public ModelAndView listAllEmployees() {
         ModelAndView mav = new ModelAndView("employees");
 
-        String username = authentication.getName();
-        Employee employee = employeeService.getEmployeeByEmail(username);
+        User user = authService.getCurrentUser();
+
+        Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
         List<Employee> employees = employeeService.getAllEmployees();
 
         mav.addObject("employee", employee);

@@ -31,14 +31,12 @@ public class EmployeeServiceImplIntegrationTest {
         u1.setId(1);
         u1.setEmail("jpowell0@hplussport.com");
         u1.setPassword("jpowell0");
-        u1.setRole("ADMIN");
         userRepository.save(u1);
 
         User u2 = new User();
         u2.setId(2);
         u2.setEmail("egarcia1@hplussport.com");
         u2.setPassword("egarcia1");
-        u2.setRole("EMPLOYEE");
         userRepository.save(u2);
 
         Employee e = new Employee();
@@ -64,7 +62,6 @@ public class EmployeeServiceImplIntegrationTest {
         u1.setId(1);
         u1.setEmail("jpowell0@hplussport.com");
         u1.setPassword("jpowell0");
-        u1.setRole("ADMIN");
         userRepository.save(u1);
 
         Employee e = new Employee();
@@ -90,7 +87,6 @@ public class EmployeeServiceImplIntegrationTest {
         u2.setId(2);
         u2.setEmail("egarcia1@hplussport.com");
         u2.setPassword("egarcia1");
-        u2.setRole("EMPLOYEE");
         userRepository.save(u2);
 
         Employee e = new Employee();

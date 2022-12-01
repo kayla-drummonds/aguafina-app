@@ -30,7 +30,6 @@ public class CustomerServiceImplIntegrationTest {
         u.setId(4);
         u.setEmail("cshaw0@mlb.com");
         u.setPassword("cshaw0");
-        u.setRole("CUSTOMER");
         userRepository.save(u);
 
         Customer c = new Customer();
@@ -58,7 +57,6 @@ public class CustomerServiceImplIntegrationTest {
         u.setId(5);
         u.setEmail("ecarr1@oracle.com");
         u.setPassword("cshaw0");
-        u.setRole("CUSTOMER");
         userRepository.save(u);
 
         Customer c = new Customer();
