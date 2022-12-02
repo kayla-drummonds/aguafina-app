@@ -93,7 +93,7 @@ public class CustomerController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("customer", customer);
-            return "create_order";
+            return "edit_customer";
         } else {
             Customer existingCustomer = customerService.getCustomerById(id);
             existingCustomer.setId(customer.getId());

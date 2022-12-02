@@ -129,8 +129,13 @@ public class OrderController {
         List<Order> ordersByCustomer = orderService.getOrderByCustomerId(customerId, customer);
         Double total = orderService.getTotalByCustomerId(customerId, customer);
 
-        mav.addObject("ordersByCustomer", ordersByCustomer);
-        mav.addObject("total", total);
+        if (total != null && !ordersByCustomer.isEmpty()) {
+            mav.addObject("total", total);
+            mav.addObject("ordersByCustomer", ordersByCustomer);
+        } else {
+            total = 0.00;
+            mav.addObject("total", total);
+        }
 
         log.debug(customer.getFirstName() + " " + customer.getLastName() + " has " + ordersByCustomer.size()
                 + " orders.");

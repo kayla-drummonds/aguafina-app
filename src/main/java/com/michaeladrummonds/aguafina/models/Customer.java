@@ -40,7 +40,7 @@ public class Customer {
 
     @Column
     @NotEmpty(message = "First name is required.")
-    @Length(min = 2, max = 45, message = "First name must be between 2 and 45 characters")
+    @Length(min = 2, max = 45, message = "First name must be between 2 and 45 characters.")
     private String firstName;
 
     @Column
@@ -51,7 +51,6 @@ public class Customer {
     @Column
     @NotEmpty(message = "Email is required.")
     @Length(max = 255, message = "Email must be less than 255 characters.")
-    @EmailUnique
     private String email;
 
     @Column

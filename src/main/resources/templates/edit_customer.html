@@ -74,8 +74,7 @@
 			<div
 				class="card p-centered col-6 col-12 p-2 s-rounded"
 				th:object="${customer}"
-				id="update-customer-form"
-				onsubmit="return validateCustomer();">
+				id="update-customer-form">
 				<div class="card-header">
 					<h3
 						class="card-title text-center"
@@ -127,6 +126,8 @@
 									</div>
 									<div class="column col-12">
 										<p
+											th:if="${#fields.hasErrors('firstName')}"
+											th:errors="*{firstName}"
 											class="form-input-hint text-error"
 											id="firstNameHint"></p>
 									</div>
@@ -150,7 +151,11 @@
 											placeholder="Last Name" />
 									</div>
 									<div class="column col-12">
-										<p class="form-input-hint text-error" id="lastNameHint"></p>
+										<p
+											th:if="${#fields.hasErrors('lastName')}"
+											th:errors="*{lastName}"
+											class="form-input-hint text-error"
+											id="lastNameHint"></p>
 									</div>
 								</div>
 							</div>
@@ -172,7 +177,11 @@
 											placeholder="Email" />
 									</div>
 									<div class="column col-12">
-										<p class="form-input-hint text-error" id="emailHint"></p>
+										<p
+											th:if="${#fields.hasErrors('email')}"
+											th:errors="*{email}"
+											class="form-input-hint text-error"
+											id="emailHint"></p>
 									</div>
 								</div>
 							</div>
@@ -194,7 +203,11 @@
 											placeholder="###-###-####" />
 									</div>
 									<div class="column col-12">
-										<p class="form-input-hint text-error" id="phoneHint"></p>
+										<p
+											th:if="${#fields.hasErrors('phone')}"
+											th:errors="*{phone}"
+											class="form-input-hint text-error"
+											id="phoneHint"></p>
 									</div>
 								</div>
 							</div>
@@ -216,7 +229,11 @@
 											placeholder="Address" />
 									</div>
 									<div class="column col-12">
-										<p class="form-input-hint text-error" id="addressHint"></p>
+										<p
+											th:if="${#fields.hasErrors('address')}"
+											th:errors="*{address}"
+											class="form-input-hint text-error"
+											id="addressHint"></p>
 									</div>
 								</div>
 							</div>
@@ -238,7 +255,11 @@
 											placeholder="City" />
 									</div>
 									<div class="column col-12">
-										<p class="form-input-hint text-error" id="cityHint"></p>
+										<p
+											th:if="${#fields.hasErrors('city')}"
+											th:errors="*{city}"
+											class="form-input-hint text-error"
+											id="cityHint"></p>
 									</div>
 								</div>
 							</div>
@@ -260,7 +281,11 @@
 											placeholder="State" />
 									</div>
 									<div class="column col-12">
-										<p class="form-input-hint text-error" id="stateHint"></p>
+										<p
+											th:if="${#fields.hasErrors('state')}"
+											th:errors="*{state}"
+											class="form-input-hint text-error"
+											id="stateHint"></p>
 									</div>
 								</div>
 							</div>
@@ -282,7 +307,11 @@
 											placeholder="ZIP Code" />
 									</div>
 									<div class="column col-12">
-										<p class="form-input-hint text-error" id="zipCodeHint"></p>
+										<p
+											th:if="${#fields.hasErrors('zipCode')}"
+											th:errors="*{zipCode}"
+											class="form-input-hint text-error"
+											id="zipCodeHint"></p>
 									</div>
 								</div>
 							</div>
