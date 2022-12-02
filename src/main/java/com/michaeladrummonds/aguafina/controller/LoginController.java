@@ -94,6 +94,7 @@ public class LoginController {
             model.addAttribute("registrationDto", registrationDto);
             return "registration_customer";
         }
+
         User user = new User();
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());

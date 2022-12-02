@@ -3,20 +3,27 @@ package com.michaeladrummonds.aguafina.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.michaeladrummonds.aguafina.config.AuthenticatedUserService;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.models.Order;
+import com.michaeladrummonds.aguafina.models.User;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.OrderServiceImpl;
@@ -37,13 +44,17 @@ public class OrderController {
     @Autowired
     private EmployeeServiceImpl employeeService;
 
+    @Autowired
+    private AuthenticatedUserService authService;
+
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping("/orders")
-    public ModelAndView listAllOrders(Authentication authentication) {
+    public ModelAndView listAllOrders() {
         ModelAndView mav = new ModelAndView("orders");
 
-        String username = authentication.getName();
-        Employee employee = employeeService.getEmployeeByEmail(username);
+        User user = authService.getCurrentUser();
+        Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
+
         List<Order> orders = orderService.getAllOrders();
 
         mav.addObject("employee", employee);
@@ -56,33 +67,46 @@ public class OrderController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping("/orders/new")
-    public ModelAndView createOrder(Authentication authentication) {
-        ModelAndView mav = new ModelAndView("create_order");
+    public String createOrder(Model model) {
 
-        String username = authentication.getName();
-        Employee employee = employeeService.getEmployeeByEmail(username);
+        User user = authService.getCurrentUser();
+        Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
+
         Order order = new Order();
         List<Customer> customers = customerService.getAllCustomers();
         List<Employee> employees = employeeService.getAllEmployees();
 
-        mav.addObject("employee", employee);
-        mav.addObject("order", order);
-        mav.addObject("customers", customers);
-        mav.addObject("employees", employees);
-        return mav;
+        model.addAttribute("employeeC", employee);
+        model.addAttribute("order", order);
+        model.addAttribute("customers", customers);
+        model.addAttribute("employees", employees);
+        return "create_order";
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @PostMapping("/orders")
-    public ModelAndView saveOrder(Order order) {
-        ModelAndView mav = new ModelAndView("redirect:/orders");
+    public String saveOrder(Model model, @Valid @ModelAttribute("order") Order order, BindingResult bindingResult) {
 
-        order.setCreationDate(new Date());
-        orderService.saveOrder(order);
+        for (ObjectError e : bindingResult.getAllErrors()) {
+            log.debug(e.getDefaultMessage());
+        }
 
-        log.debug(order.toString());
+        if (bindingResult.hasErrors()) {
+            List<Customer> customers = customerService.getAllCustomers();
+            List<Employee> employees = employeeService.getAllEmployees();
+            model.addAttribute("customers", customers);
+            model.addAttribute("employees", employees);
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("order", order);
+            return "create_order";
+        } else {
+            order.setCreationDate(new Date());
+            orderService.saveOrder(order);
 
-        return mav;
+            log.debug(order.toString());
+            return "redirect:/orders";
+        }
+
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")

@@ -95,10 +95,7 @@ function validateCustomer() {
 function validateOrder() {
     let customer = document.newOrderForm.customer;
     let employee = document.newOrderForm.employee;
-    let product = document.newOrderForm.product;
-    let quantity = document.newOrderForm.q;
     let price = document.newOrderForm.p;
-
 
     if (customer.value == "") {
         document.getElementById("customer").classList.add("is-error");
@@ -116,24 +113,6 @@ function validateOrder() {
     } else {
         employee = document.getElementById("employee").value;
         document.getElementById("employee").classList.add("is-success");
-    }
-
-    if (product.value == "") {
-        document.getElementById("product").classList.add("is-error");
-        document.getElementById("productHint").innerHTML = "Please select a product.";
-        return false;
-    } else {
-        product = document.getElementById("product").value;
-        document.getElementById("product").classList.add("is-success");
-    }
-
-    if (quantity.value == "" || quantity.value == 0 || quantity.value < 0 || quantity.value >= 10) {
-        document.getElementById("q").classList.add("is-error");
-        document.getElementById("quantityHint").innerHTML = "Please enter a quantity between 1 and 10.";
-        return false;
-    } else {
-        q = document.getElementById("q").value;
-        document.getElementById("q").classList.add("is-success");
     }
 
     if (price.value == "" || price.value == 0 || price.value < 2 || price.value > 4 || isNaN(price.value)) {

@@ -56,15 +56,6 @@
 				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 				<a class="btn btn-link active" th:href="@{/orders}">All Orders</a>
 			</section>
-			<section
-				class="navbar-section"
-				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
-				<a
-					class="btn btn-link"
-					th:href="@{/orders/employee/{employee}(employee = ${employee.id})}"
-					>My Orders</a
-				>
-			</section>
 			<section class="navbar-section" sec:authorize="isAuthenticated()">
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
@@ -98,6 +89,7 @@
 											class="form-select"
 											title="customer"
 											th:field="*{customer.id}"
+											th:classappend="${#fields.hasErrors('customer.id') ? 'is-error' : ''}"
 											id="customer"
 											name="customer">
 											<option value="" selected>--Select Customer--</option>
@@ -108,7 +100,9 @@
 												Customer ID: Last, First
 											</option>
 										</select>
-										<p class="form-input-hint" id="customerHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="customerHint"></p>
 									</div>
 								</div>
 							</div>
@@ -124,6 +118,7 @@
 											class="form-select"
 											title="employee"
 											th:field="*{employee.id}"
+											th:classappend="${#fields.hasErrors('employee.id') ? 'is-error' : ''}"
 											id="employee"
 											name="employee">
 											<option value="" selected>--Select Employee--</option>
@@ -134,7 +129,9 @@
 												Employee ID
 											</option>
 										</select>
-										<p class="form-input-hint" id="employeeHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="employeeHint"></p>
 									</div>
 								</div>
 							</div>
@@ -151,7 +148,8 @@
 											title="product"
 											id="product"
 											name="product"
-											th:field="*{product}">
+											th:field="*{product}"
+											th:classappend="${#fields.hasErrors('product') ? 'is-error' : ''}">
 											<option value="" selected>--Select Variety--</option>
 											<option th:value="MWBLU20">Blueberry 20 oz.</option>
 											<option th:value="MWBLU32">Blueberry 32 oz.</option>
@@ -164,7 +162,13 @@
 											<option th:value="MWSTR20">Strawberry 20 oz.</option>
 											<option th:value="MWSTR32">Strawberry 20 oz.</option>
 										</select>
-										<p class="form-input-hint" id="productHint"></p>
+									</div>
+									<div class="column col-12">
+										<p
+											th:if="${#fields.hasErrors('product')}"
+											th:errors="*{product}"
+											class="form-input-hint text-error"
+											id="productHint"></p>
 									</div>
 								</div>
 							</div>
@@ -181,8 +185,15 @@
 											type="number"
 											name="q"
 											id="q"
-											th:field="*{quantity}" />
-										<p class="form-input-hint" id="quantityHint"></p>
+											th:field="*{quantity}"
+											th:classappend="${#fields.hasErrors('quantity') ? 'is-error' : ''}" />
+									</div>
+									<div class="column col-12">
+										<p
+											th:if="${#fields.hasErrors('quantity')}"
+											th:errors="*{quantity}"
+											class="form-input-hint text-error"
+											id="quantityHint"></p>
 									</div>
 								</div>
 							</div>
@@ -194,11 +205,11 @@
 									<div class="column col-8 col-sm-12 col-md-12">
 										<label class="form-radio">
 											<input type="radio" name="p" value="2" checked />
-											<i class="form-icon"></i> $2.00
+											<em class="form-icon"></em> $2.00
 										</label>
 										<label class="form-radio">
 											<input type="radio" name="p" value="4" />
-											<i class="form-icon"></i> $4.00
+											<em class="form-icon"></em> $4.00
 										</label>
 									</div>
 								</div>
