@@ -20,7 +20,7 @@ public class UserRegistrationDto {
 
     @NotEmpty(message = "Email is required.")
     @Length(min = 5, max = 256, message = "Email must be less than 256 characters.")
-    @EmailUnique
+    @EmailUnique(message = "User already exists with this email.")
     private String email;
 
     @NotEmpty(message = "Password is required.")

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -84,7 +85,7 @@ public class LoginController {
         ModelAndView mav = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
-            mav.setViewName("redirect:/registration/customer?error");
+            mav.setViewName("registration_customer");
             mav.addObject("bindingResult", bindingResult);
             mav.addObject("user", registrationDto);
             return mav;
@@ -119,12 +120,12 @@ public class LoginController {
     }
 
     @PostMapping("/registration/employee")
-    public ModelAndView registerEmployeeUser(@Valid UserRegistrationDto registrationDto,
+    public ModelAndView registerEmployeeUser(@Valid @ModelAttribute("user") UserRegistrationDto registrationDto,
             BindingResult bindingResult) {
-        ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView("redirect:/registration/employee?success");
 
         if (bindingResult.hasErrors()) {
-            mav.setViewName("redirect:/registration/customer?error");
+            mav.setViewName("redirect:/registration/employee?error");
             mav.addObject("bindingResult", bindingResult);
             mav.addObject("user", registrationDto);
             return mav;
