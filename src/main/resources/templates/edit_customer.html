@@ -121,9 +121,14 @@
 											class="form-input"
 											type="text"
 											th:field="*{firstName}"
+											th:classappend="${#fields.hasErrors('firstName') ? 'is-error' : ''}"
 											id="firstName"
 											placeholder="First Name" />
-										<p class="form-input-hint" id="firstNameHint"></p>
+									</div>
+									<div class="column col-12">
+										<p
+											class="form-input-hint text-error"
+											id="firstNameHint"></p>
 									</div>
 								</div>
 							</div>
@@ -140,9 +145,12 @@
 											class="form-input"
 											type="text"
 											th:field="*{lastName}"
+											th:classappend="${#fields.hasErrors('lastName') ? 'is-error' : ''}"
 											id="lastName"
 											placeholder="Last Name" />
-										<p class="form-input-hint" id="lastNameHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="lastNameHint"></p>
 									</div>
 								</div>
 							</div>
@@ -159,9 +167,12 @@
 											class="form-input"
 											type="email"
 											th:field="*{email}"
+											th:classappend="${#fields.hasErrors('email') ? 'is-error' : ''}"
 											id="email"
 											placeholder="Email" />
-										<p class="form-input-hint" id="emailHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="emailHint"></p>
 									</div>
 								</div>
 							</div>
@@ -178,10 +189,12 @@
 											class="form-input"
 											type="tel"
 											th:field="*{phone}"
+											th:classappend="${#fields.hasErrors('phone') ? 'is-error' : ''}"
 											id="phone"
-											pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
 											placeholder="###-###-####" />
-										<p class="form-input-hint" id="phoneHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="phoneHint"></p>
 									</div>
 								</div>
 							</div>
@@ -198,9 +211,12 @@
 											class="form-input"
 											type="text"
 											th:field="*{address}"
+											th:classappend="${#fields.hasErrors('address') ? 'is-error' : ''}"
 											id="address"
 											placeholder="Address" />
-										<p class="form-input-hint" id="addressHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="addressHint"></p>
 									</div>
 								</div>
 							</div>
@@ -217,9 +233,12 @@
 											class="form-input"
 											type="text"
 											th:field="*{city}"
+											th:classappend="${#fields.hasErrors('city') ? 'is-error' : ''}"
 											id="city"
 											placeholder="City" />
-										<p class="form-input-hint" id="cityHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="cityHint"></p>
 									</div>
 								</div>
 							</div>
@@ -236,9 +255,12 @@
 											class="form-input"
 											type="text"
 											th:field="*{state}"
+											th:classappend="${#fields.hasErrors('state') ? 'is-error' : ''}"
 											id="state"
 											placeholder="State" />
-										<p class="form-input-hint" id="stateHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="stateHint"></p>
 									</div>
 								</div>
 							</div>
@@ -255,9 +277,12 @@
 											class="form-input"
 											type="text"
 											th:field="*{zipCode}"
+											th:classappend="${#fields.hasErrors('zipCode') ? 'is-error' : ''}"
 											id="zipCode"
 											placeholder="ZIP Code" />
-										<p class="form-input-hint" id="zipCodeHint"></p>
+									</div>
+									<div class="column col-12">
+										<p class="form-input-hint text-error" id="zipCodeHint"></p>
 									</div>
 								</div>
 							</div>

@@ -79,10 +79,8 @@
 		</header>
 		<div class="container pt-2 pb-2">
 			<div class="columns">
-				<div class="column col-4" id="create-customer-container">
-					<a th:href="@{/customers/new}" class="btn btn-lg" id="create-button"
-						>Create New Customer</a
-					>
+				<div class="column col-4 invisible" id="create-customer-container">
+					Invisible Placeholder
 				</div>
 				<div class="column col-4" id="customers-header-container">
 					<h2 class="text-center">Customers</h2>
@@ -93,7 +91,7 @@
 							<input
 								class="form-input"
 								type="text"
-								placeholder="Search by Email or Phone"
+								placeholder="Email or Phone"
 								th:name="keyword" />
 							<button
 								type="submit"

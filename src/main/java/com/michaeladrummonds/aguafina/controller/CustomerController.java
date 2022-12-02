@@ -2,11 +2,16 @@ package com.michaeladrummonds.aguafina.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,39 +69,48 @@ public class CustomerController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
     @GetMapping("/customers/edit/{id}")
-    public ModelAndView editCustomer(@PathVariable Integer id, Model model) {
-
-        ModelAndView mav = new ModelAndView("edit_customer");
-
+    public String editCustomer(@PathVariable Integer id, Model model) {
         User user = authService.getCurrentUser();
 
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
 
-        mav.addObject("customer", customerService.getCustomerById(id));
-        mav.addObject("employee", employee);
+        model.addAttribute("customer", customerService.getCustomerById(id));
+        model.addAttribute("employee", employee);
 
-        return mav;
+        return "edit_customer";
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
     @PostMapping("/customers/{id}")
-    public ModelAndView updateCustomer(@PathVariable Integer id, Customer customer) {
+    public String updateCustomer(Model model, @PathVariable Integer id,
+            @Valid @ModelAttribute("customer") Customer customer,
+            BindingResult bindingResult) {
 
-        ModelAndView mav = new ModelAndView("redirect:/home");
+        for (ObjectError e : bindingResult.getAllErrors()) {
+            log.debug(e.getDefaultMessage());
+        }
 
-        Customer existingCustomer = customerService.getCustomerById(id);
-        existingCustomer.setId(customer.getId());
-        existingCustomer.setFirstName(customer.getFirstName());
-        existingCustomer.setLastName(customer.getLastName());
-        existingCustomer.setEmail(customer.getEmail());
-        existingCustomer.setAddress(customer.getAddress());
-        existingCustomer.setCity(customer.getCity());
-        existingCustomer.setState(customer.getState());
-        existingCustomer.setZipCode(customer.getZipCode());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("customer", customer);
+            return "create_order";
+        } else {
+            Customer existingCustomer = customerService.getCustomerById(id);
+            existingCustomer.setId(customer.getId());
+            existingCustomer.setFirstName(customer.getFirstName());
+            existingCustomer.setLastName(customer.getLastName());
+            existingCustomer.setEmail(customer.getEmail());
+            existingCustomer.setAddress(customer.getAddress());
+            existingCustomer.setCity(customer.getCity());
+            existingCustomer.setState(customer.getState());
+            existingCustomer.setZipCode(customer.getZipCode());
 
-        customerService.updateCustomer(existingCustomer);
+            customerService.updateCustomer(existingCustomer);
 
-        log.debug(existingCustomer.getFirstName() + " " + existingCustomer.getLastName() + " has just been updated.");
-        return mav;
+            log.debug(
+                    existingCustomer.getFirstName() + " " + existingCustomer.getLastName() + " has just been updated.");
+            return "redirect:/home";
+        }
+
     }
 }

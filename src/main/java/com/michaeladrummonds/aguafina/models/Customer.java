@@ -56,7 +56,7 @@ public class Customer {
 
     @Column
     @NotEmpty(message = "Phone number is required.")
-    @Length(max = 12, message = "Phone number must be no more than 12 characters.")
+    @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Phone number must only contain numbers and dashes.")
     private String phone;
 
     @Column
