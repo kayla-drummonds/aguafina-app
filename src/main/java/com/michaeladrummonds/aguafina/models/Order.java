@@ -13,7 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,18 +39,24 @@ public class Order {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id")
+    @NotEmpty(message = "Customer is required.")
     private Customer customer;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "employee_id")
+    @NotEmpty(message = "Employee is required.")
     private Employee employee;
 
     @Column
     @NotNull
+    @NotEmpty(message = "Product is required.")
     private String product;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "Quantity is required.")
+    @Positive(message = "Quantity must be positive.")
+    @Max(value = 10, message = "Quantity must be less than or equal to 10.")
+    @Min(value = 1, message = "Quantity must be at least 1.")
     private Integer quantity;
 
     @Column
