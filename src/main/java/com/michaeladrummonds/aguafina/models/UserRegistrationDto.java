@@ -7,15 +7,13 @@ import org.hibernate.validator.constraints.Length;
 
 import com.michaeladrummonds.aguafina.validation.EmailUnique;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@ToString
 public class UserRegistrationDto {
 
     @NotEmpty(message = "Email is required.")
@@ -32,10 +30,10 @@ public class UserRegistrationDto {
     private String confirmPassword;
 
     @NotEmpty(message = "First name is required.")
-    @Length(min = 3, max = 45, message = "First name must be between 3 to 45 characters.")
+    @Length(min = 2, max = 45, message = "First name must be between 2 to 45 characters.")
     private String firstName;
 
     @NotEmpty(message = "Last name is required.")
-    @Length(min = 3, max = 45, message = "Last name must be between 3 to 45 characters.")
+    @Length(min = 2, max = 45, message = "Last name must be between 2 to 45 characters.")
     private String lastName;
 }

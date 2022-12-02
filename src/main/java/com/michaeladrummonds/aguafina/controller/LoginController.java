@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,14 +73,15 @@ public class LoginController {
     public ModelAndView createNewCustomerUser() {
         ModelAndView mav = new ModelAndView("registration_customer");
 
-        UserRegistrationDto user = new UserRegistrationDto();
-        mav.addObject("user", user);
+        UserRegistrationDto registrationDto = new UserRegistrationDto();
+        mav.addObject("registrationDto", registrationDto);
 
         return mav;
     }
 
     @PostMapping("/registration/customer")
-    public ModelAndView registerCustomerUser(@Valid UserRegistrationDto registrationDto,
+    public ModelAndView registerCustomerUser(
+            @Valid @ModelAttribute("registrationDto") UserRegistrationDto registrationDto,
             BindingResult bindingResult) {
 
         ModelAndView mav = new ModelAndView();
@@ -87,7 +89,7 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             mav.setViewName("registration_customer");
             mav.addObject("bindingResult", bindingResult);
-            mav.addObject("user", registrationDto);
+            mav.addObject("registrationDto", registrationDto);
             return mav;
         } else {
             User user = new User();
@@ -114,20 +116,21 @@ public class LoginController {
     @GetMapping("/registration/employee")
     public ModelAndView createNewEmployeeUser() {
         ModelAndView mav = new ModelAndView("registration_employee");
-        UserRegistrationDto user = new UserRegistrationDto();
-        mav.addObject("user", user);
+        UserRegistrationDto registrationDto = new UserRegistrationDto();
+        mav.addObject("registrationDto", registrationDto);
         return mav;
     }
 
     @PostMapping("/registration/employee")
-    public ModelAndView registerEmployeeUser(@Valid @ModelAttribute("user") UserRegistrationDto registrationDto,
+    public ModelAndView registerEmployeeUser(
+            @Valid @ModelAttribute("registrationDto") UserRegistrationDto registrationDto,
             BindingResult bindingResult) {
         ModelAndView mav = new ModelAndView("redirect:/registration/employee?success");
 
         if (bindingResult.hasErrors()) {
             mav.setViewName("redirect:/registration/employee?error");
             mav.addObject("bindingResult", bindingResult);
-            mav.addObject("user", registrationDto);
+            mav.addObject("registrationDto", registrationDto);
             return mav;
         } else {
             User user = new User();

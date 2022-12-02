@@ -36,12 +36,18 @@
 						<a th:href="@{/login}">log in.</a>
 					</div>
 				</div>
+				<div th:if="${param.error}">
+					<div class="toast toast-success">
+						You have been successfully registered. Please
+						<a th:href="@{/login}">log in.</a>
+					</div>
+				</div>
 				<div class="card-body">
 					<form
 						class="form-horizontal px-2 s-rounded"
 						th:action="@{/registration/employee}"
 						method="post"
-						th:object="${user}"
+						th:object="${registrationDto}"
 						name="newEmployeeUserForm">
 						<div class="columns">
 							<div class="column col-12 py-2">
