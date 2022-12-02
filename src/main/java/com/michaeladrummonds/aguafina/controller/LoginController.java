@@ -12,8 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +32,11 @@ import com.michaeladrummonds.aguafina.repository.UserRoleRepository;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping
+@Slf4j
 public class LoginController {
 
     @Autowired
@@ -70,88 +74,81 @@ public class LoginController {
     }
 
     @GetMapping("/registration/customer")
-    public ModelAndView createNewCustomerUser() {
-        ModelAndView mav = new ModelAndView("registration_customer");
-
+    public String createNewCustomerUser(Model model) {
         UserRegistrationDto registrationDto = new UserRegistrationDto();
-        mav.addObject("registrationDto", registrationDto);
-
-        return mav;
+        model.addAttribute("registrationDto", registrationDto);
+        return "registration_customer";
     }
 
     @PostMapping("/registration/customer")
-    public ModelAndView registerCustomerUser(
+    public String registerCustomerUser(Model model,
             @Valid @ModelAttribute("registrationDto") UserRegistrationDto registrationDto,
             BindingResult bindingResult) {
 
-        ModelAndView mav = new ModelAndView();
-
-        if (bindingResult.hasErrors()) {
-            mav.setViewName("registration_customer");
-            mav.addObject("bindingResult", bindingResult);
-            mav.addObject("registrationDto", registrationDto);
-            return mav;
-        } else {
-            User user = new User();
-
-            String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
-
-            user.setFirstName(registrationDto.getFirstName());
-            user.setLastName(registrationDto.getLastName());
-            user.setEmail(registrationDto.getEmail());
-            user.setPassword(encodedPassword);
-
-            userRepository.save(user);
-
-            UserRole ur = new UserRole();
-            ur.setRoleName("CUSTOMER");
-            ur.setUserId(user.getId());
-
-            userRoleRepository.save(ur);
+        for (ObjectError e : bindingResult.getAllErrors()) {
+            log.debug(e.getDefaultMessage());
         }
 
-        return mav;
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("registrationDto", registrationDto);
+            return "registration_customer";
+        }
+        User user = new User();
+
+        String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
+
+        user.setFirstName(registrationDto.getFirstName());
+        user.setLastName(registrationDto.getLastName());
+        user.setEmail(registrationDto.getEmail());
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+
+        UserRole ur = new UserRole();
+        ur.setRoleName("CUSTOMER");
+        ur.setUserId(user.getId());
+
+        userRoleRepository.save(ur);
+
+        return "redirect:/registration/customer?success";
     }
 
     @GetMapping("/registration/employee")
-    public ModelAndView createNewEmployeeUser() {
-        ModelAndView mav = new ModelAndView("registration_employee");
+    public String createNewEmployeeUser(Model model) {
         UserRegistrationDto registrationDto = new UserRegistrationDto();
-        mav.addObject("registrationDto", registrationDto);
-        return mav;
+        model.addAttribute("registrationDto", registrationDto);
+        return "registration_employee";
     }
 
     @PostMapping("/registration/employee")
-    public ModelAndView registerEmployeeUser(
+    public String registerEmployeeUser(Model model,
             @Valid @ModelAttribute("registrationDto") UserRegistrationDto registrationDto,
             BindingResult bindingResult) {
-        ModelAndView mav = new ModelAndView("redirect:/registration/employee?success");
 
         if (bindingResult.hasErrors()) {
-            mav.setViewName("redirect:/registration/employee?error");
-            mav.addObject("bindingResult", bindingResult);
-            mav.addObject("registrationDto", registrationDto);
-            return mav;
-        } else {
-            User user = new User();
-
-            String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
-
-            user.setFirstName(registrationDto.getFirstName());
-            user.setLastName(registrationDto.getLastName());
-            user.setEmail(registrationDto.getEmail());
-            user.setPassword(encodedPassword);
-
-            userRepository.save(user);
-
-            UserRole ur = new UserRole();
-            ur.setRoleName("EMPLOYEE");
-            ur.setUserId(user.getId());
-
-            userRoleRepository.save(ur);
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("registrationDto", registrationDto);
+            return "registration_employee";
         }
+        User user = new User();
 
-        return mav;
+        String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
+
+        user.setFirstName(registrationDto.getFirstName());
+        user.setLastName(registrationDto.getLastName());
+        user.setEmail(registrationDto.getEmail());
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+
+        UserRole ur = new UserRole();
+        ur.setRoleName("EMPLOYEE");
+        ur.setUserId(user.getId());
+
+        userRoleRepository.save(ur);
+
+        return "redirect:/registration/employee?success";
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE', 'CUSTOMER')")

@@ -29,6 +29,12 @@
 				<div class="card-header">
 					<h3 class="card-title text-center">Customer Account Registration</h3>
 				</div>
+				<div th:if="${param.success}">
+					<div class="toast toast-success">
+						You have been successfully registered. Please
+						<a th:href="@{/login}">log in.</a>
+					</div>
+				</div>
 				<div class="card-body">
 					<form
 						class="form-horizontal px-2 s-rounded"
@@ -48,13 +54,17 @@
 											id="firstName"
 											class="form-input"
 											type="text"
-											th:field="*{firstName}" />
+											th:field="*{firstName}"
+											th:classappend="${#fields.hasErrors('firstName') ? 'is-error' : ''}" />
 									</div>
-									<p
-										th:if="${#fields.hasErrors('firstName')}"
-										th:errors="*{firstName}"
-										class="form-input-hint"
-										id="firstNameHint"></p>
+									<div class="column col-12">
+										<em class="icon icon-cross text-error"></em>
+										<p
+											th:if="${#fields.hasErrors('firstName')}"
+											th:errors="*{firstName}"
+											class="form-input-hint text-error"
+											id="firstNameHint"></p>
+									</div>
 								</div>
 							</div>
 							<div class="column col-12 py-2">
@@ -69,13 +79,16 @@
 											id="lastName"
 											class="form-input"
 											type="text"
-											th:field="*{lastName}" />
+											th:field="*{lastName}"
+											th:classappend="${#fields.hasErrors('lastName') ? 'is-error' : ''}" />
 									</div>
-									<p
-										th:if="${#fields.hasErrors('lastName')}"
-										th:errors="*{lastName}"
-										class="form-input-hint"
-										id="lastNameHint"></p>
+									<div class="column col-12">
+										<p
+											th:if="${#fields.hasErrors('lastName')}"
+											th:errors="*{lastName}"
+											class="form-input-hint text-error"
+											id="lastNameHint"></p>
+									</div>
 								</div>
 							</div>
 							<div class="column col-12 py-2">
@@ -90,13 +103,16 @@
 											id="email"
 											class="form-input"
 											type="email"
-											th:field="*{email}" />
+											th:field="*{email}"
+											th:classappend="${#fields.hasErrors('email') ? 'is-error' : ''}" />
 									</div>
-									<p
-										th:if="${#fields.hasErrors('email')}"
-										th:errors="*{email}"
-										class="form-input-hint"
-										id="emailHint"></p>
+									<div class="column col-12">
+										<p
+											th:if="${#fields.hasErrors('email')}"
+											th:errors="*{email}"
+											class="form-input-hint text-error"
+											id="emailHint"></p>
+									</div>
 								</div>
 							</div>
 							<div class="column col-12 py-2">
@@ -111,13 +127,16 @@
 											id="password"
 											class="form-input"
 											type="password"
-											th:field="*{password}" />
+											th:field="*{password}"
+											th:classappend="${#fields.hasErrors('password') ? 'is-error' : ''}" />
 									</div>
-									<p
-										th:if="${#fields.hasErrors('password')}"
-										th:errors="*{password}"
-										class="form-input-hint"
-										id="passwordHint"></p>
+									<div class="column col-12">
+										<p
+											th:if="${#fields.hasErrors('password')}"
+											th:errors="*{password}"
+											class="form-input-hint text-error"
+											id="passwordHint"></p>
+									</div>
 								</div>
 								<div class="form-group">
 									<div class="column col-4">
@@ -132,13 +151,16 @@
 											id="confirmPassword"
 											class="form-input"
 											type="password"
-											th:field="*{confirmPassword}" />
+											th:field="*{confirmPassword}"
+											th:classappend="${#fields.hasErrors('confirmPassword') ? 'is-error' : ''}" />
 									</div>
-									<p
-										th:if="${#fields.hasErrors('confirmPassword')}"
-										th:errors="*{confirmPassword}"
-										class="form-input-hint"
-										id="confirmPasswordHint"></p>
+									<div class="column col-12">
+										<p
+											th:if="${#fields.hasErrors('confirmPassword')}"
+											th:errors="*{confirmPassword}"
+											class="form-input-hint text-error"
+											id="confirmPasswordHint"></p>
+									</div>
 								</div>
 							</div>
 						</div>

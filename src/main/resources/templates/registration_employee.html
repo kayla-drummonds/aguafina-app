@@ -36,19 +36,14 @@
 						<a th:href="@{/login}">log in.</a>
 					</div>
 				</div>
-				<div th:if="${param.error}">
-					<div class="toast toast-success">
-						You have been successfully registered. Please
-						<a th:href="@{/login}">log in.</a>
-					</div>
-				</div>
 				<div class="card-body">
 					<form
 						class="form-horizontal px-2 s-rounded"
 						th:action="@{/registration/employee}"
 						method="post"
 						th:object="${registrationDto}"
-						name="newEmployeeUserForm">
+						name="newUserForm"
+						id="newUserForm">
 						<div class="columns">
 							<div class="column col-12 py-2">
 								<div class="form-group">
@@ -63,13 +58,16 @@
 											class="form-input"
 											type="text"
 											th:field="*{firstName}"
-											name="firstName" />
+											name="firstName"
+											th:classappend="${#fields.hasErrors('firstName') ? 'is-error' : ''}" />
 									</div>
 									<p
 										th:if="${#fields.hasErrors('firstName')}"
 										th:errors="*{firstName}"
-										class="form-input-hint"
-										id="firstNameHint"></p>
+										class="form-input-hint text-error"
+										id="firstNameHint">
+										Error
+									</p>
 								</div>
 							</div>
 							<div class="column col-12 py-2">
@@ -85,12 +83,13 @@
 											class="form-input"
 											type="text"
 											th:field="*{lastName}"
-											name="lastName" />
+											name="lastName"
+											th:classappend="${#fields.hasErrors('lastName') ? 'is-error' : ''}" />
 									</div>
 									<p
 										th:if="${#fields.hasErrors('lastName')}"
 										th:errors="*{lastName}"
-										class="form-input-hint"
+										class="form-input-hint text-error"
 										id="lastNameHint"></p>
 								</div>
 							</div>
@@ -107,12 +106,13 @@
 											class="form-input"
 											type="email"
 											th:field="*{email}"
-											name="email" />
+											name="email"
+											th:classappend="${#fields.hasErrors('email') ? 'is-error' : ''}" />
 									</div>
 									<p
 										th:if="${#fields.hasErrors('email')}"
 										th:errors="*{email}"
-										class="form-input-hint"
+										class="form-input-hint text-error"
 										id="emailHint"></p>
 								</div>
 							</div>
@@ -129,12 +129,13 @@
 											class="form-input"
 											type="password"
 											th:field="*{password}"
-											name="password" />
+											name="password"
+											th:classappend="${#fields.hasErrors('password') ? 'is-error' : ''}" />
 									</div>
 									<p
 										th:if="${#fields.hasErrors('password')}"
 										th:errors="*{password}"
-										class="form-input-hint"
+										class="form-input-hint text-error"
 										id="passwordHint"></p>
 								</div>
 								<div class="form-group">
@@ -151,12 +152,13 @@
 											class="form-input"
 											type="password"
 											th:field="*{confirmPassword}"
-											name="confirmPassword" />
+											name="confirmPassword"
+											th:classappend="${#fields.hasErrors('confirmPassword') ? 'is-error' : ''}" />
 									</div>
 									<p
 										th:if="${#fields.hasErrors('confirmPassword')}"
 										th:errors="*{confirmPassword}"
-										class="form-input-hint"
+										class="form-input-hint text-error"
 										id="confirmPasswordHint"></p>
 								</div>
 							</div>
