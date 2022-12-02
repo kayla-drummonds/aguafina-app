@@ -112,6 +112,10 @@ public class LoginController {
 
         userRoleRepository.save(ur);
 
+        Customer existingCustomer = customerService.getCustomerByEmail(user.getEmail());
+        existingCustomer.setUser(user);
+        customerService.updateCustomer(existingCustomer);
+
         return "redirect:/registration/customer?success";
     }
 
@@ -148,6 +152,10 @@ public class LoginController {
         ur.setUserId(user.getId());
 
         userRoleRepository.save(ur);
+
+        Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
+        employee.setUser(user);
+        employeeService.updateEmployee(employee);
 
         return "redirect:/registration/employee?success";
     }

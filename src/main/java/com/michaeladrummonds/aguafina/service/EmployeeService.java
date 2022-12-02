@@ -14,4 +14,6 @@ public interface EmployeeService {
     Employee getEmployeeById(Integer id);
 
     Employee getEmployeeByEmail(String email);
+
+    Employee updateEmployee(Employee employee);
 }
