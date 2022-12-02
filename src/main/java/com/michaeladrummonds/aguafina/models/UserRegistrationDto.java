@@ -5,6 +5,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.michaeladrummonds.aguafina.validation.EmailUnique;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ public class UserRegistrationDto {
 
     @NotEmpty(message = "Email is required.")
     @Length(min = 5, max = 256, message = "Email must be less than 256 characters.")
+    @EmailUnique
     private String email;
 
     @NotEmpty(message = "Password is required.")

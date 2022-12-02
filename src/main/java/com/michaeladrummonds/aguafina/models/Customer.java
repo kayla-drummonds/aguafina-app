@@ -13,7 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.michaeladrummonds.aguafina.validation.EmailUnique;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,35 +39,44 @@ public class Customer {
     private Integer id;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "First name is required.")
+    @Length(min = 2, max = 45, message = "First name must be between 2 and 45 characters")
     private String firstName;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "Last name is required.")
+    @Length(min = 2, max = 45, message = "Last name must be between 2 and 45 characters.")
     private String lastName;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "Email is required.")
+    @Length(max = 255, message = "Email must be less than 255 characters.")
+    @EmailUnique
     private String email;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "Phone number is required.")
+    @Length(max = 12, message = "Phone number must be no more than 12 characters.")
     private String phone;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "Street address is required.")
+    @Length(max = 45, message = "Street address must be less than 45 characters.")
     private String address;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "City is required.")
+    @Length(max = 45, message = "City must be less than 45 characters.")
     private String city;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "State is required.")
+    @Length(max = 45, message = "State must be less than 45 characters.")
     private String state;
 
     @Column
-    @NotNull
+    @NotEmpty(message = "Zip code is required.")
+    @Pattern(regexp = "^\\d{5}$", message = "Zip code must be 5 digits long and only contain numbers.")
     private String zipCode;
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "customer", fetch = FetchType.LAZY)
