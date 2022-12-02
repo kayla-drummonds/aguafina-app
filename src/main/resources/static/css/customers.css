@@ -1,0 +1,22 @@
+/* button properties */
+#update-button {
+	background-color: #135c9eff;
+	color: #e3e3e3ff;
+	border: 2px solid #e3e3e3ff;
+	transition-duration: 0.4s;
+}
+
+#update-button:hover {
+	background-color: #e3e3e3ff;
+	color: #135c9eff;
+	border: 2px solid #135c9eff;
+}
+
+#customer-tile {
+	border: 2px solid #7ba0c1;
+	padding: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #477eaf;
+	color: #e3e3e3;
+}

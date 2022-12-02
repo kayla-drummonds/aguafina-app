@@ -4,15 +4,9 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<th:block th:insert="~{fragments/header :: header}"></th:block>
+		<link rel="stylesheet" th:href="@{/css/customers.css}" />
 		<title>Customers</title>
 		<style>
-			form {
-				margin: auto;
-				padding: none;
-				border: none;
-				background-color: #afc1d2;
-			}
-
 			#create-customer-container,
 			#customers-header-container {
 				display: flex;
@@ -20,9 +14,14 @@
 				align-items: center;
 			}
 
-			#search-button {
+			#keyword-search-button {
 				background-color: #477eaf;
 				color: white;
+				border: none;
+			}
+
+			form {
+				background-color: #afc1d2;
 				border: none;
 			}
 		</style>

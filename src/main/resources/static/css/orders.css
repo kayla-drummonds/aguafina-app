@@ -1,0 +1,51 @@
+.table {
+	width: 100%;
+}
+
+.table th,
+.table td {
+	text-align: center;
+	border-bottom: 1px solid black;
+}
+
+.table tr:nth-child(even) {
+	background-color: white;
+	color: #477eaf;
+}
+
+.table tr:nth-child(odd) {
+	background-color: #7ba0c1;
+	color: #e3e3e3ff;
+}
+
+.table tr:hover,
+.table th {
+	background-color: #477eaf;
+	color: #e3e3e3ff;
+}
+
+#delete-button {
+	background-color: red;
+	color: #e3e3e3ff;
+	border: 2px solid #e3e3e3ff;
+	transition-duration: 0.4s;
+}
+
+#delete-button:hover {
+	background-color: #e3e3e3ff;
+	color: red;
+	border: 2px solid red;
+}
+
+#create-button {
+	background-color: #477eaf;
+	color: #e3e3e3ff;
+	border: 2px solid #e3e3e3ff;
+	transition-duration: 0.4s;
+}
+
+#create-button:hover {
+	background-color: #e3e3e3ff;
+	color: #477eaf;
+	border: 2px solid #477eaf;
+}

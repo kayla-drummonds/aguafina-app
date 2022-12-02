@@ -1,0 +1,55 @@
+/*  
+--lapis-lazuli: #135C9E;
+--steel-blue: #477EAF;
+--air-superiority-blue: #7BA0C1;
+--light-steel-blue: #AFC1D2;
+--platinum: #E3E3E3;
+font-family: 'Noto Sans Ethiopic', sans-serif;
+ */
+
+body {
+	font-family: "Noto Sans Ethiopic", sans-serif;
+}
+
+/* navigation bar properties */
+.navbar {
+	list-style-type: none;
+	margin: 0;
+	padding: 15px;
+	overflow: hidden;
+	background-color: #135c9e;
+	width: 100%;
+}
+
+.btn.btn-link,
+.navbar-brand.mr-2 {
+	color: white;
+}
+
+.btn.btn-link.active {
+	background-color: #e3e3e3;
+	color: #135c9e;
+}
+
+.btn.btn-link:hover {
+	color: #afc1d2;
+}
+
+/* layout properties */
+.container {
+	background-color: #afc1d2;
+}
+
+/* global form properties */
+
+form {
+	margin: auto;
+	padding: 10%;
+	border: solid 2px;
+	background-color: #e3e3e3ff;
+}
+
+h3 {
+	text-align: center;
+	color: #477eaf;
+}
