@@ -61,7 +61,8 @@ public class OrderController {
         mav.addObject("orders", orders);
 
         log.debug("There are currently " + orders.size() + " completed orders.");
-
+        orders.stream()
+                .forEach(x -> log.debug(x.getId() + " | " + x.getProduct() + " | " + x.getCreationDate()));
         return mav;
     }
 

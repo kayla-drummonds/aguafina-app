@@ -24,8 +24,7 @@ public class EmployeeServiceImplIntegrationTest {
     private EmployeeRepository employeeRepository;
 
     @ParameterizedTest
-    @CsvSource({ "1,5 Jenifer Crossing,Lynchburg,jpowell0@hplussport.com,Jack,Powell,VA,24515,1",
-            "2,97 Vidon Alley,Manchester,egarcia1@hplussport.com,Emily,Garcia,NH,31050,2" })
+    @CsvSource({ "1,5 Jenifer Crossing,Lynchburg,jpowell0@hplussport.com,Jack,Powell,VA,24515,1" })
     public void testGetAllEmployees(ArgumentsAccessor accessor) {
         User u1 = new User();
         u1.setId(1);

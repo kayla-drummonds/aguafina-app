@@ -80,17 +80,17 @@ public class OrderServiceImplIntegrationTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "2,2022-11-13 00:00:00,MWCRA32,24,1,2,6" })
+    @CsvSource({ "1, 2022-12-02 16:07:59, MWBLU32, 3, 12, 1, 1" })
     public void testFindByCustomerId(ArgumentsAccessor accessor) throws ArgumentAccessException, ParseException {
         Order o = new Order();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         o.setId(accessor.getInteger(0));
         o.setCreationDate(formatter.parse(accessor.getString(1)));
         o.setProduct(accessor.getString(2));
-        o.setTotal(accessor.getDouble(3));
+        o.setQuantity(accessor.getInteger(3));
+        o.setTotal(accessor.getDouble(4));
         o.setCustomer(customerRepository.findByEmail("cshaw0@mlb.com"));
         o.setEmployee(employeeRepository.findByEmail("jpowell0@hplussport.com"));
-        o.setQuantity(accessor.getInteger(6));
         orderRepository.save(o);
 
         List<Order> found = orderRepository.findByCustomerId(o.getCustomer(), 1);
@@ -116,7 +116,7 @@ public class OrderServiceImplIntegrationTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "2,2022-11-13 00:00:00,MWCRA32,24,1,2,6" })
+    @CsvSource({ "2,'2022-12-02 16:08:16','MWCRA32',2,2,16,4" })
     public void testCountOrdersByEmployee(ArgumentsAccessor accessor) throws ArgumentAccessException, ParseException {
         Order o = new Order();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -134,7 +134,7 @@ public class OrderServiceImplIntegrationTest {
     }
 
     @ParameterizedTest
-    @CsvSource({ "4,'2022-11-13 00:00:00','MWCRA20',6,2,3,3" })
+    @CsvSource({ "1,'2022-12-02 16:07:59','MWBLU32',1,1,12,3" })
     public void testFindByEmployeeId(ArgumentsAccessor accessor) throws ArgumentAccessException, ParseException {
         Order o = new Order();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -149,5 +149,25 @@ public class OrderServiceImplIntegrationTest {
 
         List<Order> ordersFound = orderRepository.findByEmployeeId(o.getEmployee(), 3);
         assertEquals(1, ordersFound.size());
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "1,'2022-12-02 16:07:59','MWBLU32',1,1,12,3" })
+    public void testDeleteById(ArgumentsAccessor accessor) throws ArgumentAccessException, ParseException {
+        Order o = new Order();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        o.setId(accessor.getInteger(0));
+        o.setCreationDate(formatter.parse(accessor.getString(1)));
+        o.setProduct(accessor.getString(2));
+        o.setTotal(accessor.getDouble(3));
+        o.setCustomer(customerRepository.findByEmail("ecarr1@mlb.com"));
+        o.setEmployee(employeeRepository.findByEmail("rdean2@hplussport.com"));
+        o.setQuantity(accessor.getInteger(6));
+
+        orderRepository.save(o);
+
+        orderRepository.deleteById(o.getId());
+        List<Order> orders = orderRepository.findByCustomerId(o.getCustomer(), 2);
+        assertEquals(0, orders.size());
     }
 }
