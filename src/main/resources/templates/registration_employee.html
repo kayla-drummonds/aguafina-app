@@ -61,7 +61,7 @@
 											name="firstName"
 											th:classappend="${#fields.hasErrors('firstName') ? 'is-error' : ''}" />
 									</div>
-									<div class="column col-12">
+									<div class="column col-12 pt-1">
 										<p
 											th:if="${#fields.hasErrors('firstName')}"
 											th:errors="*{firstName}"
@@ -86,7 +86,7 @@
 											name="lastName"
 											th:classappend="${#fields.hasErrors('lastName') ? 'is-error' : ''}" />
 									</div>
-									<div class="column col-12">
+									<div class="column col-12 pt-1">
 										<p
 											th:if="${#fields.hasErrors('lastName')}"
 											th:errors="*{lastName}"
@@ -111,7 +111,7 @@
 											name="email"
 											th:classappend="${#fields.hasErrors('email') ? 'is-error' : ''}" />
 									</div>
-									<div class="column col-12">
+									<div class="column col-12 pt-1">
 										<p
 											th:if="${#fields.hasErrors('email')}"
 											th:errors="*{email}"
@@ -136,7 +136,7 @@
 											name="password"
 											th:classappend="${#fields.hasErrors('password') ? 'is-error' : ''}" />
 									</div>
-									<div class="column col-12">
+									<div class="column col-12 pt-1">
 										<p
 											th:if="${#fields.hasErrors('password')}"
 											th:errors="*{password}"
@@ -161,7 +161,7 @@
 											name="confirmPassword"
 											th:classappend="${#fields.hasErrors('confirmPassword') ? 'is-error' : ''}" />
 									</div>
-									<div class="column col-12">
+									<div class="column col-12 pt-1">
 										<p
 											th:if="${#fields.hasErrors('confirmPassword')}"
 											th:errors="*{confirmPassword}"
