@@ -1,15 +1,10 @@
 package com.michaeladrummonds.aguafina.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,18 +54,18 @@ public class LoginController {
     private AuthenticatedUserService authService;
 
     @GetMapping("/login")
-    public ModelAndView login(HttpServletRequest request, HttpSession session) {
+    public ModelAndView login() {
+
         ModelAndView mav = new ModelAndView();
 
-        session.setAttribute("SPRING_SECURITY_LAST_EXCEPTION", request);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+        if (!authService.isAuthenticated()) {
             mav.setViewName("login");
             return mav;
         }
 
         mav.setViewName("redirect:/home");
         return mav;
+
     }
 
     @GetMapping("/registration/customer")
