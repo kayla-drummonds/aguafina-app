@@ -20,7 +20,7 @@ public class EmailUniqueImpl implements ConstraintValidator<EmailUnique, String>
 
     @Override
     public void initialize(EmailUnique constraintAnnotation) {
-
+        // initializes Email Unique Validation
     }
 
     @Override
