@@ -70,9 +70,9 @@
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
 		</header>
-		<div class="container pt-2">
+		<div class="container p-2">
 			<div
-				class="card p-centered col-6 col-12 p-2 s-rounded"
+				class="card p-centered col-6 col-md-12 p-2 s-rounded"
 				th:object="${customer}"
 				id="update-customer-form">
 				<div class="card-header">
@@ -88,7 +88,9 @@
 						th:action="@{/customers/{id}(id=${customer.id})}"
 						method="POST">
 						<div class="columns">
-							<div class="column col-12 py-2">
+							<div
+								class="column col-12 py-2"
+								sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 								<div class="form-group">
 									<div class="column col-4">
 										<label class="form-label form-label-inline" for="id"
@@ -103,7 +105,6 @@
 											th:field="*{id}"
 											id="id"
 											disabled />
-										<p class="form-input-hint" id="idHint"></p>
 									</div>
 								</div>
 							</div>
