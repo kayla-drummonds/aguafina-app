@@ -24,6 +24,7 @@ import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.models.Role;
 import com.michaeladrummonds.aguafina.models.User;
 import com.michaeladrummonds.aguafina.models.UserRegistrationDto;
+import com.michaeladrummonds.aguafina.repository.RoleRepository;
 import com.michaeladrummonds.aguafina.repository.UserRepository;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
@@ -37,6 +38,9 @@ public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private EmployeeServiceImpl employeeService;
@@ -91,12 +95,13 @@ public class LoginController {
         User user = new User();
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
+        Role role = roleRepository.findByName("CUSTOMER");
 
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
-        user.setRoles(Arrays.asList(new Role("CUSTOMER")));
+        user.setRoles(Arrays.asList(role));
 
         userRepository.save(user);
 
@@ -127,12 +132,13 @@ public class LoginController {
         User user = new User();
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
+        Role role = roleRepository.findByName("EMPLOYEE");
 
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
-        user.setRoles(Arrays.asList(new Role("EMPLOYEE")));
+        user.setRoles(Arrays.asList(role));
 
         userRepository.save(user);
 
