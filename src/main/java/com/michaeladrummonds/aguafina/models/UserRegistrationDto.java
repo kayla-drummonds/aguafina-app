@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import com.michaeladrummonds.aguafina.validation.EmailUnique;
+import com.michaeladrummonds.aguafina.validation.FieldMatch;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class UserRegistrationDto {
     private String password;
 
     @NotEmpty(message = "Confirm password is required.")
+    @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match.")
     private String confirmPassword;
 
     @NotEmpty(message = "First name is required.")
