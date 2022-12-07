@@ -11,20 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.michaeladrummonds.aguafina.models.Role;
 import com.michaeladrummonds.aguafina.models.User;
-import com.michaeladrummonds.aguafina.models.UserRole;
 import com.michaeladrummonds.aguafina.repository.UserRepository;
-import com.michaeladrummonds.aguafina.repository.UserRoleRepository;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
@@ -33,23 +30,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Username '" + username + "' not found in database");
         }
-        List<UserRole> userRoles = userRoleRepository.findByUserId(user.getId());
         // check the account status
         boolean accountIsEnabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        Collection<? extends GrantedAuthority> springRoles = buildGrantAuthorities(userRoles);
-
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                accountIsEnabled, accountNonExpired, credentialsNonExpired, accountNonLocked, springRoles);
+                accountIsEnabled, accountNonExpired, credentialsNonExpired, accountNonLocked,
+                mapRolesToAuthorities(user.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> buildGrantAuthorities(List<UserRole> userRoles) {
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (UserRole role : userRoles) {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return authorities;
     }

@@ -1,5 +1,7 @@
 package com.michaeladrummonds.aguafina.controller;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.michaeladrummonds.aguafina.config.AuthenticatedUserService;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
+import com.michaeladrummonds.aguafina.models.Role;
 import com.michaeladrummonds.aguafina.models.User;
 import com.michaeladrummonds.aguafina.models.UserRegistrationDto;
-import com.michaeladrummonds.aguafina.models.UserRole;
 import com.michaeladrummonds.aguafina.repository.UserRepository;
-import com.michaeladrummonds.aguafina.repository.UserRoleRepository;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 
@@ -36,9 +37,6 @@ public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
 
     @Autowired
     private EmployeeServiceImpl employeeService;
@@ -98,14 +96,9 @@ public class LoginController {
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
+        user.setRoles(Arrays.asList(new Role("CUSTOMER")));
 
         userRepository.save(user);
-
-        UserRole ur = new UserRole();
-        ur.setRoleName("CUSTOMER");
-        ur.setUserId(user.getId());
-
-        userRoleRepository.save(ur);
 
         Customer existingCustomer = customerService.getCustomerByEmail(user.getEmail());
         existingCustomer.setUser(user);
@@ -139,14 +132,9 @@ public class LoginController {
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
+        user.setRoles(Arrays.asList(new Role("EMPLOYEE")));
 
         userRepository.save(user);
-
-        UserRole ur = new UserRole();
-        ur.setRoleName("EMPLOYEE");
-        ur.setUserId(user.getId());
-
-        userRoleRepository.save(ur);
 
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
         employee.setUser(user);
