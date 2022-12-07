@@ -1,7 +1,5 @@
 package com.michaeladrummonds.aguafina.controller;
 
-import java.util.Arrays;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.michaeladrummonds.aguafina.config.AuthenticatedUserService;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
-import com.michaeladrummonds.aguafina.models.Role;
 import com.michaeladrummonds.aguafina.models.User;
 import com.michaeladrummonds.aguafina.models.UserRegistrationDto;
-import com.michaeladrummonds.aguafina.repository.RoleRepository;
+import com.michaeladrummonds.aguafina.models.UserRole;
+import com.michaeladrummonds.aguafina.repository.UserRoleRepository;
 import com.michaeladrummonds.aguafina.repository.UserRepository;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
@@ -40,7 +38,7 @@ public class LoginController {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
     private EmployeeServiceImpl employeeService;
@@ -95,19 +93,25 @@ public class LoginController {
         User user = new User();
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
-        Role role = roleRepository.findByName("CUSTOMER");
 
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
-        user.setRoles(Arrays.asList(role));
 
         userRepository.save(user);
+
+        UserRole ur = new UserRole();
+        ur.setRoleName("CUSTOMER");
+        ur.setUserId(user.getId());
+
+        userRoleRepository.save(ur);
 
         Customer existingCustomer = customerService.getCustomerByEmail(user.getEmail());
         existingCustomer.setUser(user);
         customerService.updateCustomer(existingCustomer);
+
+        log.debug("Customer user created successfully.");
 
         return "redirect:/registration/customer?success";
     }
@@ -132,19 +136,25 @@ public class LoginController {
         User user = new User();
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
-        Role role = roleRepository.findByName("EMPLOYEE");
 
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
-        user.setRoles(Arrays.asList(role));
 
         userRepository.save(user);
+
+        UserRole ur = new UserRole();
+        ur.setRoleName("EMPLOYEE");
+        ur.setUserId(user.getId());
+
+        userRoleRepository.save(ur);
 
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
         employee.setUser(user);
         employeeService.updateEmployee(employee);
+
+        log.debug("Employee user successfully created.");
 
         return "redirect:/registration/employee?success";
     }
@@ -166,6 +176,8 @@ public class LoginController {
         }
 
         mav.addObject("user", user);
+
+        log.debug("Welcome, " + user.getFirstName() + " " + user.getLastName());
         return mav;
     }
 
