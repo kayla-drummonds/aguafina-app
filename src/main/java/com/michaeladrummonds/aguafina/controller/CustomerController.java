@@ -42,7 +42,7 @@ public class CustomerController {
     private AuthenticatedUserService authService;
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
-    @GetMapping({ "/customers", "/customers/page/{pageNo}" })
+    @GetMapping("/customers")
     public ModelAndView listCustomers(@RequestParam(value = "keyword", required = false) String keyword) {
         ModelAndView mav = new ModelAndView("customers");
 
@@ -61,6 +61,7 @@ public class CustomerController {
             List<Customer> customers = customerService.getAllCustomers();
             mav.addObject("customers", customers);
             mav.addObject("keyword", keyword);
+            log.debug("There are " + customers.size() + " current customers.");
         }
 
         return mav;
