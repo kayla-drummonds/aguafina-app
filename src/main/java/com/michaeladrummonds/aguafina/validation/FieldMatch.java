@@ -9,11 +9,11 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({ ElementType.METHOD, ElementType.FIELD })
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = FieldMatchValidator.class)
+@Constraint(validatedBy = FieldsMatchValidator.class)
 @Documented
-public @interface FieldMatch {
+public @interface FieldsMatch {
     String message() default "{constraints.field-match}";
 
     Class<?>[] groups() default {};
@@ -23,4 +23,10 @@ public @interface FieldMatch {
     String first();
 
     String second();
+
+    @Target({ ElementType.TYPE })
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface List {
+        FieldMatch[] value();
+    }
 }

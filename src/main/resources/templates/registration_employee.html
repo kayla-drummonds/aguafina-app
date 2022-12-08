@@ -45,6 +45,13 @@
 						name="newUserForm"
 						id="newUserForm">
 						<div class="columns">
+							<div class="column col-12 pt-1">
+								<p
+									th:if="${#fields.hasAnyErrors()}"
+									th:each="error : ${#fields.errors('*')}"
+									th:text="${error}"
+									class="form-input-hint text-error"></p>
+							</div>
 							<div class="column col-12 py-2">
 								<div class="form-group">
 									<div class="column col-4">

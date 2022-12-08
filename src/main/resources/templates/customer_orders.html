@@ -10,7 +10,6 @@
 				color: #e3e3e3;
 			}
 			#customer-order-tile {
-				border: #e3e3e3 solid 3px;
 				background-color: #477eaf;
 				color: #e3e3e3;
 			}
@@ -104,39 +103,56 @@
 			</div>
 		</div>
 		<div class="container">
-			<div class="columns">
+			<div class="timeline">
+				<div class="divider m-0"></div>
 				<div
-					class="tile column col-6 col-sm-12 col-md-12 my-2"
-					th:each="order : ${ordersByCustomer}"
-					id="customer-order-tile">
-					<div class="tile-content">
-						<div class="columns">
-							<div class="column col-3 text-center">
-								<div class="tile-title h5" th:text="${order.id}"></div>
-								<div
-									class="tile-subtitle"
-									th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}"></div>
-							</div>
-							<div class="divider-vert"></div>
-							<div class="column col-8">
+					class="timeline-item"
+					id="timeline-item"
+					th:each="order : ${ordersByCustomer}">
+					<div class="timeline-left">
+						<a
+							class="timeline-icon"
+							href="#timeline-item"
+							title="timeline-item"></a>
+					</div>
+					<div class="timeline-content">
+						<div class="tile column col-12 my-2" id="customer-order-tile">
+							<div class="tile-content">
 								<div class="columns">
-									<div class="column col-4">Employee ID:</div>
-									<div
-										class="column col-8"
-										th:text="${order.employee.id}"></div>
-									<div class="column col-4">Product:</div>
-									<div class="column col-8" th:text="${order.product}"></div>
-									<div class="column col-4">Quantity:</div>
-									<div class="column col-8" th:text="${order.quantity}"></div>
-									<div class="column col-4">Total:</div>
-									<div
-										class="column col-8"
-										th:text="${#numbers.formatCurrency(order.total)}"></div>
+									<div class="column col-3 text-center">
+										<div class="tile-title h5" th:text="${order.id}"></div>
+										<div
+											class="tile-subtitle"
+											th:text="${#dates.format(order.creationDate,'MM-dd-yyyy')}"></div>
+									</div>
+									<div class="divider-vert"></div>
+									<div class="column col-8">
+										<div class="columns">
+											<div class="column col-4">Employee ID:</div>
+											<div
+												class="column col-8"
+												th:text="${order.employee.id}"></div>
+											<div class="column col-4">Product:</div>
+											<div
+												class="column col-8"
+												th:text="${order.product}"></div>
+											<div class="column col-4">Quantity:</div>
+											<div
+												class="column col-8"
+												th:text="${order.quantity}"></div>
+											<div class="column col-4">Total:</div>
+											<div
+												class="column col-8"
+												th:text="${#numbers.formatCurrency(order.total)}"></div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
+						<div class="divider"></div>
 					</div>
 				</div>
+				...
 			</div>
 		</div>
 		<div th:insert="~{fragments/footer :: footer}"></div>

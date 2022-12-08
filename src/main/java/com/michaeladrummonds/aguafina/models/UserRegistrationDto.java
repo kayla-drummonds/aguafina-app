@@ -15,6 +15,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@FieldMatch.List({
+        @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match.")
+})
 public class UserRegistrationDto {
 
     @NotEmpty(message = "Email is required.")
@@ -28,7 +31,6 @@ public class UserRegistrationDto {
     private String password;
 
     @NotEmpty(message = "Confirm password is required.")
-    @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match.")
     private String confirmPassword;
 
     @NotEmpty(message = "First name is required.")
