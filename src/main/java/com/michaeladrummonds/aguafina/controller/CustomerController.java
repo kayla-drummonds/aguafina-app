@@ -74,8 +74,9 @@ public class CustomerController {
         User user = authService.getCurrentUser();
 
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
+        Customer customer = customerService.getCustomerById(id);
 
-        model.addAttribute("customer", customerService.getCustomerById(id));
+        model.addAttribute("customer", customer);
         model.addAttribute("employee", employee);
 
         return "edit_customer";

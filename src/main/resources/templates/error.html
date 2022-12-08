@@ -14,36 +14,23 @@
 			<p class="empty-title h5" th:text="'Error: Status Code ' + ${status}">
 				Error Status Code
 			</p>
-			<div th:switch="${status}">
-				<p
-					class="empty-subtitle"
-					th:case="'400'"
-					th:text="'Bad request: ' + ${message} + '.'"></p>
-				<p
-					class="empty-subtitle"
-					th:case="'401'"
-					th:text="'Unauthorized: ' + ${message} + '.'"></p>
-				<p
-					class="empty-subtitle"
-					th:case="'403'"
-					th:text="'Resource not found: ' + ${message} + '.'"></p>
-				<p
-					class="empty-subtitle"
-					th:case="'405'"
-					th:text="'Method not allowed: ' + ${message} + '.'"></p>
-				<p
-					class="empty-subtitle"
-					th:case="'500'"
-					th:text="'Internal server error: ' + ${message} + '.'"></p>
-				<p
-					class="empty-subtitle"
-					th:case="'*'"
-					th:text="'Unexpected error: ' + ${message} + '.'"></p>
+			<div>
+				<p class="empty-subtitle" th:text="${message}"></p>
 			</div>
+
 			<div class="empty-action">
 				<a class="btn" th:href="@{/home}">Return Home</a>
 				<p th:text="'Exception: ' + ${exception}">Exception</p>
-				<p><code th:text="'Stack Trace: ' + ${trace}">Stack Trace</code></p>
+				<p>
+					<code th:text="'Stack Trace: ' + ${trace}">Stack Trace</code>
+				</p>
+				<p>
+					<code th:text="'Request URL: ' + ${requestUrl}">Request URL</code>
+				</p>
+				<code th:text="'Root Trace: ' + ${roottrace}">Root Trace</code>
+				<p>
+					<code th:text="'Errors: ' + ${errors}">Request URL</code>
+				</p>
 			</div>
 		</div>
 		<div th:insert="~{fragments/footer :: footer}"></div>
