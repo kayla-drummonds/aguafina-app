@@ -7,30 +7,47 @@
 		<title th:text="'Error: Status Code ' + ${status}">Error</title>
 	</head>
 	<body>
-		<div class="empty">
+		<div class="empty" style="width: 100%; height: 100%">
 			<div class="empty-icon">
 				<em class="icon icon-4x icon-stop"></em>
 			</div>
-			<p class="empty-title h5" th:text="'Error: Status Code ' + ${status}">
+			<p class="empty-title h5" th:text="'HTTP Status Code ' + ${status}">
 				Error Status Code
 			</p>
-			<div>
+			<div th:switch="${status}">
+				<p class="empty-subtitle" th:case="'400'">
+					Sorry, it looks like there's an error in the url. Please check it and
+					try again.
+				</p>
+				<p class="empty-subtitle" th:case="'401'">
+					Sorry, it looks like you've failed to log in. Please check your
+					username and/or password and try again.
+				</p>
+				<p class="empty-subtitle" th:case="'403'">
+					Sorry, it looks like you aren't authorized to access this resource.
+				</p>
+				<p class="empty-subtitle" th:case="'404'">
+					Sorry, it looks like we don't have what you're looking for.
+				</p>
+				<p class="empty-subtitle" th:case="'405'">
+					Sorry, it looks like this request is invalid.
+				</p>
+				<p class="empty-subtitle" th:case="'500'">
+					This is an error on our end. Please try again later.
+				</p>
+				<p class="empty-subtitle" th:case="'*'">
+					Sorry, we ran into an unexpected error.
+				</p>
+			</div>
+			<div sec:authorize="hasAnyAuthority('ADMIN')">
 				<p class="empty-subtitle" th:text="${message}"></p>
 			</div>
 
 			<div class="empty-action">
-				<a class="btn" th:href="@{/home}">Return Home</a>
-				<p th:text="'Exception: ' + ${exception}">Exception</p>
-				<p>
-					<code th:text="'Stack Trace: ' + ${trace}">Stack Trace</code>
+				<p sec:authorize="hasAnyAuthority('ADMIN')">
+					<code th:text="'Error: ' + ${error}"></code>
 				</p>
-				<p>
-					<code th:text="'Request URL: ' + ${requestUrl}">Request URL</code>
-				</p>
-				<code th:text="'Root Trace: ' + ${roottrace}">Root Trace</code>
-				<p>
-					<code th:text="'Errors: ' + ${errors}">Request URL</code>
-				</p>
+				<a class="btn" th:href="@{/home}">Let's go back home.</a>
 			</div>
 		</div>
 		<div th:insert="~{fragments/footer :: footer}"></div>

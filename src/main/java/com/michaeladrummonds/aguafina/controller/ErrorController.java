@@ -1,99 +1,120 @@
 package com.michaeladrummonds.aguafina.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Controller
 @ControllerAdvice
 @RequestMapping
 public class ErrorController {
-    private static final String PACKAGE_NAME = "com.michaeladrummonds.aguafina";
 
-    @GetMapping("/error/404")
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String error404(HttpServletRequest request, Exception ex) {
-        return "redirect:/error?404";
+    @ExceptionHandler({ ConstraintViolationException.class })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleConstraintViolation(@ModelAttribute("exception") ConstraintViolationException ex,
+            WebRequest request,
+            @ModelAttribute("status") HttpStatus status, Model model) {
+
+        List<String> errors = new ArrayList<>();
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            errors.add(violation.getRootBeanClass().getName() + " " +
+                    violation.getPropertyPath() + ": " + violation.getMessage());
+        }
+
+        model.addAttribute("errors", errors);
+        model.addAttribute("message", ex.getMessage());
+        return "error";
+
     }
 
-    @ExceptionHandler(Exception.class)
-    @GetMapping("/error")
-    public String handleAllExceptions(HttpServletRequest request, Exception ex, Model model) {
+    @ExceptionHandler({ MethodArgumentTypeMismatchException.class })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleMethodArgumentTypeMismatch(
+            @ModelAttribute("exception") MethodArgumentTypeMismatchException ex, WebRequest request,
+            @ModelAttribute("status") HttpStatus status, Model model) {
 
-        model.addAllAttributes(buildExceptionParameters(ex, request));
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
-        if (status != null) {
-            Integer statusCode = Integer.valueOf(status.toString());
-
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "error-404";
-            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "error-500";
-            }
-        }
+        model.addAttribute("error", error);
+        model.addAttribute("exception", ex.toString());
+        model.addAttribute("message", ex.getMessage());
 
         return "error";
     }
 
-    private String getRequestURL(HttpServletRequest request) {
-        String result = request.getRequestURL().toString();
-        if (request.getQueryString() != null) {
-            result = result + "?" + request.getQueryString();
-        }
+    @ExceptionHandler({ NoHandlerFoundException.class })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNoHandlerFoundException(
+            @ModelAttribute("exception") NoHandlerFoundException ex, @ModelAttribute("status") HttpStatus status,
+            WebRequest request, Model model) {
 
-        return result;
+        String error = "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
+
+        model.addAttribute("error", error);
+        model.addAttribute("exception", ex.toString());
+        model.addAttribute("message", ex.getMessage());
+
+        return "error";
     }
 
-    public Map<String, Object> buildExceptionParameters(Exception ex, String message) {
-        Map<String, Object> result = new HashMap<>();
+    @ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public String handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
+            @ModelAttribute("status") HttpStatus status,
+            WebRequest request, Model model) {
 
-        String stackTrace = getHTMLStackTrace(ExceptionUtils.getStackFrames(ex));
+        String error = ex.getMethod() + " method is not supported for this request.";
 
-        // message is the request URL if it was an error page, otherwise it can be a
-        // message
-        // from the class that calls it
-        result.put("requestUrl", message);
-        result.put("message", ex.getMessage());
-        result.put("stackTrace", stackTrace);
-
-        if (ex.getCause() != null) {
-            result.put("rootcause", ExceptionUtils.getRootCause(ex));
-
-            String roottrace = getHTMLStackTrace(ExceptionUtils.getRootCauseStackTrace(ex));
-            result.put("roottrace", roottrace);
-        }
-
-        return result;
+        model.addAttribute("error", error);
+        model.addAttribute("exception", ex.toString());
+        model.addAttribute("message", ex.getMessage());
+        return "error";
     }
 
-    public Map<String, Object> buildExceptionParameters(Exception ex, HttpServletRequest request) {
-        String message = getRequestURL(request);
-        return buildExceptionParameters(ex, message);
+    @ExceptionHandler({ Exception.class })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleAll(@ModelAttribute("exception") Exception ex, WebRequest request,
+            @ModelAttribute("status") HttpStatus status, Model model) {
+
+        String error = "Unknown error has occurred.";
+
+        model.addAttribute("error", error);
+        model.addAttribute("exception", ex.toString());
+        model.addAttribute("message", ex.getMessage());
+        model.addAttribute("trace", ex.getStackTrace());
+        return "error";
+
     }
 
-    private String getHTMLStackTrace(String[] stack) {
-        StringBuffer result = new StringBuffer();
-        for (String frame : stack) {
-            if (frame.contains(PACKAGE_NAME)) {
-                result.append(" &nbsp; &nbsp; &nbsp;" + frame.trim().substring(3) + "<br>\n");
-            } else if (frame.contains("Caused by:")) {
-                result.append("Caused By:<br>");
-            }
-        }
+    @ExceptionHandler({ NoSuchElementException.class })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleNoSuchElementException(NoSuchElementException ex,
+            WebRequest request,
+            @ModelAttribute("status") HttpStatus status, Model model) {
 
-        return result.toString();
+        String error = "No data result found.";
+
+        model.addAttribute("error", error);
+        model.addAttribute("exception", ex.toString());
+        model.addAttribute("message", ex.getMessage());
+        model.addAttribute("trace", ex.getStackTrace());
+        return "error";
+
     }
 }
