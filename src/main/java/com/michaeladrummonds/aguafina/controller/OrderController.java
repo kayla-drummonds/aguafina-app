@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.expression.spel.SpelEvaluationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -126,16 +127,25 @@ public class OrderController {
     public ModelAndView getOrdersByCustomer(@Param("customer") Customer customer) {
         ModelAndView mav = new ModelAndView("customer_orders");
 
+        User user = authService.getCurrentUser();
+
         Integer customerId = customer.getId();
         List<Order> ordersByCustomer = orderService.getOrderByCustomerId(customerId, customer);
         Double total = orderService.getTotalByCustomerId(customerId, customer);
 
-        if (total != null && !ordersByCustomer.isEmpty()) {
-            mav.addObject("total", total);
-            mav.addObject("ordersByCustomer", ordersByCustomer);
-        } else {
-            total = 0.00;
-            mav.addObject("total", total);
+        try {
+            if (user.getEmail().equals(customer.getEmail())) {
+                mav.addObject("customer", customer);
+                if (total != null && !ordersByCustomer.isEmpty()) {
+                    mav.addObject("total", total);
+                    mav.addObject("ordersByCustomer", ordersByCustomer);
+                } else {
+                    total = 0.00;
+                    mav.addObject("total", total);
+                }
+            }
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
         }
 
         log.debug(customer.getFirstName() + " " + customer.getLastName() + " has " + ordersByCustomer.size()

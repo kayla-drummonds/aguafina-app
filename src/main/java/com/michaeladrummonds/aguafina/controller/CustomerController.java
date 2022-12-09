@@ -76,9 +76,16 @@ public class CustomerController {
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
         Customer customer = customerService.getCustomerById(id);
 
-        model.addAttribute("customer", customer);
-        model.addAttribute("employee", employee);
-
+        try {
+            if (user.getEmail().equals(customer.getEmail()) && employee == null) {
+                model.addAttribute("customer", customer);
+            } else if (user.getEmail().equals(employee.getEmail())) {
+                model.addAttribute("customer", customer);
+                model.addAttribute("employee", employee);
+            }
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
+        }
         return "edit_customer";
     }
 

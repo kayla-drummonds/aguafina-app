@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -115,6 +116,31 @@ public class ErrorController {
         model.addAttribute("message", ex.getMessage());
         model.addAttribute("trace", ex.getStackTrace());
         return "error";
+    }
 
+    @ExceptionHandler({ HttpClientErrorException.class })
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleForbiddenException(HttpClientErrorException ex, WebRequest request,
+            @ModelAttribute("status") HttpStatus status, Model model) {
+        String error = "Access forbidden.";
+
+        model.addAttribute("error", error);
+        model.addAttribute("exception", ex.toString());
+        model.addAttribute("message", ex.getMessage());
+        model.addAttribute("trace", ex.getStackTrace());
+        return "error";
+    }
+
+    @ExceptionHandler({ NullPointerException.class })
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleNullPointerException(NullPointerException ex, WebRequest request,
+            @ModelAttribute("status") HttpStatus status, Model model) {
+        String error = "No object found.";
+
+        model.addAttribute("error", error);
+        model.addAttribute("exception", ex.toString());
+        model.addAttribute("message", ex.getMessage());
+        model.addAttribute("trace", ex.getStackTrace());
+        return "error";
     }
 }
