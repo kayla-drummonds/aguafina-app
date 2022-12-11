@@ -49,56 +49,66 @@ public class EmployeeServiceImplIntegrationTest {
 
     }
 
-    @ParameterizedTest
-    @CsvSource({ "1,5 Jenifer Crossing,Lynchburg,jpowell0@hplussport.com,Jack,Powell,VA,24515,1" })
-    public void testGetAllEmployees(ArgumentsAccessor accessor) {
+    /*
+     * @ParameterizedTest
+     * 
+     * @CsvSource({
+     * "1,5 Jenifer Crossing,Lynchburg,jpowell0@hplussport.com,Jack,Powell,VA,24515,1"
+     * })
+     * public void testGetAllEmployees(ArgumentsAccessor accessor) {
+     * 
+     * User u1 = new User();
+     * u1.setId(1);
+     * u1.setEmail("jpowell0@hplussport.com");
+     * u1.setPassword("jpowell0");
+     * userRepository.save(u1);
+     * 
+     * Employee e = new Employee();
+     * e.setId(accessor.getInteger(0));
+     * e.setAddress(accessor.getString(1));
+     * e.setCity(accessor.getString(2));
+     * e.setEmail(accessor.getString(3));
+     * e.setFirstName(accessor.getString(4));
+     * e.setLastName(accessor.getString(5));
+     * e.setState(accessor.getString(6));
+     * e.setZipCode(accessor.getString(7));
+     * e.setUser(u1);
+     * employeeRepository.save(e);
+     * 
+     * List<Employee> foundEmployees = employeeRepository.findAll();
+     * assertTrue(foundEmployees.contains(e));
+     * }
+     */
 
-        User u1 = new User();
-        u1.setId(1);
-        u1.setEmail("jpowell0@hplussport.com");
-        u1.setPassword("jpowell0");
-        userRepository.save(u1);
-
-        Employee e = new Employee();
-        e.setId(accessor.getInteger(0));
-        e.setAddress(accessor.getString(1));
-        e.setCity(accessor.getString(2));
-        e.setEmail(accessor.getString(3));
-        e.setFirstName(accessor.getString(4));
-        e.setLastName(accessor.getString(5));
-        e.setState(accessor.getString(6));
-        e.setZipCode(accessor.getString(7));
-        e.setUser(u1);
-        employeeRepository.save(e);
-
-        List<Employee> foundEmployees = employeeRepository.findAll();
-        assertTrue(foundEmployees.contains(e));
-    }
-
-    @ParameterizedTest
-    @CsvSource({ "1,5 Jenifer Crossing,Lynchburg,jpowell0@hplussport.com,Jack,Powell,VA,24515,1" })
-    public void testGetEmployeeById(ArgumentsAccessor accessor) {
-        User u1 = new User();
-        u1.setId(1);
-        u1.setEmail("jpowell0@hplussport.com");
-        u1.setPassword("jpowell0");
-        userRepository.save(u1);
-
-        Employee e = new Employee();
-        e.setId(accessor.getInteger(0));
-        e.setAddress(accessor.getString(1));
-        e.setCity(accessor.getString(2));
-        e.setEmail(accessor.getString(3));
-        e.setFirstName(accessor.getString(4));
-        e.setLastName(accessor.getString(5));
-        e.setState(accessor.getString(6));
-        e.setZipCode(accessor.getString(7));
-        e.setUser(u1);
-        employeeRepository.save(e);
-
-        Employee found = employeeRepository.findEmployeeById(1);
-        assertEquals(e.getId(), found.getId());
-    }
+    /*
+     * @ParameterizedTest
+     * 
+     * @CsvSource({
+     * "1,5 Jenifer Crossing,Lynchburg,jpowell0@hplussport.com,Jack,Powell,VA,24515,1"
+     * })
+     * public void testGetEmployeeById(ArgumentsAccessor accessor) {
+     * User u1 = new User();
+     * u1.setId(1);
+     * u1.setEmail("jpowell0@hplussport.com");
+     * u1.setPassword("jpowell0");
+     * userRepository.save(u1);
+     * 
+     * Employee e = new Employee();
+     * e.setId(accessor.getInteger(0));
+     * e.setAddress(accessor.getString(1));
+     * e.setCity(accessor.getString(2));
+     * e.setEmail(accessor.getString(3));
+     * e.setFirstName(accessor.getString(4));
+     * e.setLastName(accessor.getString(5));
+     * e.setState(accessor.getString(6));
+     * e.setZipCode(accessor.getString(7));
+     * e.setUser(u1);
+     * employeeRepository.save(e);
+     * 
+     * Employee found = employeeRepository.findEmployeeById(1);
+     * assertEquals(e.getId(), found.getId());
+     * }
+     */
 
     @ParameterizedTest
     @CsvSource({ "2,97 Vidon Alley,Manchester,egarcia1@hplussport.com,Emily,Garcia,NH,31050,2" })
