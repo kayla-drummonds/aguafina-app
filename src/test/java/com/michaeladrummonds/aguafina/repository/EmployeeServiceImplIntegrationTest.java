@@ -96,7 +96,7 @@ public class EmployeeServiceImplIntegrationTest {
         e.setUser(u1);
         employeeRepository.save(e);
 
-        Employee found = employeeRepository.findById(1).get();
+        Employee found = employeeRepository.findEmployeeById(1);
         assertEquals(e.getId(), found.getId());
     }
 
