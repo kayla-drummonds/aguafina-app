@@ -14,6 +14,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
@@ -154,7 +155,8 @@ public class OrderServiceImplIntegrationTest {
 
     @ParameterizedTest
     @CsvSource({ "1,'2022-12-02 16:07:59','MWBLU32',1,1,12,3" })
-    public void testDeleteById(ArgumentsAccessor accessor) throws ArgumentAccessException, ParseException {
+    public void testDeleteById(ArgumentsAccessor accessor)
+            throws ArgumentAccessException, ParseException, EmptyResultDataAccessException {
         Order o = new Order();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         o.setId(accessor.getInteger(0));
