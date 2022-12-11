@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -23,9 +24,8 @@ public class EmployeeServiceImplIntegrationTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @ParameterizedTest
-    @CsvSource({ "1,5 Jenifer Crossing,Lynchburg,jpowell0@hplussport.com,Jack,Powell,VA,24515,1" })
-    public void testGetAllEmployees(ArgumentsAccessor accessor) {
+    @BeforeEach
+    public void setUp() {
         User u1 = new User();
         u1.setId(1);
         u1.setEmail("jpowell0@hplussport.com");
@@ -38,6 +38,27 @@ public class EmployeeServiceImplIntegrationTest {
         u2.setPassword("egarcia1");
         userRepository.save(u2);
 
+        Employee e1 = new Employee(1, "Jack", "Powell", "jpowell0@hplussport.com", "5 Jenifer Crossing", "Lynchburg",
+                "VA", "24515", null,
+                u1);
+        employeeRepository.save(e1);
+
+        Employee e2 = new Employee(2, "Emily", "Garcia", "egarcia1@hplussport.com", "97 Vidon Alley", "Manchester",
+                "NH", "31050", null, u2);
+        employeeRepository.save(e2);
+
+    }
+
+    @ParameterizedTest
+    @CsvSource({ "1,5 Jenifer Crossing,Lynchburg,jpowell0@hplussport.com,Jack,Powell,VA,24515,1" })
+    public void testGetAllEmployees(ArgumentsAccessor accessor) {
+
+        User u1 = new User();
+        u1.setId(1);
+        u1.setEmail("jpowell0@hplussport.com");
+        u1.setPassword("jpowell0");
+        userRepository.save(u1);
+
         Employee e = new Employee();
         e.setId(accessor.getInteger(0));
         e.setAddress(accessor.getString(1));
@@ -47,7 +68,7 @@ public class EmployeeServiceImplIntegrationTest {
         e.setLastName(accessor.getString(5));
         e.setState(accessor.getString(6));
         e.setZipCode(accessor.getString(7));
-        e.setUser(userRepository.findByEmail(accessor.getString(3)));
+        e.setUser(u1);
         employeeRepository.save(e);
 
         List<Employee> foundEmployees = employeeRepository.findAll();
@@ -72,7 +93,7 @@ public class EmployeeServiceImplIntegrationTest {
         e.setLastName(accessor.getString(5));
         e.setState(accessor.getString(6));
         e.setZipCode(accessor.getString(7));
-        e.setUser(userRepository.findByEmail(accessor.getString(3)));
+        e.setUser(u1);
         employeeRepository.save(e);
 
         Employee found = employeeRepository.findById(1).get();
