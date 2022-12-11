@@ -1,7 +1,7 @@
 package com.michaeladrummonds.aguafina.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -160,7 +160,7 @@ public class OrderServiceImplIntegrationTest {
         o.setId(accessor.getInteger(0));
         o.setCreationDate(formatter.parse(accessor.getString(1)));
         o.setProduct(accessor.getString(2));
-        o.setTotal(accessor.getDouble(3));
+        o.setTotal(accessor.getDouble(5));
         o.setCustomer(customerRepository.findByEmail("cshaw0@mlb.com"));
         o.setEmployee(employeeRepository.findByEmail("jpowell0@hplussport.com"));
         o.setQuantity(accessor.getInteger(6));
@@ -169,6 +169,6 @@ public class OrderServiceImplIntegrationTest {
 
         orderRepository.deleteById(o.getId());
         List<Order> orders = orderRepository.findByCustomerId(o.getCustomer(), 1);
-        assertEquals(0, orders.size());
+        assertTrue(orders.isEmpty());
     }
 }
