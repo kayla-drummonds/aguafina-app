@@ -18,7 +18,6 @@ INSERT INTO customers (id,address,city,email,first_name,last_name,phone,state,zi
 );
 
 INSERT INTO orders (id,creation_date,product,total,customer_id,employee_id,quantity) VALUES (
-    (1,'2022-11-13 00:00:00','MWCRA32',24,1,2,6),
-    (2,'2022-11-13 00:00:00','MWCRA20',10,2,2,5),
-    (3,'2022-11-13 00:00:00','MWCRA20',6,2,3,3)
+    (1,'2022-12-02 16:07:59','MWBLU32',12,1,1,3),
+    (2,'2022-12-02 16:08:16','MWCRA32',16,2,2,4)
 );
