@@ -111,7 +111,7 @@ public class EmployeeServiceImplIntegrationTest {
      */
 
     @ParameterizedTest
-    @CsvSource({ "2,97 Vidon Alley,Manchester,egarcia1@hplussport.com,Emily,Garcia,NH,31050,2" })
+    @CsvSource({ "2,97 Vidon Alley,Manchester,egarcia1@hplussport.com,Emily,Garcia,NH,31050,2 " })
     public void testGetEmployeeByEmail(ArgumentsAccessor accessor) {
         User u2 = new User();
         u2.setId(2);
