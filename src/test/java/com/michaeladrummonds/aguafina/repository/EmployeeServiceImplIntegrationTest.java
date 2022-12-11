@@ -97,7 +97,7 @@ public class EmployeeServiceImplIntegrationTest {
         employeeRepository.save(e);
 
         Employee found = employeeRepository.findById(1).get();
-        assertEquals(e, found);
+        assertEquals(e.getId(), found.getId());
     }
 
     @ParameterizedTest
