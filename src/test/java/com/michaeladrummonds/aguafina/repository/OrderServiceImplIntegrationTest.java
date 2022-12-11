@@ -161,8 +161,8 @@ public class OrderServiceImplIntegrationTest {
         o.setCreationDate(formatter.parse(accessor.getString(1)));
         o.setProduct(accessor.getString(2));
         o.setTotal(accessor.getDouble(3));
-        o.setCustomer(customerRepository.findByEmail("ecarr1@mlb.com"));
-        o.setEmployee(employeeRepository.findByEmail("rdean2@hplussport.com"));
+        o.setCustomer(customerRepository.findByEmail("cshaw0@mlb.com"));
+        o.setEmployee(employeeRepository.findByEmail("jpowell0@hplussport.com"));
         o.setQuantity(accessor.getInteger(6));
 
         orderRepository.save(o);
