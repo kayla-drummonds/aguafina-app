@@ -105,7 +105,9 @@
 						<th scope="col">Product</th>
 						<th scope="col">Quantity</th>
 						<th scope="col">Total</th>
-						<th scope="col">Actions</th>
+						<th scope="col" sec:authorize="hasAnyAuthority('ADMIN')">
+							Actions
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -119,7 +121,7 @@
 						<td th:text="${order.product}">Product</td>
 						<td th:text="${order.quantity}">Quantity</td>
 						<td th:text="${#numbers.formatCurrency(order.total)}">Total</td>
-						<td>
+						<td sec:authorize="hasAnyAuthority('ADMIN')">
 							<a
 								th:href="@{/orders/delete/{id}(id=${order.id})}"
 								class="btn"

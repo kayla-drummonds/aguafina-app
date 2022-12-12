@@ -11,20 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.michaeladrummonds.aguafina.models.Role;
 import com.michaeladrummonds.aguafina.models.User;
-import com.michaeladrummonds.aguafina.models.UserRole;
 import com.michaeladrummonds.aguafina.repository.UserRepository;
-import com.michaeladrummonds.aguafina.repository.UserRoleRepository;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
@@ -39,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        List<UserRole> userRoles = userRoleRepository.findByUserId(user.getId());
+        Collection<Role> userRoles = user.getRoles();
         Collection<? extends GrantedAuthority> springRoles = buildGrantAuthorities(userRoles);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
@@ -47,10 +44,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 springRoles);
     }
 
-    private Collection<? extends GrantedAuthority> buildGrantAuthorities(List<UserRole> roles) {
+    private Collection<? extends GrantedAuthority> buildGrantAuthorities(Collection<Role> userRoles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (UserRole role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        for (Role role : userRoles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return authorities;
     }

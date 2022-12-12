@@ -1,5 +1,7 @@
 package com.michaeladrummonds.aguafina.controller;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.michaeladrummonds.aguafina.config.AuthenticatedUserService;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
+import com.michaeladrummonds.aguafina.models.Role;
 import com.michaeladrummonds.aguafina.models.User;
 import com.michaeladrummonds.aguafina.models.UserRegistrationDto;
-import com.michaeladrummonds.aguafina.models.UserRole;
-import com.michaeladrummonds.aguafina.repository.UserRoleRepository;
+import com.michaeladrummonds.aguafina.repository.RoleRepository;
 import com.michaeladrummonds.aguafina.repository.UserRepository;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
@@ -38,7 +40,7 @@ public class LoginController {
     private UserRepository userRepository;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     private EmployeeServiceImpl employeeService;
@@ -94,18 +96,15 @@ public class LoginController {
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
 
+        Role role = roleRepository.findRoleByName("CUSTOMER");
+
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
+        user.setRoles(Arrays.asList(role));
 
         userRepository.save(user);
-
-        UserRole ur = new UserRole();
-        ur.setRoleName("CUSTOMER");
-        ur.setUserId(user.getId());
-
-        userRoleRepository.save(ur);
 
         Customer existingCustomer = customerService.getCustomerByEmail(user.getEmail());
         existingCustomer.setUser(user);
@@ -136,19 +135,16 @@ public class LoginController {
         User user = new User();
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
+        Role roleEmployee = roleRepository.findRoleByName("EMPLOYEE");
+        Role roleAdmin = roleRepository.findRoleByName("ADMIN");
 
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
+        user.setRoles(Arrays.asList(roleEmployee, roleAdmin));
 
         userRepository.save(user);
-
-        UserRole ur = new UserRole();
-        ur.setRoleName("EMPLOYEE");
-        ur.setUserId(user.getId());
-
-        userRoleRepository.save(ur);
 
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
         employee.setUser(user);
