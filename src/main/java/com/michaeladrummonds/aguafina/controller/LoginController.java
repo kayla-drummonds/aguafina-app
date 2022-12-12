@@ -1,6 +1,7 @@
 package com.michaeladrummonds.aguafina.controller;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -96,13 +97,15 @@ public class LoginController {
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
 
+        List<Role> roles = new ArrayList<>();
         Role role = roleRepository.findRoleByName("CUSTOMER");
+        roles.add(role);
 
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
-        user.setRoles(Arrays.asList(role));
+        user.setRoles(roles);
 
         userRepository.save(user);
 
@@ -135,14 +138,17 @@ public class LoginController {
         User user = new User();
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
+
+        List<Role> roles = new ArrayList<>();
         Role roleEmployee = roleRepository.findRoleByName("EMPLOYEE");
+        roles.add(roleEmployee);
         // Role roleAdmin = roleRepository.findRoleByName("ADMIN");
 
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
-        user.setRoles(Arrays.asList(roleEmployee));
+        user.setRoles(roles);
 
         userRepository.save(user);
 
