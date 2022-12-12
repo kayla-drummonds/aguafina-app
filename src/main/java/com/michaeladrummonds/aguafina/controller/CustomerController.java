@@ -22,6 +22,7 @@ import com.michaeladrummonds.aguafina.config.AuthenticatedUserService;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.models.User;
+import com.michaeladrummonds.aguafina.repository.UserRepository;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
 
@@ -40,6 +41,9 @@ public class CustomerController {
 
     @Autowired
     private AuthenticatedUserService authService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping("/customers")
@@ -115,6 +119,14 @@ public class CustomerController {
             existingCustomer.setZipCode(customer.getZipCode());
 
             customerService.updateCustomer(existingCustomer);
+
+            User user = authService.getCurrentUser();
+            if (user.getEmail().equals(existingCustomer.getEmail())) {
+                user.setEmail(existingCustomer.getEmail());
+                user.setFirstName(existingCustomer.getFirstName());
+                user.setLastName(existingCustomer.getLastName());
+                userRepository.save(user);
+            }
 
             log.debug(
                     existingCustomer.getFirstName() + " " + existingCustomer.getLastName() + " has just been updated.");
