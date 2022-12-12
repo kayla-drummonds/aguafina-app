@@ -144,7 +144,7 @@ public class OrderController {
                 }
             }
         } catch (NullPointerException e) {
-            throw new NullPointerException();
+            throw new NullPointerException(e.getMessage());
         }
 
         log.debug(customer.getFirstName() + " " + customer.getLastName() + " has " + ordersByCustomer.size()
