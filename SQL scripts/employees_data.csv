@@ -1,8 +1,8 @@
 "id";"address";"city";"email";"first_name";"last_name";"state";"zip_code";"user_id"
 1;"5 Jenifer Crossing";"Lynchburg";"jpowell0@hplussport.com";"Jack";"Powell";"VA";"24515";1
 2;"97 Vidon Alley";"Manchester";"egarcia1@hplussport.com";"Emily";"Garcia";"NH";"31050";2
-3;"2482 1st Road";"Houston";"rdean2@hplussport.com";"Richard";"Dean";"TX";"77228";0
-4;"5230 Rigney Circle";"Alexandria";"jporter3@hplussport.com";"Jane";"Porter";"VA";"22301";0
+3;"2482 1st Road";"Houston";"rdean2@hplussport.com";"Richard";"Dean";"TX";"77228";3
+4;"5230 Rigney Circle";"Alexandria";"jporter3@hplussport.com";"Jane";"Porter";"VA";"22301";9
 5;"7 Upham Alley";"El Paso";"rvasquez4@hplussport.com";"Robin";"Vasquez";"TX";"79984";0
 6;"144 Banding Lane";"Houston";"dflores5@hplussport.com";"Douglas";"Flores";"TX";"77090";0
 7;"3011 Mosinee Park";"Amarillo";"cjohnston6@hplussport.com";"Craig";"Johnston";"TX";"79188";0

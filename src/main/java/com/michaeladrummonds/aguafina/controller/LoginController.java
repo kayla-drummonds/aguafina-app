@@ -136,13 +136,13 @@ public class LoginController {
 
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
         Role roleEmployee = roleRepository.findRoleByName("EMPLOYEE");
-        Role roleAdmin = roleRepository.findRoleByName("ADMIN");
+        // Role roleAdmin = roleRepository.findRoleByName("ADMIN");
 
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(encodedPassword);
-        user.setRoles(Arrays.asList(roleEmployee, roleAdmin));
+        user.setRoles(Arrays.asList(roleEmployee));
 
         userRepository.save(user);
 
