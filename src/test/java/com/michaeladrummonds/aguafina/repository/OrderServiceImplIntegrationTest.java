@@ -1,7 +1,7 @@
 package com.michaeladrummonds.aguafina.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-// import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
@@ -153,28 +153,27 @@ public class OrderServiceImplIntegrationTest {
         assertEquals(1, ordersFound.size());
     }
 
-    /*
-     * @ParameterizedTest
-     * 
-     * @CsvSource({ "1,'2022-12-02 16:07:59','MWBLU32',1,1,12,3" })
-     * public void testDeleteById(ArgumentsAccessor accessor)
-     * throws ArgumentAccessException, ParseException,
-     * EmptyResultDataAccessException {
-     * Order o = new Order();
-     * SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-     * o.setId(accessor.getInteger(0));
-     * o.setCreationDate(formatter.parse(accessor.getString(1)));
-     * o.setProduct(accessor.getString(2));
-     * o.setTotal(accessor.getDouble(5));
-     * o.setCustomer(customerRepository.findByEmail("cshaw0@mlb.com"));
-     * o.setEmployee(employeeRepository.findByEmail("jpowell0@hplussport.com"));
-     * o.setQuantity(accessor.getInteger(6));
-     * 
-     * orderRepository.save(o);
-     * 
-     * orderRepository.deleteById(o.getId());
-     * List<Order> orders = orderRepository.findByCustomerId(o.getCustomer(), 1);
-     * assertTrue(orders.isEmpty());
-     * }
-     */
+    @ParameterizedTest
+
+    @CsvSource({ "1,'2022-12-02 16:07:59','MWBLU32',1,1,12,3" })
+    public void testDeleteById(ArgumentsAccessor accessor)
+            throws ArgumentAccessException, ParseException,
+            EmptyResultDataAccessException {
+        Order o = new Order();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        o.setId(accessor.getInteger(0));
+        o.setCreationDate(formatter.parse(accessor.getString(1)));
+        o.setProduct(accessor.getString(2));
+        o.setTotal(accessor.getDouble(5));
+        o.setCustomer(customerRepository.findByEmail("cshaw0@mlb.com"));
+        o.setEmployee(employeeRepository.findByEmail("jpowell0@hplussport.com"));
+        o.setQuantity(accessor.getInteger(6));
+
+        orderRepository.save(o);
+
+        orderRepository.deleteById(o.getId());
+        List<Order> orders = orderRepository.findByCustomerId(o.getCustomer(), 1);
+        assertTrue(orders.isEmpty());
+    }
+
 }
