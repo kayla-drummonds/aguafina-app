@@ -24,4 +24,6 @@ public interface CustomerService {
     List<Customer> getCustomerByKeyword(String keyword);
 
     Page<Customer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+
+    Customer saveCustomer(Customer customer);
 }

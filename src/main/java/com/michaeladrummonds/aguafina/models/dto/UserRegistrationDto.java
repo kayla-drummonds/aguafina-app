@@ -1,4 +1,4 @@
-package com.michaeladrummonds.aguafina.models;
+package com.michaeladrummonds.aguafina.models.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;

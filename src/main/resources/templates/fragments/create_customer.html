@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<th:block th:insert="~{fragments/header :: header}"></th:block>
+		<title>Create New Customer</title>
+	</head>
+
+	<body>
+		<div
+			class="card p-centered col-6 col-md-12 p-2 s-rounded"
+			th:object="${customer}"
+			id="create-customer-form"
+			th:fragment="create_customer">
+			<div class="card-body">
+				<form
+					class="form-horizontal p-2 s-rounded"
+					th:action="@{/orders#add-new-customer}"
+					method="POST"
+					name="newCustomerForm">
+					<div class="columns">
+						<div class="column col-12 py-2">
+							<div class="form-group">
+								<div class="column col-4">
+									<label class="form-label form-label-inline" for="firstName"
+										>First Name:
+									</label>
+								</div>
+								<div class="column col-8">
+									<input
+										name="firstName"
+										class="form-input"
+										type="text"
+										th:field="*{firstName}"
+										th:classappend="${#fields.hasErrors('firstName') ? 'is-error' : ''}"
+										id="firstName"
+										placeholder="First Name" />
+								</div>
+								<div class="column col-12">
+									<p
+										th:if="${#fields.hasErrors('firstName')}"
+										th:errors="*{firstName}"
+										class="form-input-hint text-error"
+										id="firstNameHint"></p>
+								</div>
+							</div>
+						</div>
+						<div class="column col-12 py-2">
+							<div class="form-group">
+								<div class="column col-4">
+									<label class="form-label form-label-inline" for="lastName"
+										>Last Name:</label
+									>
+								</div>
+								<div class="column col-8">
+									<input
+										name="lastName"
+										class="form-input"
+										type="text"
+										th:field="*{lastName}"
+										th:classappend="${#fields.hasErrors('lastName') ? 'is-error' : ''}"
+										id="lastName"
+										placeholder="Last Name" />
+								</div>
+								<div class="column col-12">
+									<p
+										th:if="${#fields.hasErrors('lastName')}"
+										th:errors="*{lastName}"
+										class="form-input-hint text-error"
+										id="lastNameHint"></p>
+								</div>
+							</div>
+						</div>
+						<div class="column col-12 py-2">
+							<div class="form-group">
+								<div class="column col-4">
+									<label class="form-label form-label-inline" for="email"
+										>Email:</label
+									>
+								</div>
+								<div class="column col-8">
+									<input
+										name="email"
+										class="form-input"
+										type="email"
+										th:field="*{email}"
+										th:classappend="${#fields.hasErrors('email') ? 'is-error' : ''}"
+										id="email"
+										placeholder="Email" />
+								</div>
+								<div class="column col-12">
+									<p
+										th:if="${#fields.hasErrors('email')}"
+										th:errors="*{email}"
+										class="form-input-hint text-error"
+										id="emailHint"></p>
+								</div>
+							</div>
+						</div>
+						<div class="column col-12 py-2">
+							<div class="form-group">
+								<div class="column col-4">
+									<label class="form-label form-label-inline" for="phone"
+										>Phone:</label
+									>
+								</div>
+								<div class="column col-8">
+									<input
+										name="phone"
+										class="form-input"
+										type="tel"
+										th:field="*{phone}"
+										th:classappend="${#fields.hasErrors('phone') ? 'is-error' : ''}"
+										id="phone"
+										placeholder="###-###-####" />
+								</div>
+								<div class="column col-12">
+									<p
+										th:if="${#fields.hasErrors('phone')}"
+										th:errors="*{phone}"
+										class="form-input-hint text-error"
+										id="phoneHint"></p>
+								</div>
+							</div>
+						</div>
+						<button class="btn p-centered btn-success" type="submit">
+							Submit
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

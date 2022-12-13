@@ -24,7 +24,7 @@ import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.models.Role;
 import com.michaeladrummonds.aguafina.models.User;
-import com.michaeladrummonds.aguafina.models.UserRegistrationDto;
+import com.michaeladrummonds.aguafina.models.dto.UserRegistrationDto;
 import com.michaeladrummonds.aguafina.repository.CustomerRepository;
 import com.michaeladrummonds.aguafina.repository.EmployeeRepository;
 import com.michaeladrummonds.aguafina.repository.RoleRepository;

@@ -62,12 +62,35 @@
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
 		</header>
-		<div class="container pt-2 pb-2">
+		<div class="container pt-2 pb-2" id="orders">
 			<div class="columns">
 				<div class="column col-4">
-					<a class="btn btn-lg" th:href="@{/orders/new}" id="create-button"
+					<a th:href="@{/orders/new}" class="btn">Existing Customer</a>
+					<a
+						class="btn btn-lg"
+						href="#add-new-customer"
+						th:href="@{/orders#add-new-customer}"
 						>Create New Order</a
 					>
+					<div class="modal" id="add-new-customer">
+						<a href="#orders" class="modal-overlay" aria-label="close"></a>
+						<div class="modal-container">
+							<div class="modal-header">
+								<a
+									href="#orders"
+									class="btn btn-clear float-right"
+									aria-label="Close"></a>
+								<div class="modal-title h5">Add New Customer</div>
+							</div>
+							<div class="modal-body">
+								<div class="content">
+									<div
+										th:insert="~{fragments/create_customer :: create_customer}"></div>
+								</div>
+							</div>
+							<div class="modal-footer">...</div>
+						</div>
+					</div>
 				</div>
 				<div class="column col-4">
 					<h2 class="text-center">All Orders</h2>

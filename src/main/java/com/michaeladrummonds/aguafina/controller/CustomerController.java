@@ -22,6 +22,7 @@ import com.michaeladrummonds.aguafina.config.AuthenticatedUserService;
 import com.michaeladrummonds.aguafina.models.Customer;
 import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.models.User;
+import com.michaeladrummonds.aguafina.models.dto.CustomerDto;
 import com.michaeladrummonds.aguafina.repository.UserRepository;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
 import com.michaeladrummonds.aguafina.service.impl.EmployeeServiceImpl;
@@ -70,6 +71,40 @@ public class CustomerController {
 
         return mav;
 
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
+    @GetMapping("/orders#add-new-customer")
+    public String addNewCustomer(Model model) {
+        CustomerDto customerDto = new CustomerDto();
+        model.addAttribute("customer", customerDto);
+        return "orders#add-new-customer";
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
+    @PostMapping("/orders#add-new-customer")
+    public String saveNewCustomer(Model model, @Valid @ModelAttribute("customerDto") CustomerDto customerDto,
+            BindingResult bindingResult) {
+        for (ObjectError e : bindingResult.getAllErrors()) {
+            log.debug(e.getDefaultMessage());
+        }
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("customerDto", customerDto);
+            return "orders#add-new-customer";
+        } else {
+            Customer customer = new Customer();
+            customer.setFirstName(customerDto.getFirstName());
+            customer.setLastName(customerDto.getLastName());
+            customer.setEmail(customerDto.getEmail());
+            customer.setPhone(customerDto.getPhone());
+
+            customerService.saveCustomer(customer);
+        }
+
+        log.debug("Customer created successfully");
+        return "create_order";
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
@@ -132,6 +167,5 @@ public class CustomerController {
                     existingCustomer.getFirstName() + " " + existingCustomer.getLastName() + " has just been updated.");
             return "redirect:/home";
         }
-
     }
 }
