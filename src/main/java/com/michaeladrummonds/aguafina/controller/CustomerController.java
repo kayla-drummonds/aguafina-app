@@ -121,10 +121,10 @@ public class CustomerController {
             customerService.updateCustomer(existingCustomer);
 
             User user = authService.getCurrentUser();
-            if (user.getEmail().equals(existingCustomer.getEmail())) {
-                user.setEmail(existingCustomer.getEmail());
-                user.setFirstName(existingCustomer.getFirstName());
-                user.setLastName(existingCustomer.getLastName());
+            if (user.getEmail().equals(customer.getEmail())) {
+                user.setEmail(customer.getEmail());
+                user.setFirstName(customer.getFirstName());
+                user.setLastName(customer.getLastName());
                 userRepository.save(user);
             }
 

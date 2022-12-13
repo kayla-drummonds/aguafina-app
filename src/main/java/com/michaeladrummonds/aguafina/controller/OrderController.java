@@ -74,10 +74,12 @@ public class OrderController {
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
 
         Order order = new Order();
+        Customer customer = new Customer();
         List<Customer> customers = customerService.getAllCustomers();
         List<Employee> employees = employeeService.getAllEmployees();
 
-        model.addAttribute("employeeC", employee);
+        model.addAttribute("employee", employee);
+        model.addAttribute("customer", customer);
         model.addAttribute("order", order);
         model.addAttribute("customers", customers);
         model.addAttribute("employees", employees);
@@ -86,7 +88,8 @@ public class OrderController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @PostMapping("/orders")
-    public String saveOrder(Model model, @Valid @ModelAttribute("order") Order order, BindingResult bindingResult) {
+    public String saveOrder(Model model, @Valid @ModelAttribute("order") Order order,
+            @ModelAttribute("customer") Customer customer, BindingResult bindingResult) {
 
         for (ObjectError e : bindingResult.getAllErrors()) {
             log.debug(e.getDefaultMessage());

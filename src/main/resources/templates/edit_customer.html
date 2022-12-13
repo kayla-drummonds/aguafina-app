@@ -18,7 +18,10 @@
 				color: #135c9e;
 			}
 		</style>
-		<title>Update Customer</title>
+		<title
+			th:text="'Edit ' + ${customer.firstName} + ' ' + ${customer.lastName} + '\'s Information'">
+			Update Customer
+		</title>
 	</head>
 
 	<body>
@@ -40,7 +43,7 @@
 			<section sec:authorize="hasAnyAuthority('CUSTOMER')">
 				<a
 					th:href="@{/customers/edit/{id}(id = ${customer.id})}"
-					class="btn btn-link"
+					class="btn btn-link active"
 					>Edit My Information</a
 				>
 			</section>
@@ -78,8 +81,14 @@
 				<div class="card-header">
 					<h3
 						class="card-title text-center"
-						th:text="'Update Customer ' + ${customer.id}">
+						th:text="'Update Customer ' + ${customer.id}"
+						sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 						Update Customer Information
+					</h3>
+					<h3
+						class="card-title text-center"
+						sec:authorize="hasAnyAuthority('CUSTOMER')">
+						Update My Information
 					</h3>
 				</div>
 				<div class="card-body">
@@ -316,7 +325,9 @@
 									</div>
 								</div>
 							</div>
-							<button class="btn p-centered" type="submit">Submit</button>
+							<button class="btn p-centered btn-success" type="submit">
+								Submit
+							</button>
 						</div>
 					</form>
 				</div>

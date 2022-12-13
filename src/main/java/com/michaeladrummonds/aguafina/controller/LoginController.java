@@ -25,6 +25,8 @@ import com.michaeladrummonds.aguafina.models.Employee;
 import com.michaeladrummonds.aguafina.models.Role;
 import com.michaeladrummonds.aguafina.models.User;
 import com.michaeladrummonds.aguafina.models.UserRegistrationDto;
+import com.michaeladrummonds.aguafina.repository.CustomerRepository;
+import com.michaeladrummonds.aguafina.repository.EmployeeRepository;
 import com.michaeladrummonds.aguafina.repository.RoleRepository;
 import com.michaeladrummonds.aguafina.repository.UserRepository;
 import com.michaeladrummonds.aguafina.service.impl.CustomerServiceImpl;
@@ -48,6 +50,12 @@ public class LoginController {
 
     @Autowired
     private CustomerServiceImpl customerService;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     @Qualifier("passwordEncoder")
@@ -110,8 +118,17 @@ public class LoginController {
         userRepository.save(user);
 
         Customer existingCustomer = customerService.getCustomerByEmail(user.getEmail());
-        existingCustomer.setUser(user);
-        customerService.updateCustomer(existingCustomer);
+        if (existingCustomer == null) {
+            Customer newCustomer = new Customer();
+            newCustomer.setFirstName(registrationDto.getFirstName());
+            newCustomer.setLastName(registrationDto.getLastName());
+            newCustomer.setEmail(registrationDto.getEmail());
+            newCustomer.setUser(user);
+            customerRepository.save(newCustomer);
+        } else {
+            existingCustomer.setUser(user);
+            customerService.updateCustomer(existingCustomer);
+        }
 
         log.debug("Customer user created successfully.");
 
@@ -153,8 +170,17 @@ public class LoginController {
         userRepository.save(user);
 
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
-        employee.setUser(user);
-        employeeService.updateEmployee(employee);
+        if (employee == null) {
+            Employee newEmployee = new Employee();
+            newEmployee.setFirstName(registrationDto.getFirstName());
+            newEmployee.setLastName(registrationDto.getLastName());
+            newEmployee.setEmail(registrationDto.getEmail());
+            newEmployee.setUser(user);
+            employeeRepository.save(newEmployee);
+        } else {
+            employee.setUser(user);
+            employeeService.updateEmployee(employee);
+        }
 
         log.debug("Employee user successfully created.");
 
