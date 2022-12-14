@@ -47,31 +47,10 @@ public class OrderController {
     @Autowired
     private AuthenticatedUserService authService;
 
-    // @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
-    // @GetMapping("/orders")
-    // public ModelAndView listAllOrders() {
-    // ModelAndView mav = new ModelAndView("orders");
-
-    // User user = authService.getCurrentUser();
-    // Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
-
-    // List<Order> orders = orderService.getAllOrders();
-    // Customer customer = new Customer();
-
-    // mav.addObject("employee", employee);
-    // mav.addObject("orders", orders);
-    // mav.addObject("customer", customer);
-
-    // log.debug("There are currently " + orders.size() + " completed orders.");
-    // orders.stream()
-    // .forEach(x -> log.debug(x.getId() + " | " + x.getProduct() + " | " +
-    // x.getCreationDate()));
-    // return mav;
-    // }
-
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping("/orders")
-    public String listAllOrders(Model model) {
+    public ModelAndView listAllOrders() {
+        ModelAndView mav = new ModelAndView("orders");
 
         User user = authService.getCurrentUser();
         Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
@@ -79,34 +58,15 @@ public class OrderController {
         List<Order> orders = orderService.getAllOrders();
         Customer customer = new Customer();
 
-        model.addAttribute("employee", employee);
-        model.addAttribute("orders", orders);
-        model.addAttribute("customer", customer);
+        mav.addObject("employee", employee);
+        mav.addObject("orders", orders);
+        mav.addObject("customer", customer);
 
         log.debug("There are currently " + orders.size() + " completed orders.");
         orders.stream()
-                .forEach(x -> log.debug(x.getId() + " | " + x.getProduct() + " | " + x.getCreationDate()));
-        return "orders";
-    }
-
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
-    @PostMapping("/orders#add-new-customer")
-    public String saveNewCustomer(Model model, @Valid @ModelAttribute("customer") Customer customer,
-            BindingResult bindingResult) {
-        for (ObjectError e : bindingResult.getAllErrors()) {
-            log.debug(e.getDefaultMessage());
-        }
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("customer", customer);
-            return "orders#add-new-customer";
-        } else {
-            customerService.saveCustomer(customer);
-            log.debug("Customer created successfully");
-            return "redirect:/orders/new";
-        }
-
+                .forEach(x -> log.debug(x.getId() + " | " + x.getProduct() + " | " +
+                        x.getCreationDate()));
+        return mav;
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")

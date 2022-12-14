@@ -73,7 +73,7 @@
 				<a class="btn btn-link" th:href="@{/logout}">Log Out</a>
 			</section>
 		</header>
-		<div class="container">
+		<div class="container" id="employee-orders">
 			<div class="hero hero-sm">
 				<div class="hero-body" th:object="${employee}">
 					<div class="columns">
@@ -85,9 +85,53 @@
 							<div
 								class="h5"
 								th:text="${employee.orders.size()} + ' order(s)'"></div>
-							<a class="btn" th:href="@{/orders/new}" id="create-button"
+							<a
+								class="btn"
+								href="customer-options"
+								th:href="@{/orders/employee/{employee}#customer-options(employee = ${employee.id})}"
+								id="create-button"
 								>Create New Order</a
 							>
+							<div class="modal" id="customer-options">
+								<a
+									href="#employee-orders"
+									class="modal-overlay"
+									aria-label="close"></a>
+								<div class="modal-container">
+									<div class="modal-header">
+										<a
+											href="#employee-orders"
+											class="btn btn-clear float-right"
+											aria-label="Close"></a>
+										<div class="modal-title h5" style="color: #135c9eff">
+											Add New Order: Customer Type
+										</div>
+									</div>
+									<div class="modal-body">
+										<div class="content">
+											<div class="columns text-center">
+												<div class="column col-6">
+													<a
+														class="btn btn-link text-success"
+														th:href="@{/customers/new}"
+														>New Customer</a
+													>
+												</div>
+												<div class="column col-6">
+													<a
+														class="btn btn-link text-gray"
+														th:href="@{/orders/new}"
+														>Existing Customer</a
+													>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<a href="#employee-orders" class="btn btn-error">Cancel</a>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="divider-vert"></div>
 						<div class="column">

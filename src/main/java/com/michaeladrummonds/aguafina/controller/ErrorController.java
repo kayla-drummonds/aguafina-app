@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -109,7 +110,7 @@ public class ErrorController {
             WebRequest request,
             @ModelAttribute("status") HttpStatus status, Model model) {
 
-        String error = "No data result found.";
+        String error = "No data result founds.";
 
         model.addAttribute("error", error);
         model.addAttribute("exception", ex.toString());
@@ -142,5 +143,21 @@ public class ErrorController {
         model.addAttribute("message", ex.getMessage());
         model.addAttribute("trace", ex.getStackTrace());
         return "error";
+    }
+
+    @ExceptionHandler({ DataIntegrityViolationException.class })
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleDataIntegrityViolationException(@ModelAttribute("exception") DataIntegrityViolationException ex,
+            WebRequest request,
+            @ModelAttribute("status") HttpStatus status, Model model) {
+
+        String error = "Customer already exists.";
+
+        model.addAttribute("error", error);
+        model.addAttribute("exception", ex.toString());
+        model.addAttribute("message", ex.getMessage());
+        model.addAttribute("trace", ex.getStackTrace());
+        return "error";
+
     }
 }

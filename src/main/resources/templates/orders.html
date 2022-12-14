@@ -65,14 +65,14 @@
 		<div class="container pt-2 pb-2" id="orders">
 			<div class="columns">
 				<div class="column col-4">
-					<a th:href="@{/orders/new}" class="btn">Existing Customer</a>
 					<a
-						class="btn btn-lg"
-						href="#add-new-customer"
-						th:href="@{/orders#add-new-customer}"
+						class="btn btn-link"
+						href="customer-options"
+						th:href="@{/orders#customer-options}"
+						id="create-button"
 						>Create New Order</a
 					>
-					<div class="modal" id="add-new-customer">
+					<div class="modal" id="customer-options">
 						<a href="#orders" class="modal-overlay" aria-label="close"></a>
 						<div class="modal-container">
 							<div class="modal-header">
@@ -80,15 +80,31 @@
 									href="#orders"
 									class="btn btn-clear float-right"
 									aria-label="Close"></a>
-								<div class="modal-title h5">Add New Customer</div>
+								<div class="modal-title h5" style="color: #135c9eff">
+									Add New Order: Customer Type
+								</div>
 							</div>
 							<div class="modal-body">
 								<div class="content">
-									<div
-										th:insert="~{fragments/create_customer :: create_customer}"></div>
+									<div class="columns text-center">
+										<div class="column col-6">
+											<a
+												class="btn btn-link text-success"
+												th:href="@{/customers/new}"
+												>New Customer</a
+											>
+										</div>
+										<div class="column col-6">
+											<a class="btn btn-link text-gray" th:href="@{/orders/new}"
+												>Existing Customer</a
+											>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="modal-footer">...</div>
+							<div class="modal-footer">
+								<a href="#orders" class="btn btn-error">Cancel</a>
+							</div>
 						</div>
 					</div>
 				</div>

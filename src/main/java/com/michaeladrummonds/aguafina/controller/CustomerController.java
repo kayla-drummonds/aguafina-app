@@ -1,10 +1,12 @@
 package com.michaeladrummonds.aguafina.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,40 +74,47 @@ public class CustomerController {
 
     }
 
-    // @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
-    // @GetMapping("/orders#add-new-customer")
-    // public String addNewCustomer(Model model) {
-    // CustomerDto customerDto = new CustomerDto();
-    // model.addAttribute("customer", customerDto);
-    // return "orders#add-new-customer";
-    // }
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
+    @GetMapping("/customers/new")
+    public String createNewCustomer(Model model) {
 
-    // @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
-    // @PostMapping("/orders#add-new-customer")
-    // public String saveNewCustomer(Model model, @Valid @ModelAttribute("customer")
-    // CustomerDto customerDto,
-    // BindingResult bindingResult) {
-    // for (ObjectError e : bindingResult.getAllErrors()) {
-    // log.debug(e.getDefaultMessage());
-    // }
+        User user = authService.getCurrentUser();
+        Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
 
-    // if (bindingResult.hasErrors()) {
-    // model.addAttribute("bindingResult", bindingResult);
-    // model.addAttribute("customer", customerDto);
-    // return "orders#add-new-customer";
-    // } else {
-    // Customer customer = new Customer();
-    // customer.setFirstName(customerDto.getFirstName());
-    // customer.setLastName(customerDto.getLastName());
-    // customer.setEmail(customerDto.getEmail());
-    // customer.setPhone(customerDto.getPhone());
+        Customer customer = new Customer();
+        model.addAttribute("customer", customer);
+        model.addAttribute("employee", employee);
 
-    // customerService.saveCustomer(customer);
-    // log.debug("Customer created successfully");
-    // return "redirect:/orders/new";
-    // }
+        return "create_customer";
+    }
 
-    // }
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
+    @PostMapping("/customers/new")
+    public String saveNewCustomer(Model model, @Valid @ModelAttribute("customer") Customer customer,
+            BindingResult bindingResult) {
+        for (ObjectError e : bindingResult.getAllErrors()) {
+            log.debug(e.getDefaultMessage());
+        }
+
+        User user = authService.getCurrentUser();
+        Employee employee = employeeService.getEmployeeByEmail(user.getEmail());
+        model.addAttribute("employee", employee);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("customer", customer);
+            return "create_customer";
+        } else {
+            Customer existingCustomer = customerService.getCustomerByEmail(customer.getEmail());
+            if (existingCustomer == null) {
+                customerService.saveCustomer(customer);
+            } else {
+                throw new DataIntegrityViolationException("Customer already exists with email: " + customer.getEmail());
+            }
+            return "redirect:/orders/new";
+        }
+
+    }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE','CUSTOMER')")
     @GetMapping("/customers/edit/{id}")
@@ -122,8 +131,8 @@ public class CustomerController {
                 model.addAttribute("customer", customer);
                 model.addAttribute("employee", employee);
             }
-        } catch (NullPointerException e) {
-            throw new NullPointerException();
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("No customer found with id " + id);
         }
         return "edit_customer";
     }
