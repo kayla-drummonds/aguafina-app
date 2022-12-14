@@ -36,3 +36,56 @@ function validateOrder() {
         document.getElementById("p").classList.add("is-success");
     }
 }
+
+function validateNewCustomer() {
+    let firstName = document.newCustomerForm.firstName;
+    let lastName = document.newCustomerForm.lastName;
+    let email = document.newCustomerForm.email;
+    let phone = document.newCustomerForm.phone;
+
+    if (firstName.value == "") {
+        document.getElementById("firstName").classList.add("is-error");
+        document.getElementById("firstNameHint").innerHTML = "Please enter first name.";
+        return false;
+    } else {
+        firstName = document.getElementById("firstName").value;
+        document.getElementById("firstName").classList.add("is-success");
+    }
+
+    if (lastName.value == "") {
+        document.getElementById("lastName").classList.add("is-error");
+        document.getElementById("lastNameHint").innerHTML = "Please enter last name.";
+        return false;
+    } else {
+        lastName = document.getElementById("lastName").value;
+        document.getElementById("lastName").classList.add("is-success");
+    }
+
+    if (email.value == "") {
+        document.getElementById("email").classList.add("is-error");
+        document.getElementById("emailHint").innerHTML = "Please enter email.";
+        return false;
+    } else {
+        atpos = email.value.indexOf("@");
+        dotpos = email.value.lastIndexOf(".");
+        if (atpos < 1 || (dotpos - atpos < 2)) {
+            document.getElementById("email").classList.add("is-error");
+            document.getElementById("emailHint").innerHTML = "Please enter email in correct format.";
+            return false;
+        } else {
+            email = document.getElementById("email").value;
+            document.getElementById("email").classList.add("is-success");
+        }
+    }
+
+    if (phone.value == "") {
+        document.getElementById("phone").classList.add("is-error");
+        document.getElementById("phoneHint").innerHTML = "Please enter phone number.";
+        return false;
+    } else {
+        lastName = document.getElementById("phone").value;
+        document.getElementById("phone").classList.add("is-success");
+    }
+
+
+}

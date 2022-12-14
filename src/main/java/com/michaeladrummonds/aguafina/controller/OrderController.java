@@ -90,6 +90,26 @@ public class OrderController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
+    @PostMapping("/orders#add-new-customer")
+    public String saveNewCustomer(Model model, @Valid @ModelAttribute("customer") Customer customer,
+            BindingResult bindingResult) {
+        for (ObjectError e : bindingResult.getAllErrors()) {
+            log.debug(e.getDefaultMessage());
+        }
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("customer", customer);
+            return "orders#add-new-customer";
+        } else {
+            customerService.saveCustomer(customer);
+            log.debug("Customer created successfully");
+            return "redirect:/orders/new";
+        }
+
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')")
     @GetMapping("/orders/new")
     public String createOrder(Model model) {
 

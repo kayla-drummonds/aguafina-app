@@ -10,15 +10,15 @@
 	<body>
 		<div
 			class="card p-centered col-6 col-md-12 p-2 s-rounded"
-			th:object="${customer}"
-			id="create-customer-form"
-			th:fragment="create_customer">
+			id="create-customer-form">
 			<div class="card-body">
 				<form
 					class="form-horizontal p-2 s-rounded"
 					th:action="@{/orders#add-new-customer}"
+					th:object="${customer}"
 					method="POST"
-					name="newCustomerForm">
+					name="newCustomerForm"
+					onsubmit="return validateNewCustomer();">
 					<div class="columns">
 						<div class="column col-12 py-2">
 							<div class="form-group">
