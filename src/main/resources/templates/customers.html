@@ -55,9 +55,6 @@
 				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 				<a class="btn btn-link active" th:href="@{/customers}">Customers</a>
 			</section>
-			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
-				<a class="btn btn-link" th:href="@{/employees}">Employees</a>
-			</section>
 			<section
 				class="navbar-section"
 				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">

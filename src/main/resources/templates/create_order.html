@@ -48,9 +48,6 @@
 				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 				<a class="btn btn-link" th:href="@{/customers}">Customers</a>
 			</section>
-			<section class="navbar-section" sec:authorize="hasAnyAuthority('ADMIN')">
-				<a class="btn btn-link" th:href="@{/employees}">Employees</a>
-			</section>
 			<section
 				class="navbar-section"
 				sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
@@ -232,7 +229,9 @@
 								</div>
 							</div>
 						</div>
-						<button class="btn p-centered" type="submit">Submit</button>
+						<button class="btn btn-success p-centered" type="submit">
+							Submit
+						</button>
 					</form>
 				</div>
 			</div>

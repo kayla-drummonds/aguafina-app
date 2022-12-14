@@ -66,13 +66,6 @@
 							sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
 							<a th:href="@{/orders}">View All Orders</a>
 						</li>
-						<li
-							class="divider"
-							data-content="ADMIN"
-							sec:authorize="hasAnyAuthority('ADMIN')"></li>
-						<li class="menu-item" sec:authorize="hasAnyAuthority('ADMIN')">
-							<a th:href="@{/employees}">View All Employees</a>
-						</li>
 						<li class="divider"></li>
 						<li class="menu-item" sec:authorization="isAuthenticated()">
 							<a th:href="@{/logout}">Log out</a>
