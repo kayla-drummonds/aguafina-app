@@ -119,6 +119,3 @@ All existing customers are listed on the customers page. Employees can also find
 <dt>Building the database schema in MYSQL</dt>
 <dd>At first I tried to set up the database and tables in MySQL, but it was difficult with multiple foreign keys. It is easier to build the tables using Hibernate and using SQL scripts to insert sample data.</dd>
 </dl>
-<b><em>Installation and Project Set Up Instructions:</em></br>
-
-
